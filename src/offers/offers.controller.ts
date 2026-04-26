@@ -4,7 +4,9 @@ import { AnalyzeArtifactDto } from './dto/analyze-artifact.dto';
 
 @Controller('offers')
 export class OffersController {
-  constructor(private readonly offersArtifactAnalyzerService: OffersArtifactAnalyzerService) {}
+  constructor(
+    private readonly offersArtifactAnalyzerService: OffersArtifactAnalyzerService,
+  ) {}
 
   @Post('analyze-artifact')
   analyzeArtifact(@Body() payload: AnalyzeArtifactDto) {

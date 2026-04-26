@@ -24,7 +24,10 @@ function textOrEmpty(text: string): string {
   return text.replace(/\s+/g, ' ').trim();
 }
 
-function guessBlockName($: CheerioAPI, element: Element): { blockName: string; blockSelector: string } {
+function guessBlockName(
+  $: CheerioAPI,
+  element: Element,
+): { blockName: string; blockSelector: string } {
   const blockNode = $(element).closest(BLOCK_SELECTOR).first();
 
   if (blockNode.length === 0) {
@@ -60,7 +63,12 @@ export function extractOffersFromHtml(html: string): TOfferLink[] {
 
   for (const anchor of anchors) {
     const href = $(anchor).attr('href') || '';
-    if (!href || href.startsWith('#') || href.startsWith('javascript:') || href.startsWith('mailto:')) {
+    if (
+      !href ||
+      href.startsWith('#') ||
+      href.startsWith('javascript:') ||
+      href.startsWith('mailto:')
+    ) {
       continue;
     }
 

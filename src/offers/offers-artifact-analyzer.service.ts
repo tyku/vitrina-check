@@ -2,13 +2,18 @@ import { Injectable } from '@nestjs/common';
 import { readFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import { TAnalyzeArtifactInput, TAnalyzeArtifactOutput } from './types';
-import { extractOffersFromHtml, findLinksByPattern, normalizePatterns, resolveUnmatchedShortLinks } from './libs';
-
-
+import {
+  extractOffersFromHtml,
+  findLinksByPattern,
+  normalizePatterns,
+  resolveUnmatchedShortLinks,
+} from './libs';
 
 @Injectable()
 export class OffersArtifactAnalyzerService {
-  async analyzeFromArtifacts(input: TAnalyzeArtifactInput): Promise<TAnalyzeArtifactOutput> {
+  async analyzeFromArtifacts(
+    input: TAnalyzeArtifactInput,
+  ): Promise<TAnalyzeArtifactOutput> {
     const patterns = normalizePatterns(input.patterns);
     const artifactHtmlPath = this.toAbsolutePath(input.artifactHtmlPath);
     const html = await readFile(artifactHtmlPath, 'utf-8');

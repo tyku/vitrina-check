@@ -4,7 +4,10 @@ import type { TFetchHtmlOptions, TFetchHtmlResult } from '../types';
 const DEFAULT_USER_AGENT =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36';
 
-export async function fetchPageHtml(url: string, options: TFetchHtmlOptions = {}): Promise<TFetchHtmlResult> {
+export async function fetchPageHtml(
+  url: string,
+  options: TFetchHtmlOptions = {},
+): Promise<TFetchHtmlResult> {
   const timeoutMs = options.timeoutMs ?? 60_000;
   const viewport = options.viewport ?? { width: 1440, height: 900 };
   const userAgent = options.userAgent ?? DEFAULT_USER_AGENT;

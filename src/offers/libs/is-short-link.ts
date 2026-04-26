@@ -22,7 +22,10 @@ export function isShortLink(url: string, knownHosts: string[] = []): boolean {
     }
 
     // Heuristic for generic shorteners with tiny path slugs.
-    return /^\/[a-z0-9_-]{2,12}$/i.test(path) || /^\/c\/[a-z0-9_-]{2,20}$/i.test(path);
+    return (
+      /^\/[a-z0-9_-]{2,12}$/i.test(path) ||
+      /^\/c\/[a-z0-9_-]{2,20}$/i.test(path)
+    );
   } catch {
     return false;
   }

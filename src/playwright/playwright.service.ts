@@ -64,7 +64,11 @@ export class PlaywrightService {
       await mkdir(this.artifactsDir, { recursive: true });
 
       const page = await context.newPage();
-      await this.openAndStabilizePage(page, params.url, params.navigationTimeoutMs);
+      await this.openAndStabilizePage(
+        page,
+        params.url,
+        params.navigationTimeoutMs,
+      );
 
       const html = await page.content();
       const { htmlPath, screenshotPath } = await this.persistArtifacts({

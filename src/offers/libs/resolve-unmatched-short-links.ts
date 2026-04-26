@@ -1,19 +1,24 @@
 import {
-   TMatchedResolvedOffer,
-   TOfferLink,
-   TResolvedShortLink,
-   TResolveShortLinksOptions,
+  TMatchedResolvedOffer,
+  TOfferLink,
+  TResolvedShortLink,
+  TResolveShortLinksOptions,
 } from '../types';
 
-import { 
+import {
   findLinksByPattern,
   matchesAnyPattern,
   normalizePatterns,
- } from './find-links-by-pattern';
+} from './find-links-by-pattern';
 import { isShortLink } from './is-short-link';
 
-async function resolveOneShortLink(sourceUrl: string, timeoutMs: number): Promise<TResolvedShortLink> {
-  const requestUrl = sourceUrl.includes('?') ? `${sourceUrl}&nc=1` : `${sourceUrl}?nc=1`;
+async function resolveOneShortLink(
+  sourceUrl: string,
+  timeoutMs: number,
+): Promise<TResolvedShortLink> {
+  const requestUrl = sourceUrl.includes('?')
+    ? `${sourceUrl}&nc=1`
+    : `${sourceUrl}?nc=1`;
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
 
@@ -62,7 +67,9 @@ async function resolveUniqueShortLinks(
     }
   };
 
-  await Promise.all(Array.from({ length: Math.max(1, concurrency) }, () => worker()));
+  await Promise.all(
+    Array.from({ length: Math.max(1, concurrency) }, () => worker()),
+  );
   return results;
 }
 
@@ -86,9 +93,17 @@ export async function resolveUnmatchedShortLinks(
     .filter((href) => !directUrlSet.has(href))
     .filter((href) => isShortLink(href));
 
-  const resolved = await resolveUniqueShortLinks(unresolvedShortLinks, concurrency, timeoutMs);
-  const resolvedMatches = resolved.filter((item) => matchesAnyPattern(item.finalUrl, patterns));
-  const matchedBySource = new Map(resolvedMatches.map((item) => [item.sourceUrl, item]));
+  const resolved = await resolveUniqueShortLinks(
+    unresolvedShortLinks,
+    concurrency,
+    timeoutMs,
+  );
+  const resolvedMatches = resolved.filter((item) =>
+    matchesAnyPattern(item.finalUrl, patterns),
+  );
+  const matchedBySource = new Map(
+    resolvedMatches.map((item) => [item.sourceUrl, item]),
+  );
 
   const resolvedMatchedOffers: TMatchedResolvedOffer[] = offers
     .filter((offer) => matchedBySource.has(offer.href))
