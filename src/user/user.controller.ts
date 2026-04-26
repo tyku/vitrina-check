@@ -11,14 +11,15 @@ import {
   UsePipes,
   Logger,
 } from '@nestjs/common';
-import { UserService } from './user.service';
 import { CreateUserSchema } from './dto/create-user.dto';
-import type { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserSchema } from './dto/update-user.dto';
-import type { UpdateUserDto } from './dto/update-user.dto';
-import { ResponseUserDto } from './dto/response-user.dto';
 import { ZodValidationPipe } from './pipes/zod-validation.pipe';
 import { SourceType } from './schemas/user.schema';
+import { UserService } from './user.service';
+
+import type { TCreateUserDto } from './dto/create-user.dto';
+import type { TUpdateUserDto } from './dto/update-user.dto';
+import type { TResponseUserDto } from './dto/response-user.dto';
 
 @Controller('users')
 export class UserController {
@@ -29,9 +30,9 @@ export class UserController {
   @Post()
   @HttpCode(HttpStatus.CREATED)
   @UsePipes(new ZodValidationPipe(CreateUserSchema))
-  async create(@Body() createUserDto: CreateUserDto): Promise<{
+  async create(@Body() createUserDto: TCreateUserDto): Promise<{
     success: boolean;
-    data: ResponseUserDto;
+    data: TResponseUserDto;
     message: string;
   }> {
     this.logger.log('POST /users - Create user request received');
@@ -50,7 +51,7 @@ export class UserController {
     @Query('externalId') externalId: string,
   ): Promise<{
     success: boolean;
-    data: ResponseUserDto;
+    data: TResponseUserDto;
     message: string;
   }> {
     this.logger.log(
@@ -71,7 +72,7 @@ export class UserController {
   @HttpCode(HttpStatus.OK)
   async findOne(@Param('id') id: string): Promise<{
     success: boolean;
-    data: ResponseUserDto;
+    data: TResponseUserDto;
     message: string;
   }> {
     this.logger.log(`GET /users/${id} - Find user request received`);
@@ -87,10 +88,11 @@ export class UserController {
   @HttpCode(HttpStatus.OK)
   async update(
     @Param('id') id: string,
-    @Body(new ZodValidationPipe(UpdateUserSchema)) updateUserDto: UpdateUserDto,
+    @Body(new ZodValidationPipe(UpdateUserSchema))
+    updateUserDto: TUpdateUserDto,
   ): Promise<{
     success: boolean;
-    data: ResponseUserDto;
+    data: TResponseUserDto;
     message: string;
   }> {
     this.logger.log(`PATCH /users/${id} - Update user request received`);

@@ -1,40 +1,11 @@
-import { Type } from 'class-transformer';
-import {
-  ArrayNotEmpty,
-  IsArray,
-  IsBoolean,
-  IsInt,
-  IsOptional,
-  IsString,
-  Max,
-  Min,
-} from 'class-validator';
+import { z } from 'zod';
 
-export class AnalyzeArtifactDto {
-  @IsString()
-  artifactHtmlPath!: string;
+export const AnalyzeArtifactSchema = z.object({
+  artifactHtmlPath: z.string().min(1, 'artifactHtmlPath is required'),
+  patterns: z.array(z.string().min(1)).nonempty('patterns must not be empty'),
+  resolveShortLinks: z.boolean().optional(),
+  shortLinkTimeoutMs: z.number().int().min(1_000).max(120_000).optional(),
+  shortLinkConcurrency: z.number().int().min(1).max(32).optional(),
+});
 
-  @IsArray()
-  @ArrayNotEmpty()
-  @IsString({ each: true })
-  patterns!: string[];
-
-  @IsOptional()
-  @Type(() => Boolean)
-  @IsBoolean()
-  resolveShortLinks?: boolean;
-
-  @IsOptional()
-  @Type(() => Number)
-  @IsInt()
-  @Min(1_000)
-  @Max(120_000)
-  shortLinkTimeoutMs?: number;
-
-  @IsOptional()
-  @Type(() => Number)
-  @IsInt()
-  @Min(1)
-  @Max(32)
-  shortLinkConcurrency?: number;
-}
+export type TAnalyzeArtifactDto = z.infer<typeof AnalyzeArtifactSchema>;

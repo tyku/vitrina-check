@@ -16,4 +16,4 @@ export const CreateUserSchema = z.object({
   languageCode: z.string().max(10).optional(),
 });
 
-export type CreateUserDto = z.infer<typeof CreateUserSchema>;
+export type TCreateUserDto = z.infer<typeof CreateUserSchema>;

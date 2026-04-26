@@ -13,4 +13,4 @@ export const UpdateUserSchema = z.object({
   languageCode: z.string().max(10).optional(),
 });
 
-export type UpdateUserDto = z.infer<typeof UpdateUserSchema>;
+export type TUpdateUserDto = z.infer<typeof UpdateUserSchema>;

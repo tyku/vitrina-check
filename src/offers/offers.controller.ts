@@ -1,6 +1,8 @@
 import { Body, Controller, Post } from '@nestjs/common';
+import { ZodValidationPipe } from '../user/pipes/zod-validation.pipe';
+import { AnalyzeArtifactSchema } from './dto/analyze-artifact.dto';
 import { OffersArtifactAnalyzerService } from './offers-artifact-analyzer.service';
-import { AnalyzeArtifactDto } from './dto/analyze-artifact.dto';
+import type { TAnalyzeArtifactDto } from './dto/analyze-artifact.dto';
 
 @Controller('offers')
 export class OffersController {
@@ -9,7 +11,10 @@ export class OffersController {
   ) {}
 
   @Post('analyze-artifact')
-  analyzeArtifact(@Body() payload: AnalyzeArtifactDto) {
+  analyzeArtifact(
+    @Body(new ZodValidationPipe(AnalyzeArtifactSchema))
+    payload: TAnalyzeArtifactDto,
+  ) {
     return this.offersArtifactAnalyzerService.analyzeFromArtifacts(payload);
   }
 }

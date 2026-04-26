@@ -6,10 +6,10 @@ import {
   Logger,
 } from '@nestjs/common';
 import { UserRepository } from './user.repository';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { ResponseUserDto } from './dto/response-user.dto';
 import { UserDocument, SourceType } from './schemas/user.schema';
+import type { TCreateUserDto } from './dto/create-user.dto';
+import type { TUpdateUserDto } from './dto/update-user.dto';
+import type { TResponseUserDto } from './dto/response-user.dto';
 
 @Injectable()
 export class UserService {
@@ -17,7 +17,7 @@ export class UserService {
 
   constructor(private readonly userRepository: UserRepository) {}
 
-  async create(createUserDto: CreateUserDto): Promise<ResponseUserDto> {
+  async create(createUserDto: TCreateUserDto): Promise<TResponseUserDto> {
     this.logger.log(
       `Creating user: ${createUserDto.sourceType}:${createUserDto.externalId}`,
     );
@@ -59,7 +59,7 @@ export class UserService {
     }
   }
 
-  async findById(id: string): Promise<ResponseUserDto> {
+  async findById(id: string): Promise<TResponseUserDto> {
     this.logger.log(`Fetching user by ID: ${id}`);
     const user = await this.userRepository.findById(id);
     if (!user) {
@@ -71,7 +71,7 @@ export class UserService {
   async findByExternalId(
     sourceType: SourceType,
     externalId: string,
-  ): Promise<ResponseUserDto> {
+  ): Promise<TResponseUserDto> {
     this.logger.log(`Fetching user: ${sourceType}:${externalId}`);
     const user = await this.userRepository.findByExternalId(
       sourceType,
@@ -85,8 +85,8 @@ export class UserService {
 
   async update(
     id: string,
-    updateUserDto: UpdateUserDto,
-  ): Promise<ResponseUserDto> {
+    updateUserDto: TUpdateUserDto,
+  ): Promise<TResponseUserDto> {
     this.logger.log(`Updating user: ${id}`);
     const user = await this.userRepository.update(id, updateUserDto);
     if (!user) {
@@ -99,8 +99,8 @@ export class UserService {
   async upsertByExternalId(
     sourceType: SourceType,
     externalId: string,
-    data: Partial<CreateUserDto>,
-  ): Promise<ResponseUserDto> {
+    data: Partial<TCreateUserDto>,
+  ): Promise<TResponseUserDto> {
     this.logger.log(`Upserting user: ${sourceType}:${externalId}`);
     const user = await this.userRepository.upsertByExternalId(
       sourceType,
@@ -111,8 +111,8 @@ export class UserService {
     return this.mapToResponseDto(user);
   }
 
-  private mapToResponseDto(user: UserDocument): ResponseUserDto {
-    return new ResponseUserDto({
+  private mapToResponseDto(user: UserDocument): TResponseUserDto {
+    return {
       id: user._id.toString(),
       sourceType: user.sourceType,
       externalId: user.externalId,
@@ -125,6 +125,6 @@ export class UserService {
       languageCode: user.languageCode,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
-    });
+    };
   }
 }

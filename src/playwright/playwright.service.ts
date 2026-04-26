@@ -2,7 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { chromium, Page } from 'playwright';
-import { CapturePageDto } from './dto/capture-page.dto';
+import type { TCapturePageDto } from './dto/capture-page.dto';
 
 type CaptureResult = {
   ok: true;
@@ -20,7 +20,7 @@ export class PlaywrightService {
     process.env.PLAYWRIGHT_USER_AGENT ??
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36';
 
-  async capturePage(payload: CapturePageDto): Promise<CaptureResult> {
+  async capturePage(payload: TCapturePageDto): Promise<CaptureResult> {
     const maxAttempts = (payload.retryCount ?? 1) + 1;
     const navigationTimeoutMs = payload.navigationTimeoutMs ?? 60_000;
     const screenshot = payload.screenshot ?? true;

@@ -1,6 +1,6 @@
 import { SourceType } from '../schemas/user.schema';
 
-export class ResponseUserDto {
+export type TResponseUserDto = {
   id: string;
   sourceType: SourceType;
   externalId: string;
@@ -13,8 +13,4 @@ export class ResponseUserDto {
   languageCode: string;
   createdAt: Date;
   updatedAt: Date;
-
-  constructor(partial: Partial<ResponseUserDto>) {
-    Object.assign(this, partial);
-  }
-}
+};
