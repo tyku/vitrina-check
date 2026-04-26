@@ -13,11 +13,8 @@ export class User {
   @Prop({ required: true, enum: SourceType })
   sourceType: SourceType;
 
-  @Prop({ required: true, index: true })
-  externalId: string;
-
   @Prop({ sparse: true, index: true })
-  chatId: string;
+  userId: string;
 
   @Prop()
   firstName: string;

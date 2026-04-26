@@ -8,6 +8,7 @@ import { validate } from './config/env.validation';
 import { PlaywrightModule } from './playwright/playwright.module';
 import { OffersModule } from './offers/libs';
 import { UserModule } from './user';
+import { ChecklistsModule } from './checklists';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { UserModule } from './user';
     PlaywrightModule,
     OffersModule,
     UserModule,
+    ChecklistsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
