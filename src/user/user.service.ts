@@ -5,11 +5,12 @@ import {
   NotFoundException,
   Logger,
 } from '@nestjs/common';
-import { UserRepository } from './user.repository';
 import { UserDocument, SourceType } from './schemas/user.schema';
+import { UserRepository } from './user.repository';
+
 import type { TCreateUserDto } from './dto/create-user.dto';
-import type { TUpdateUserDto } from './dto/update-user.dto';
 import type { TResponseUserDto } from './dto/response-user.dto';
+import type { TUpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UserService {
