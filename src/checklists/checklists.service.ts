@@ -12,7 +12,8 @@ export class ChecklistsService {
   async create(
     createChecklistDto: TCreateChecklistDto,
   ): Promise<TResponseChecklistDto> {
-    const checklist = await this.checklistsRepository.create(createChecklistDto);
+    const checklist =
+      await this.checklistsRepository.create(createChecklistDto);
     return this.mapToResponseDto(checklist);
   }
 
@@ -52,7 +53,9 @@ export class ChecklistsService {
     }
   }
 
-  private mapToResponseDto(checklist: ChecklistDocument): TResponseChecklistDto {
+  private mapToResponseDto(
+    checklist: ChecklistDocument,
+  ): TResponseChecklistDto {
     return {
       id: checklist._id.toString(),
       userId: checklist.userId,

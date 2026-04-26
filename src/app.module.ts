@@ -11,6 +11,7 @@ import { OffersModule } from './offers/libs';
 import { UserModule } from './user';
 import { ChecklistsModule } from './checklists';
 import { SchedulerModule } from './scheduler';
+import { SchedulesModule } from './schedules';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { SchedulerModule } from './scheduler';
     UserModule,
     ChecklistsModule,
     SchedulerModule,
+    SchedulesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

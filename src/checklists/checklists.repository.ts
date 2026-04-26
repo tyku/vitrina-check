@@ -12,7 +12,9 @@ export class ChecklistsRepository {
     private readonly checklistModel: Model<ChecklistDocument>,
   ) {}
 
-  async create(createChecklistDto: TCreateChecklistDto): Promise<ChecklistDocument> {
+  async create(
+    createChecklistDto: TCreateChecklistDto,
+  ): Promise<ChecklistDocument> {
     const checklist = new this.checklistModel(createChecklistDto);
     return checklist.save();
   }

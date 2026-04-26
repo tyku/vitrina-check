@@ -47,8 +47,9 @@ export class PlaywrightService implements OnModuleInit, OnModuleDestroy {
     private readonly configService: ConfigService,
     private readonly concurrencyLimiter: PlaywrightConcurrencyLimiterService,
   ) {
-    this.defaultUserAgent =
-      this.configService.getOrThrow<string>('playwright.userAgent');
+    this.defaultUserAgent = this.configService.getOrThrow<string>(
+      'playwright.userAgent',
+    );
     this.defaultRetryCount = this.configService.getOrThrow<number>(
       'playwright.retryCountDefault',
     );
@@ -61,8 +62,9 @@ export class PlaywrightService implements OnModuleInit, OnModuleDestroy {
     this.stabilizeDelayMs = this.configService.getOrThrow<number>(
       'playwright.stabilizeDelayMs',
     );
-    this.restartEvery =
-      this.configService.getOrThrow<number>('playwright.restartEvery');
+    this.restartEvery = this.configService.getOrThrow<number>(
+      'playwright.restartEvery',
+    );
   }
 
   onModuleInit(): void {
@@ -162,7 +164,9 @@ export class PlaywrightService implements OnModuleInit, OnModuleDestroy {
       await context.close();
       this.activeContexts = Math.max(0, this.activeContexts - 1);
       if (this.activeContexts === 0 && this.lifecycleStatus === 'busy') {
-        this.lifecycleStatus = this.restartRequested ? 'restart_pending' : 'idle';
+        this.lifecycleStatus = this.restartRequested
+          ? 'restart_pending'
+          : 'idle';
       }
     }
   }

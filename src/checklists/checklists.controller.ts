@@ -26,7 +26,11 @@ export class ChecklistsController {
   async create(
     @Body(new ZodValidationPipe(CreateChecklistSchema))
     createChecklistDto: TCreateChecklistDto,
-  ): Promise<{ success: boolean; data: TResponseChecklistDto; message: string }> {
+  ): Promise<{
+    success: boolean;
+    data: TResponseChecklistDto;
+    message: string;
+  }> {
     const checklist = await this.checklistsService.create(createChecklistDto);
     return {
       success: true,
@@ -52,9 +56,11 @@ export class ChecklistsController {
 
   @Get(':id')
   @HttpCode(HttpStatus.OK)
-  async findOne(
-    @Param('id') id: string,
-  ): Promise<{ success: boolean; data: TResponseChecklistDto; message: string }> {
+  async findOne(@Param('id') id: string): Promise<{
+    success: boolean;
+    data: TResponseChecklistDto;
+    message: string;
+  }> {
     const checklist = await this.checklistsService.findById(id);
     return {
       success: true,
@@ -69,8 +75,15 @@ export class ChecklistsController {
     @Param('id') id: string,
     @Body(new ZodValidationPipe(UpdateChecklistSchema))
     updateChecklistDto: TUpdateChecklistDto,
-  ): Promise<{ success: boolean; data: TResponseChecklistDto; message: string }> {
-    const checklist = await this.checklistsService.update(id, updateChecklistDto);
+  ): Promise<{
+    success: boolean;
+    data: TResponseChecklistDto;
+    message: string;
+  }> {
+    const checklist = await this.checklistsService.update(
+      id,
+      updateChecklistDto,
+    );
     return {
       success: true,
       data: checklist,

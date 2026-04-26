@@ -37,12 +37,7 @@ const EnvSchema = z.object({
     .min(1)
     .max(10000)
     .optional(),
-  PLAYWRIGHT_MAX_CONCURRENCY: z.coerce
-    .number()
-    .int()
-    .min(1)
-    .max(32)
-    .optional(),
+  PLAYWRIGHT_MAX_CONCURRENCY: z.coerce.number().int().min(1).max(32).optional(),
 });
 
 export function validate(config: Record<string, unknown>) {
