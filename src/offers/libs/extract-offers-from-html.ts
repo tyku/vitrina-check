@@ -1,6 +1,6 @@
 import { load, type CheerioAPI } from 'cheerio';
 import type { Element } from 'domhandler';
-import type { OfferLink } from './types';
+import type { TOfferLink } from '../types';
 
 const HEADING_SELECTOR = 'h1, h2, h3, h4, h5, h6';
 const BLOCK_SELECTOR = 'section, article, aside, main, div, ul, ol';
@@ -51,11 +51,11 @@ function guessBlockName($: CheerioAPI, element: Element): { blockName: string; b
   };
 }
 
-export function extractOffersFromHtml(html: string): OfferLink[] {
+export function extractOffersFromHtml(html: string): TOfferLink[] {
   const $ = load(html);
   const anchors = $('a[href]').toArray();
 
-  const rows: Omit<OfferLink, 'positionInBlock'>[] = [];
+  const rows: Omit<TOfferLink, 'positionInBlock'>[] = [];
   let positionOnPage = 0;
 
   for (const anchor of anchors) {

@@ -1,13 +1,18 @@
-import { findLinksByPattern, matchesAnyPattern, normalizePatterns } from './find-links-by-pattern';
-import { isShortLink } from './is-short-link';
-import type {
-  MatchedResolvedOffer,
-  OfferLink,
-  ResolvedShortLink,
-  ResolveShortLinksOptions,
-} from './types';
+import {
+   TMatchedResolvedOffer,
+   TOfferLink,
+   TResolvedShortLink,
+   TResolveShortLinksOptions,
+} from '../types';
 
-async function resolveOneShortLink(sourceUrl: string, timeoutMs: number): Promise<ResolvedShortLink> {
+import { 
+  findLinksByPattern,
+  matchesAnyPattern,
+  normalizePatterns,
+ } from './find-links-by-pattern';
+import { isShortLink } from './is-short-link';
+
+async function resolveOneShortLink(sourceUrl: string, timeoutMs: number): Promise<TResolvedShortLink> {
   const requestUrl = sourceUrl.includes('?') ? `${sourceUrl}&nc=1` : `${sourceUrl}?nc=1`;
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
@@ -44,9 +49,9 @@ async function resolveUniqueShortLinks(
   urls: string[],
   concurrency: number,
   timeoutMs: number,
-): Promise<ResolvedShortLink[]> {
+): Promise<TResolvedShortLink[]> {
   const queue = [...new Set(urls)];
-  const results: ResolvedShortLink[] = [];
+  const results: TResolvedShortLink[] = [];
 
   const worker = async () => {
     while (queue.length > 0) {
@@ -62,12 +67,12 @@ async function resolveUniqueShortLinks(
 }
 
 export async function resolveUnmatchedShortLinks(
-  offers: OfferLink[],
-  options: ResolveShortLinksOptions,
+  offers: TOfferLink[],
+  options: TResolveShortLinksOptions,
 ): Promise<{
-  directMatches: OfferLink[];
-  resolvedMatches: ResolvedShortLink[];
-  resolvedMatchedOffers: MatchedResolvedOffer[];
+  directMatches: TOfferLink[];
+  resolvedMatches: TResolvedShortLink[];
+  resolvedMatchedOffers: TMatchedResolvedOffer[];
 }> {
   const patterns = normalizePatterns(options.patterns);
   const timeoutMs = options.timeoutMs ?? 12_000;
@@ -85,7 +90,7 @@ export async function resolveUnmatchedShortLinks(
   const resolvedMatches = resolved.filter((item) => matchesAnyPattern(item.finalUrl, patterns));
   const matchedBySource = new Map(resolvedMatches.map((item) => [item.sourceUrl, item]));
 
-  const resolvedMatchedOffers: MatchedResolvedOffer[] = offers
+  const resolvedMatchedOffers: TMatchedResolvedOffer[] = offers
     .filter((offer) => matchedBySource.has(offer.href))
     .map((offer) => {
       const resolution = matchedBySource.get(offer.href);
