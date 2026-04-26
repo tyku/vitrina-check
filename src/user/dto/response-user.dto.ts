@@ -3,8 +3,7 @@ import { SourceType } from '../schemas/user.schema';
 export type TResponseUserDto = {
   id: string;
   sourceType: SourceType;
-  externalId: string;
-  chatId: string;
+  userId: string;
   firstName: string;
   lastName: string;
   username: string;
