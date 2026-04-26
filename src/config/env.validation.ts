@@ -4,6 +4,8 @@ const EnvSchema = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']).optional(),
   PORT: z.coerce.number().int().min(1).max(65535).optional(),
   MONGO_URI: z.string().min(1),
+  REDIS_URL: z.url().optional(),
+  REDIS_PASSWORD: z.string().min(1).optional(),
   PLAYWRIGHT_USER_AGENT: z.string().min(1).optional(),
   PLAYWRIGHT_RETRY_COUNT_DEFAULT: z.coerce
     .number()

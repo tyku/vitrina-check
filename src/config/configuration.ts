@@ -4,6 +4,10 @@ export default () => ({
   database: {
     uri: process.env.MONGO_URI || 'mongodb://localhost:27017/vitrina-check',
   },
+  redis: {
+    url: process.env.REDIS_URL || 'redis://localhost:6379',
+    password: process.env.REDIS_PASSWORD,
+  },
   playwright: {
     userAgent:
       process.env.PLAYWRIGHT_USER_AGENT ??
