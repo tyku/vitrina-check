@@ -10,10 +10,7 @@ export enum DispatchSchedulerQueueStatus {
   DONE = 'done',
 }
 
-@Schema({
-  timestamps: createTimestampOptions(),
-  collection: 'DispatchSchedulerQueue',
-})
+@Schema()
 export class DispatchSchedulerQueue {
   @Prop({ required: true, index: true })
   userId: string;
@@ -23,6 +20,9 @@ export class DispatchSchedulerQueue {
 
   @Prop({ required: true, index: true })
   executeAt: Date;
+
+  @Prop({ required: true, index: true })
+  href: string;
 
   @Prop({
     required: true,
@@ -46,5 +46,8 @@ export const DispatchSchedulerQueueSchema = SchemaFactory.createForClass(
   DispatchSchedulerQueue,
 );
 
-DispatchSchedulerQueueSchema.index({ scheduleId: 1, executeAt: 1 }, { unique: true });
+DispatchSchedulerQueueSchema.index(
+  { scheduleId: 1, executeAt: 1, href: 1 },
+  { unique: true },
+);
 DispatchSchedulerQueueSchema.index({ doneAt: 1 }, { expireAfterSeconds: 86400 });

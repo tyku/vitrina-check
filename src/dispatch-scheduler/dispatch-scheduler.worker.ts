@@ -12,6 +12,7 @@ export class DispatchSchedulerWorker extends WorkerHost {
   }
 
   async process(job: Job): Promise<void> {
+    console.log('====================================', new Date().toISOString())
     this.logger.log(
       `Dispatch scheduler worker started, jobId=${job.id?.toString() ?? 'n/a'}, name=${job.name}`,
     );

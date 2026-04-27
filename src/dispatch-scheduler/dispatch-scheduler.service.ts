@@ -1,4 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
+import { ChecklistsRepository } from '../checklists/checklists.repository';
 import { SchedulesRepository } from '../schedules/schedules.repository';
 import {
   ScheduleDocument,
@@ -16,6 +17,7 @@ export class DispatchSchedulerService {
 
   constructor(
     private readonly schedulesRepository: SchedulesRepository,
+    private readonly checklistsRepository: ChecklistsRepository,
     private readonly dispatchQueueRepository: DispatchSchedulerQueueRepository,
   ) {}
 
@@ -45,13 +47,14 @@ export class DispatchSchedulerService {
       this.logger.log(`Dispatch due items preview: ${preview}`);
     }
 
-    await this.dispatchQueueRepository.upsertManyCreated(dueItems);
+    const queueItems = await this.expandDueItemsWithChecklistHref(dueItems);
+    await this.dispatchQueueRepository.upsertManyCreated(queueItems);
 
     this.logger.log(
-      `Dispatch scan finished: queuedCandidates=${dueItems.length}`,
+      `Dispatch scan finished: dueCandidates=${dueItems.length}, queuedCandidates=${queueItems.length}`,
     );
 
-    return dueItems.length;
+    return queueItems.length;
   }
 
   private collectUpcomingExecutions(
@@ -77,6 +80,49 @@ export class DispatchSchedulerService {
         scheduleId: schedule._id.toString(),
         executeAt,
       }));
+  }
+
+  private async expandDueItemsWithChecklistHref(
+    dueItems: Array<{ userId: string; scheduleId: string; executeAt: Date }>,
+  ): Promise<
+    Array<{ userId: string; scheduleId: string; executeAt: Date; href: string }>
+  > {
+    const hrefsByUserId = new Map<string, string[]>();
+    const queueItems: Array<{
+      userId: string;
+      scheduleId: string;
+      executeAt: Date;
+      href: string;
+    }> = [];
+
+    for (const item of dueItems) {
+      let userHrefs = hrefsByUserId.get(item.userId);
+      if (!userHrefs) {
+        const checklists = await this.checklistsRepository.findByUserId(item.userId);
+        userHrefs = checklists
+          .map((checklist) => checklist.href)
+          .filter((href): href is string => Boolean(href));
+        hrefsByUserId.set(item.userId, userHrefs);
+      }
+
+      if (!userHrefs.length) {
+        this.logger.warn(
+          `No checklist href found for user=${item.userId}; schedule=${item.scheduleId}`,
+        );
+        continue;
+      }
+
+      for (const href of userHrefs) {
+        queueItems.push({
+          userId: item.userId,
+          scheduleId: item.scheduleId,
+          executeAt: item.executeAt,
+          href,
+        });
+      }
+    }
+
+    return queueItems;
   }
 
   private getCandidateDayStarts(windowStart: Date, windowEnd: Date): Date[] {

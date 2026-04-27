@@ -11,6 +11,7 @@ type TCreateDispatchQueueItem = {
   userId: string;
   scheduleId: string;
   executeAt: Date;
+  href: string;
 };
 
 @Injectable()
@@ -31,12 +32,17 @@ export class DispatchSchedulerQueueRepository {
     const result = await this.queueModel.bulkWrite(
       items.map((item) => ({
         updateOne: {
-          filter: { scheduleId: item.scheduleId, executeAt: item.executeAt },
+          filter: {
+            scheduleId: item.scheduleId,
+            executeAt: item.executeAt,
+            href: item.href,
+          },
           update: {
             $setOnInsert: {
               userId: item.userId,
               scheduleId: item.scheduleId,
               executeAt: item.executeAt,
+              href: item.href,
               status: DispatchSchedulerQueueStatus.CREATED,
             },
           },
@@ -49,5 +55,49 @@ export class DispatchSchedulerQueueRepository {
     this.logger.log(
       `Queue upsert completed: requested=${items.length}, inserted=${result.upsertedCount}, matched=${result.matchedCount}, modified=${result.modifiedCount}`,
     );
+  }
+
+  async claimNextCreated(
+    now = new Date(),
+  ): Promise<DispatchSchedulerQueueDocument | null> {
+    return this.queueModel
+      .findOneAndUpdate(
+        {
+          status: DispatchSchedulerQueueStatus.CREATED,
+          executeAt: { $lte: now },
+        },
+        { $set: { status: DispatchSchedulerQueueStatus.PENDING } },
+        {
+          sort: { executeAt: 1, createdAt: 1 },
+          new: true,
+        },
+      )
+      .exec();
+  }
+
+  async markDone(id: string): Promise<void> {
+    await this.queueModel
+      .updateOne(
+        { _id: id, status: DispatchSchedulerQueueStatus.PENDING },
+        {
+          $set: {
+            status: DispatchSchedulerQueueStatus.DONE,
+            doneAt: new Date(),
+          },
+        },
+      )
+      .exec();
+  }
+
+  async releasePending(id: string): Promise<void> {
+    await this.queueModel
+      .updateOne(
+        { _id: id, status: DispatchSchedulerQueueStatus.PENDING },
+        {
+          $set: { status: DispatchSchedulerQueueStatus.CREATED },
+          $unset: { doneAt: 1 },
+        },
+      )
+      .exec();
   }
 }

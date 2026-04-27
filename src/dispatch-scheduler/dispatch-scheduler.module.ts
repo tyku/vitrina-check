@@ -1,6 +1,7 @@
 import { BullModule } from '@nestjs/bullmq';
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ChecklistsModule } from '../checklists';
 import { Schedule, ScheduleSchema } from '../schedules/schemas/schedule.schema';
 import { SchedulesRepository } from '../schedules/schedules.repository';
 import { DispatchSchedulerBootstrap } from './dispatch-scheduler.bootstrap';
@@ -14,6 +15,7 @@ import {
 
 @Module({
   imports: [
+    ChecklistsModule,
     BullModule.registerQueue({
       name: 'dispatchScheduler',
     }),

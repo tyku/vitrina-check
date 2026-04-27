@@ -27,6 +27,10 @@ export class ChecklistsRepository {
     return this.checklistModel.findById(id).exec();
   }
 
+  async findByUserId(userId: string): Promise<ChecklistDocument[]> {
+    return this.checklistModel.find({ userId }).sort({ createdAt: -1 }).exec();
+  }
+
   async update(
     id: string,
     updateChecklistDto: TUpdateChecklistDto,
