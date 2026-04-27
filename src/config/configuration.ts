@@ -27,4 +27,9 @@ export default () => ({
     maxConcurrency:
       parseInt(process.env.PLAYWRIGHT_MAX_CONCURRENCY || '2', 10) || 2,
   },
+  dispatchScheduler: {
+    pollIntervalMinutes:
+      // parseInt(process.env.DISPATCH_SCHEDULER_POLL_INTERVAL_MINUTES || '10', 10) ||
+      1,
+  },
 });

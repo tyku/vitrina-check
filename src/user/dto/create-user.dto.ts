@@ -3,8 +3,7 @@ import { SourceType } from '../schemas/user.schema';
 
 export const CreateUserSchema = z.object({
   sourceType: z.nativeEnum(SourceType),
-  externalId: z.string().min(1, 'External ID is required'),
-  chatId: z.string().max(50).optional(),
+  userId: z.string().max(50),
   firstName: z.string().max(100).optional(),
   lastName: z.string().max(100).optional(),
   username: z.string().max(100).optional(),

@@ -1,20 +1,18 @@
 import {
   Controller,
-  Get,
-  Post,
-  Patch,
   Body,
-  Param,
-  Query,
+  Get,
   HttpCode,
   HttpStatus,
-  UsePipes,
   Logger,
+  Param,
+  Patch,
+  Post,
+  UsePipes,
 } from '@nestjs/common';
 import { CreateUserSchema } from './dto/create-user.dto';
 import { UpdateUserSchema } from './dto/update-user.dto';
 import { ZodValidationPipe } from './pipes/zod-validation.pipe';
-import { SourceType } from './schemas/user.schema';
 import { UserService } from './user.service';
 
 import type { TCreateUserDto } from './dto/create-user.dto';
@@ -41,30 +39,6 @@ export class UserController {
       success: true,
       data: user,
       message: 'User created successfully',
-    };
-  }
-
-  @Get('by-external')
-  @HttpCode(HttpStatus.OK)
-  async findByExternalId(
-    @Query('sourceType') sourceType: SourceType,
-    @Query('externalId') externalId: string,
-  ): Promise<{
-    success: boolean;
-    data: TResponseUserDto;
-    message: string;
-  }> {
-    this.logger.log(
-      `GET /users/by-external - sourceType=${sourceType}, externalId=${externalId}`,
-    );
-    const user = await this.userService.findByExternalId(
-      sourceType,
-      externalId,
-    );
-    return {
-      success: true,
-      data: user,
-      message: 'User retrieved successfully',
     };
   }
 

@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { createTimestampOptions } from '../../common/mongoose-timestamps';
 
 export type ScheduleDocument = Schedule & Document;
 
@@ -15,7 +16,7 @@ export enum ScheduleStatus {
   DISABLED = 'disabled',
 }
 
-@Schema({ timestamps: true })
+@Schema({ timestamps: createTimestampOptions() })
 export class Schedule {
   @Prop({ required: true, index: true })
   userId: string;

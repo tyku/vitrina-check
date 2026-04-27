@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { createTimestampOptions } from '../../common/mongoose-timestamps';
 
 export type UserDocument = User & Document;
 
@@ -8,7 +9,7 @@ export enum SourceType {
   VK = 'vk',
 }
 
-@Schema({ timestamps: true })
+@Schema({ timestamps: createTimestampOptions() })
 export class User {
   @Prop({ required: true, enum: SourceType })
   sourceType: SourceType;
@@ -42,5 +43,3 @@ export class User {
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
-
-UserSchema.index({ sourceType: 1, externalId: 1 }, { unique: true });

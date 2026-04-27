@@ -1,9 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { createTimestampOptions } from '../../common/mongoose-timestamps';
 
 export type ChecklistDocument = Checklist & Document;
 
-@Schema({ timestamps: true })
+@Schema({ timestamps: createTimestampOptions() })
 export class Checklist {
   @Prop({ required: true, index: true })
   userId: string;

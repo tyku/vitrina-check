@@ -12,6 +12,7 @@ import { UserModule } from './user';
 import { ChecklistsModule } from './checklists';
 import { SchedulerModule } from './scheduler';
 import { SchedulesModule } from './schedules';
+import { DispatchSchedulerModule } from './dispatch-scheduler';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { SchedulesModule } from './schedules';
     ChecklistsModule,
     SchedulerModule,
     SchedulesModule,
+    DispatchSchedulerModule,
   ],
   controllers: [AppController],
   providers: [AppService],

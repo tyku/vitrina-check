@@ -38,6 +38,12 @@ const EnvSchema = z.object({
     .max(10000)
     .optional(),
   PLAYWRIGHT_MAX_CONCURRENCY: z.coerce.number().int().min(1).max(32).optional(),
+  DISPATCH_SCHEDULER_POLL_INTERVAL_MINUTES: z.coerce
+    .number()
+    .int()
+    .min(1)
+    .max(1440)
+    .optional(),
 });
 
 export function validate(config: Record<string, unknown>) {

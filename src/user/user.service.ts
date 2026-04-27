@@ -1,11 +1,11 @@
 import {
   Injectable,
-  ConflictException,
   BadRequestException,
+  ConflictException,
   NotFoundException,
   Logger,
 } from '@nestjs/common';
-import { UserDocument, SourceType } from './schemas/user.schema';
+import { UserDocument } from './schemas/user.schema';
 import { UserRepository } from './user.repository';
 
 import type { TCreateUserDto } from './dto/create-user.dto';
@@ -19,21 +19,9 @@ export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
 
   async create(createUserDto: TCreateUserDto): Promise<TResponseUserDto> {
-    this.logger.log(
-      `Creating user: ${createUserDto.sourceType}:${createUserDto.externalId}`,
-    );
+    this.logger.log(`Creating user: sourceType=${createUserDto.sourceType}`);
 
     try {
-      const existing = await this.userRepository.findByExternalId(
-        createUserDto.sourceType,
-        createUserDto.externalId,
-      );
-      if (existing) {
-        throw new ConflictException(
-          'User with this sourceType and externalId already exists',
-        );
-      }
-
       const user = await this.userRepository.create(createUserDto);
       this.logger.log(`User created: ${user._id.toString()}`);
       return this.mapToResponseDto(user);
@@ -69,21 +57,6 @@ export class UserService {
     return this.mapToResponseDto(user);
   }
 
-  async findByExternalId(
-    sourceType: SourceType,
-    externalId: string,
-  ): Promise<TResponseUserDto> {
-    this.logger.log(`Fetching user: ${sourceType}:${externalId}`);
-    const user = await this.userRepository.findByExternalId(
-      sourceType,
-      externalId,
-    );
-    if (!user) {
-      throw new NotFoundException('User not found');
-    }
-    return this.mapToResponseDto(user);
-  }
-
   async update(
     id: string,
     updateUserDto: TUpdateUserDto,
@@ -94,21 +67,6 @@ export class UserService {
       throw new NotFoundException('User not found');
     }
     this.logger.log(`User updated: ${id}`);
-    return this.mapToResponseDto(user);
-  }
-
-  async upsertByExternalId(
-    sourceType: SourceType,
-    externalId: string,
-    data: Partial<TCreateUserDto>,
-  ): Promise<TResponseUserDto> {
-    this.logger.log(`Upserting user: ${sourceType}:${externalId}`);
-    const user = await this.userRepository.upsertByExternalId(
-      sourceType,
-      externalId,
-      data,
-    );
-    this.logger.log(`User upserted: ${user._id.toString()}`);
     return this.mapToResponseDto(user);
   }
 
