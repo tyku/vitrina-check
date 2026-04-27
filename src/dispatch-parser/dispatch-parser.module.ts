@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { BullModule } from '@nestjs/bullmq';
-import { ChecklistScheduler } from './checklist.scheduler';
+import { DispatchParserProcessor } from './dispatch-parser.processor';
 
 @Module({
   imports: [
@@ -8,7 +8,7 @@ import { ChecklistScheduler } from './checklist.scheduler';
       name: 'checklistScheduler',
     }),
   ],
-  providers: [ChecklistScheduler],
+  providers: [DispatchParserProcessor],
   exports: [BullModule],
 })
-export class SchedulerModule {}
+export class DispatchParserModule {}
