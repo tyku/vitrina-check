@@ -44,6 +44,12 @@ const EnvSchema = z.object({
     .min(1)
     .max(1440)
     .optional(),
+  DISPATCH_PARSER_POLL_INTERVAL_MINUTES: z.coerce
+    .number()
+    .int()
+    .min(1)
+    .max(1440)
+    .optional(),
 });
 
 export function validate(config: Record<string, unknown>) {

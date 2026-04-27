@@ -29,7 +29,14 @@ export default () => ({
   },
   dispatchScheduler: {
     pollIntervalMinutes:
-      // parseInt(process.env.DISPATCH_SCHEDULER_POLL_INTERVAL_MINUTES || '10', 10) ||
+      parseInt(
+        process.env.DISPATCH_SCHEDULER_POLL_INTERVAL_MINUTES || '1',
+        10,
+      ) || 1,
+  },
+  dispatchParser: {
+    pollIntervalMinutes:
+      parseInt(process.env.DISPATCH_PARSER_POLL_INTERVAL_MINUTES || '1', 10) ||
       1,
   },
 });
