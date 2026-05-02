@@ -109,6 +109,7 @@ export class PlaywrightService implements OnModuleInit, OnModuleDestroy {
             url: payload.url,
             navigationTimeoutMs,
             attempt,
+            artifactId: payload.artifactId,
           });
           await this.recordSuccessAndPlanRestart();
           return result;
@@ -128,6 +129,7 @@ export class PlaywrightService implements OnModuleInit, OnModuleDestroy {
     url: string;
     navigationTimeoutMs: number;
     attempt: number;
+    artifactId?: string;
   }): Promise<CaptureResult> {
     const browser = await this.getBrowser();
     const context = await browser.newContext({
@@ -150,6 +152,7 @@ export class PlaywrightService implements OnModuleInit, OnModuleDestroy {
       const htmlPath = await this.persistHtml({
         url: params.url,
         html,
+        artifactId: params.artifactId,
       });
 
       this.logger.log(`Saved rendered HTML: ${htmlPath}`);
@@ -196,14 +199,24 @@ export class PlaywrightService implements OnModuleInit, OnModuleDestroy {
   private async persistHtml(params: {
     url: string;
     html: string;
+    artifactId?: string;
   }): Promise<string> {
-    const stamp = new Date().toISOString().replace(/[:.]/g, '-');
-    const host = new URL(params.url).hostname.replace(/[^a-zA-Z0-9.-]/g, '_');
-    const baseName = `${host}_${stamp}`;
+    const baseName = params.artifactId
+      ? this.sanitizeArtifactBaseName(params.artifactId)
+      : (() => {
+          const stamp = new Date().toISOString().replace(/[:.]/g, '-');
+          const host = new URL(params.url).hostname.replace(/[^a-zA-Z0-9.-]/g, '_');
+          return `${host}_${stamp}`;
+        })();
 
     const htmlPath = join(this.artifactsDir, `${baseName}.html`);
     await writeFile(htmlPath, params.html, 'utf-8');
     return htmlPath;
+  }
+
+  private sanitizeArtifactBaseName(artifactId: string): string {
+    const safe = artifactId.replace(/[^a-zA-Z0-9_-]/g, '');
+    return safe.length > 0 ? safe : 'artifact';
   }
 
   canAcceptCaptureJob(): boolean {
