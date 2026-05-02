@@ -7,13 +7,13 @@ import { join } from 'node:path';
 import { OffersArtifactAnalyzerService } from '../offers/offers-artifact-analyzer.service';
 import { PlaywrightService } from '../playwright/playwright.service';
 import { DispatchSchedulerQueueRepository } from '../dispatch-scheduler';
+import {
+  dispatchQueuePageHtmlPath,
+  getExistingUsableDispatchQueueHtmlPath,
+  sanitizeDispatchQueueIdForFilename,
+} from './libs';
 
 const DISPATCH_PARSER_OFFER_PATTERNS = ['sravni', 'startracking'] as const;
-
-function sanitizeQueueIdForFilename(id: string): string {
-  const safe = id.replace(/[^a-zA-Z0-9_-]/g, '');
-  return safe.length > 0 ? safe : 'artifact';
-}
 
 @Processor('checklistScheduler')
 export class DispatchParserProcessor extends WorkerHost {
@@ -37,17 +37,34 @@ export class DispatchParserProcessor extends WorkerHost {
     }
 
     const queueId = queueItem._id.toString();
-    let htmlPath: string | undefined;
+    /** Only this run's fresh capture file is removed on failure (retry keeps reused artifacts). */
+    let scratchCapturePath: string | undefined;
 
     try {
-      const capture = await this.playwrightService.capturePage({
-        url: queueItem.href,
-        artifactId: queueId,
+      await mkdir(this.artifactsDir, { recursive: true });
+
+      const existingHtmlPath = await getExistingUsableDispatchQueueHtmlPath({
+        artifactsRoot: this.artifactsDir,
+        queueItemId: queueId,
       });
-      htmlPath = capture.htmlPath;
+
+      let htmlPathForAnalysis: string;
+      if (existingHtmlPath) {
+        htmlPathForAnalysis = existingHtmlPath;
+        this.logger.log(
+          `Reusing HTML artifact for queue id=${queueId}: ${existingHtmlPath}`,
+        );
+      } else {
+        const capture = await this.playwrightService.capturePage({
+          url: queueItem.href,
+          artifactId: queueId,
+        });
+        scratchCapturePath = capture.htmlPath;
+        htmlPathForAnalysis = capture.htmlPath;
+      }
 
       const analysis = await this.offersArtifactAnalyzer.analyzeFromArtifacts({
-        artifactHtmlPath: htmlPath,
+        artifactHtmlPath: htmlPathForAnalysis,
         patterns: [...DISPATCH_PARSER_OFFER_PATTERNS],
         resolveShortLinks: true,
         shortLinkRequestHeaders: {
@@ -57,13 +74,14 @@ export class DispatchParserProcessor extends WorkerHost {
         },
       });
 
-      const safeId = sanitizeQueueIdForFilename(queueId);
+      const safeId = sanitizeDispatchQueueIdForFilename(queueId);
       const reportPath = join(this.artifactsDir, `report_${safeId}.json`);
-      const pageHtmlPath = join(this.artifactsDir, `page_${safeId}.html`);
-      await mkdir(this.artifactsDir, { recursive: true });
+      const pageHtmlPath = dispatchQueuePageHtmlPath(this.artifactsDir, queueId);
 
-      await rename(htmlPath, pageHtmlPath);
-      htmlPath = undefined;
+      if (htmlPathForAnalysis !== pageHtmlPath) {
+        await rename(htmlPathForAnalysis, pageHtmlPath);
+      }
+      scratchCapturePath = undefined;
 
       const report = {
         dispatchQueueItemId: queueId,
@@ -85,12 +103,12 @@ export class DispatchParserProcessor extends WorkerHost {
       );
       throw error;
     } finally {
-      if (htmlPath) {
+      if (scratchCapturePath) {
         try {
-          await unlink(htmlPath);
+          await unlink(scratchCapturePath);
         } catch (unlinkError) {
           this.logger.warn(
-            `Failed to remove HTML artifact ${htmlPath}: ${(unlinkError as Error).message}`,
+            `Failed to remove scratch HTML artifact ${scratchCapturePath}: ${(unlinkError as Error).message}`,
           );
         }
       }
