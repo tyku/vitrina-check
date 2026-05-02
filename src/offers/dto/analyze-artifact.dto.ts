@@ -6,6 +6,7 @@ export const AnalyzeArtifactSchema = z.object({
   resolveShortLinks: z.boolean().optional(),
   shortLinkTimeoutMs: z.number().int().min(1_000).max(120_000).optional(),
   shortLinkConcurrency: z.number().int().min(1).max(32).optional(),
+  shortLinkRequestHeaders: z.record(z.string(), z.string()).optional(),
 });
 
 export type TAnalyzeArtifactDto = z.infer<typeof AnalyzeArtifactSchema>;

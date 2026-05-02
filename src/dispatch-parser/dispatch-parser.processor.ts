@@ -1,5 +1,6 @@
 import { Processor, WorkerHost } from '@nestjs/bullmq';
 import { Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { Job } from 'bullmq';
 import { mkdir, rename, unlink, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
@@ -23,6 +24,7 @@ export class DispatchParserProcessor extends WorkerHost {
     private readonly dispatchQueueRepository: DispatchSchedulerQueueRepository,
     private readonly playwrightService: PlaywrightService,
     private readonly offersArtifactAnalyzer: OffersArtifactAnalyzerService,
+    private readonly configService: ConfigService,
   ) {
     super();
   }
@@ -47,7 +49,12 @@ export class DispatchParserProcessor extends WorkerHost {
       const analysis = await this.offersArtifactAnalyzer.analyzeFromArtifacts({
         artifactHtmlPath: htmlPath,
         patterns: [...DISPATCH_PARSER_OFFER_PATTERNS],
-        resolveShortLinks: false,
+        resolveShortLinks: true,
+        shortLinkRequestHeaders: {
+          'user-agent': this.configService.getOrThrow<string>(
+            'playwright.userAgent',
+          ),
+        },
       });
 
       const safeId = sanitizeQueueIdForFilename(queueId);

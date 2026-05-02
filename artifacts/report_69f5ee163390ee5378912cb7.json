@@ -1,0 +1,13 @@
+{
+  "dispatchQueueItemId": "69f5ee163390ee5378912cb7",
+  "url": "https://kredya.ru/",
+  "analyzedAt": "2026-05-02T12:30:32.639Z",
+  "artifactHtmlPath": "/Users/artemkud/dev/vitrina-check/artifacts/page_69f5ee163390ee5378912cb7.html",
+  "patterns": [
+    "sravni",
+    "startracking"
+  ],
+  "totalOffers": 16,
+  "directMatches": [],
+  "resolvedMatches": []
+}

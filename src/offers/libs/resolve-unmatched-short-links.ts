@@ -12,9 +12,13 @@ import {
 } from './find-links-by-pattern';
 import { isShortLink } from './is-short-link';
 
+const DEFAULT_RESOLVER_USER_AGENT =
+  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36';
+
 async function resolveOneShortLink(
   sourceUrl: string,
   timeoutMs: number,
+  requestHeaders?: Record<string, string>,
 ): Promise<TResolvedShortLink> {
   const requestUrl = sourceUrl.includes('?')
     ? `${sourceUrl}&nc=1`
@@ -22,14 +26,17 @@ async function resolveOneShortLink(
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
 
+  const headers: Record<string, string> = {
+    'user-agent': DEFAULT_RESOLVER_USER_AGENT,
+    ...requestHeaders,
+  };
+
   try {
     const response = await fetch(requestUrl, {
       method: 'GET',
       redirect: 'follow',
       signal: controller.signal,
-      headers: {
-        'user-agent': 'Mozilla/5.0 (X11; Linux x86_64)',
-      },
+      headers,
     });
 
     return {
@@ -54,6 +61,7 @@ async function resolveUniqueShortLinks(
   urls: string[],
   concurrency: number,
   timeoutMs: number,
+  requestHeaders?: Record<string, string>,
 ): Promise<TResolvedShortLink[]> {
   const queue = [...new Set(urls)];
   const results: TResolvedShortLink[] = [];
@@ -62,7 +70,7 @@ async function resolveUniqueShortLinks(
     while (queue.length > 0) {
       const url = queue.shift();
       if (!url) continue;
-      const resolved = await resolveOneShortLink(url, timeoutMs);
+      const resolved = await resolveOneShortLink(url, timeoutMs, requestHeaders);
       results.push(resolved);
     }
   };
@@ -80,6 +88,7 @@ export async function resolveUnmatchedShortLinks(
   directMatches: TOfferLink[];
   resolvedMatches: TResolvedShortLink[];
   resolvedMatchedOffers: TMatchedResolvedOffer[];
+  allResolved: TResolvedShortLink[];
 }> {
   const patterns = normalizePatterns(options.patterns);
   const timeoutMs = options.timeoutMs ?? 12_000;
@@ -93,12 +102,13 @@ export async function resolveUnmatchedShortLinks(
     .filter((href) => !directUrlSet.has(href))
     .filter((href) => isShortLink(href));
 
-  const resolved = await resolveUniqueShortLinks(
+  const allResolved = await resolveUniqueShortLinks(
     unresolvedShortLinks,
     concurrency,
     timeoutMs,
+    options.requestHeaders,
   );
-  const resolvedMatches = resolved.filter((item) =>
+  const resolvedMatches = allResolved.filter((item) =>
     matchesAnyPattern(item.finalUrl, patterns),
   );
   const matchedBySource = new Map(
@@ -120,5 +130,6 @@ export async function resolveUnmatchedShortLinks(
     directMatches,
     resolvedMatches,
     resolvedMatchedOffers,
+    allResolved,
   };
 }

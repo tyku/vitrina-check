@@ -25,6 +25,8 @@ export type TResolveShortLinksOptions = {
   patterns: string[];
   timeoutMs?: number;
   concurrency?: number;
+  /** Merged into fetch headers (e.g. User-Agent aligned with Playwright capture). */
+  requestHeaders?: Record<string, string>;
 };
 
 export type TResolvedShortLink = {
@@ -45,6 +47,7 @@ export type TAnalyzeArtifactInput = {
   resolveShortLinks?: boolean;
   shortLinkTimeoutMs?: number;
   shortLinkConcurrency?: number;
+  shortLinkRequestHeaders?: Record<string, string>;
 };
 
 export type TAnalyzeArtifactOutput = {
@@ -53,4 +56,6 @@ export type TAnalyzeArtifactOutput = {
   totalOffers: number;
   directMatches: TOfferLink[];
   resolvedMatches: TMatchedResolvedOffer[];
+  /** Present when `resolveShortLinks` was true: one row per unique short URL after HTTP redirect follow. */
+  shortLinkResolutions?: TResolvedShortLink[];
 };

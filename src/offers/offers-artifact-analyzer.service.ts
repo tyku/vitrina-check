@@ -35,6 +35,7 @@ export class OffersArtifactAnalyzerService {
       patterns,
       timeoutMs: input.shortLinkTimeoutMs ?? 12_000,
       concurrency: input.shortLinkConcurrency ?? 8,
+      requestHeaders: input.shortLinkRequestHeaders,
     });
 
     return {
@@ -43,6 +44,7 @@ export class OffersArtifactAnalyzerService {
       totalOffers: offers.length,
       directMatches,
       resolvedMatches: resolved.resolvedMatchedOffers,
+      shortLinkResolutions: resolved.allResolved,
     };
   }
 

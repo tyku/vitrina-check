@@ -1,0 +1,168 @@
+{
+  "dispatchQueueItemId": "69f5f06e3390ee5378912f21",
+  "url": "https://kredya.ru/",
+  "analyzedAt": "2026-05-02T12:40:33.534Z",
+  "artifactHtmlPath": "/Users/artemkud/dev/vitrina-check/artifacts/page_69f5f06e3390ee5378912f21.html",
+  "patterns": [
+    "sravni",
+    "startracking"
+  ],
+  "totalOffers": 16,
+  "directMatches": [],
+  "resolvedMatches": [
+    {
+      "href": "https://sovtrk.ru/c/ez2wr",
+      "anchorText": "ТОП-МФОдо 30 000 ₽суммадо 30 нед.срокот 18 летвозрастПодать заявку",
+      "blockName": "best_list",
+      "blockSelector": "div.best_list",
+      "positionOnPage": 1,
+      "positionInBlock": 1,
+      "finalUrl": "https://www.zaymer.ru/?utm_source=sravniru&utm_campaign=home&utm_medium=cpa&wmid=12479&utm_term=12479&click_id=9390cd7f82113937-fc78a3b68425a243-c12c88cdb41343a0-738d34930ab66644",
+      "statusCode": 200
+    },
+    {
+      "href": "https://sovtrk.com/c/egzwg",
+      "anchorText": "Первый займ бесплатнодо 100 000 ₽суммадо 30 днейсрокот 18 летвозрастПодать заявку",
+      "blockName": "best_list",
+      "blockSelector": "div.best_list",
+      "positionOnPage": 2,
+      "positionInBlock": 2,
+      "finalUrl": "https://turbozaim.ru/?utm_source=sravni&utm_medium=affiliate&utm_campaign=turbozaim&wmid=12479&transaction_id=de15420c334d388e-bbdda8bc97fe2a00-1e7975ece0e213f2-78c865ca0d7aaaac",
+      "statusCode": 200
+    },
+    {
+      "href": "https://sovtrk.com/c/gojjx",
+      "anchorText": "Одобряем 9 из 10 заявокдо 30 000 ₽суммадо 60 днейсрокот 18 летвозрастПодать заявку",
+      "blockName": "basic_list",
+      "blockSelector": "div.basic_list",
+      "positionOnPage": 7,
+      "positionInBlock": 3,
+      "finalUrl": "https://oneclickmoney.ru/?utm_source=sravniru_zaim1&utm_medium=CPA&utm_campaign=sravniru_zaim1&sravniid=e370510792e63c70-d580ff6367c5d75a-cabb010f431962eb-1a2a3e3bc9483b37&wm_id=12479",
+      "statusCode": 401
+    },
+    {
+      "href": "https://sovtrk.ru/c/26q2z",
+      "anchorText": "Увеличено одобрение!до 100 000рсуммаот 5 днейсрокот 18 летвозрастПодать заявку",
+      "blockName": "basic_list",
+      "blockSelector": "div.basic_list",
+      "positionOnPage": 8,
+      "positionInBlock": 4,
+      "finalUrl": "https://moneyman.ru/lp/mkk/?partner=sravniru_partners&utm_source=sravniru_partners&utm_medium=affiliate&utm_campaign=sravniru_loan&clickid=b8b0a4fb2e363e47-7f40adb2c415056d-a1fef4a120c57ccf-5d8627b7638c0d5b&wmid=12479",
+      "statusCode": 200
+    },
+    {
+      "href": "https://sovtrk.com/c/7gq4v",
+      "anchorText": "Первый заём под 0%до 50 000 ₽суммадо 31 днясрокот 18 летвозрастПодать заявку",
+      "blockName": "basic_list",
+      "blockSelector": "div.basic_list",
+      "positionOnPage": 9,
+      "positionInBlock": 5,
+      "finalUrl": "https://hurmacredit.ru/?cpa=1&utm_source=sravniru&utm_campaign=mfocred&subid=9f9378b652c23677-a99b26f6d9166226-f3e097f69e3e01cf-9ffe9ff872a93205&wmid=12479&platform=sravniru",
+      "statusCode": 200
+    },
+    {
+      "href": "https://sovtrk.com/c/rx70g",
+      "anchorText": "Лучшие условиядо 100 000 рубсуммадо 60 днейсрокот 18 летвозрастПодать заявку",
+      "blockName": "basic_list",
+      "blockSelector": "div.basic_list",
+      "positionOnPage": 11,
+      "positionInBlock": 7,
+      "finalUrl": "https://www.sravni.ru/mfo/credit/?placement=origin--ho|clickid--9ecd39334bd232ba-31600ffbfe770beb-f296ce717438baab-f9ad0a298bbbedd9|affid--12479|offerid--2443|urlid--13090|source--8996&utm_source=cpa_aff&utm_medium=cpa&utm_content=origin--ho--clickid--9ecd39334bd232ba-31600ffbfe770beb-f296ce717438baab-f9ad0a298bbbedd9--affid--12479--offerid--2443--urlid--13090--source--8996&utm_term=affclid----affsub1----affsub2--GmuBAukDAAALAAAAAeUJ--affsub3--rs--affsub4----affsub5--",
+      "statusCode": 200
+    },
+    {
+      "href": "https://sovtrk.ru/c/ez2wr",
+      "anchorText": "ТОП-МФОдо 30 000 ₽суммадо 30 нед.срокот 18 летвозрастПодать заявку",
+      "blockName": "best_list",
+      "blockSelector": "div.best_list",
+      "positionOnPage": 13,
+      "positionInBlock": 5,
+      "finalUrl": "https://www.zaymer.ru/?utm_source=sravniru&utm_campaign=home&utm_medium=cpa&wmid=12479&utm_term=12479&click_id=9390cd7f82113937-fc78a3b68425a243-c12c88cdb41343a0-738d34930ab66644",
+      "statusCode": 200
+    },
+    {
+      "href": "https://sovtrk.com/c/egzwg",
+      "anchorText": "Первый займ бесплатнодо 100 000 ₽суммадо 30 днейсрокот 18 летвозрастПодать заявку",
+      "blockName": "best_list",
+      "blockSelector": "div.best_list",
+      "positionOnPage": 14,
+      "positionInBlock": 6,
+      "finalUrl": "https://turbozaim.ru/?utm_source=sravni&utm_medium=affiliate&utm_campaign=turbozaim&wmid=12479&transaction_id=de15420c334d388e-bbdda8bc97fe2a00-1e7975ece0e213f2-78c865ca0d7aaaac",
+      "statusCode": 200
+    }
+  ],
+  "shortLinkResolutions": [
+    {
+      "sourceUrl": "https://sovtrk.ru/c/pqpn4",
+      "finalUrl": "https://pxl.leads.su/click/0a65bd5a5d0f99b2588df659fec9b4bf?aff_sub1=GmuBAukDAABtCQAAAbsP",
+      "statusCode": 200,
+      "error": ""
+    },
+    {
+      "sourceUrl": "https://sovtrk.com/c/vm3kd",
+      "finalUrl": "https://pxl.leads.su/click/379f6c6f12430a20c8365185909ec6e6?erid=2W5zFJvsS8g&aff_sub1=GmuBAukDAAA4BAAAAW0D",
+      "statusCode": 200,
+      "error": ""
+    },
+    {
+      "sourceUrl": "https://sovtrk.com/c/egzwg",
+      "finalUrl": "https://turbozaim.ru/?utm_source=sravni&utm_medium=affiliate&utm_campaign=turbozaim&wmid=12479&transaction_id=de15420c334d388e-bbdda8bc97fe2a00-1e7975ece0e213f2-78c865ca0d7aaaac",
+      "statusCode": 200,
+      "error": ""
+    },
+    {
+      "sourceUrl": "https://sovtrk.com/c/gojjx",
+      "finalUrl": "https://oneclickmoney.ru/?utm_source=sravniru_zaim1&utm_medium=CPA&utm_campaign=sravniru_zaim1&sravniid=e370510792e63c70-d580ff6367c5d75a-cabb010f431962eb-1a2a3e3bc9483b37&wm_id=12479",
+      "statusCode": 401,
+      "error": ""
+    },
+    {
+      "sourceUrl": "https://sovtrk.com/c/xwl5r",
+      "finalUrl": "https://cashtoyou.ru/?utm_source=CC_finuslugi_zaim&clickid=d7qv16g33e4s73ch9egg&wmid=MB56799",
+      "statusCode": 200,
+      "error": ""
+    },
+    {
+      "sourceUrl": "https://sovtrk.com/c/goywz",
+      "finalUrl": "https://lk.finuslugi.ru/credits/new?productType=microloan&csc_new=true&utm_source=sbaing&utm_medium=affiliate&utm_campaign=pr%3Amfo_12558&utm_term=GmuBAukDAAAtBgAAAVYF&offer_id=12558&utm_content=agasd&%2F=",
+      "statusCode": 200,
+      "error": ""
+    },
+    {
+      "sourceUrl": "https://sovtrk.com/c/7gq4v",
+      "finalUrl": "https://hurmacredit.ru/?cpa=1&utm_source=sravniru&utm_campaign=mfocred&subid=9f9378b652c23677-a99b26f6d9166226-f3e097f69e3e01cf-9ffe9ff872a93205&wmid=12479&platform=sravniru",
+      "statusCode": 200,
+      "error": ""
+    },
+    {
+      "sourceUrl": "https://sovtrk.ru/c/g5jo9",
+      "finalUrl": "https://bistrodengi-mkk.ru/get?utm_source=guruleads&wmid=35358&utm_content=fc567c91870b7880e964f83f3e10f114&utm_term=35358&utm_medium=cpa",
+      "statusCode": 200,
+      "error": ""
+    },
+    {
+      "sourceUrl": "https://sovtrk.com/c/xj1y3",
+      "finalUrl": "https://www.nebusfinance.ru/?utm_source=fin_ref&click_id=d7qv16g33e4s73ch9eh0&web_id=MB56799",
+      "statusCode": 200,
+      "error": ""
+    },
+    {
+      "sourceUrl": "https://sovtrk.com/c/rx70g",
+      "finalUrl": "https://www.sravni.ru/mfo/credit/?placement=origin--ho|clickid--9ecd39334bd232ba-31600ffbfe770beb-f296ce717438baab-f9ad0a298bbbedd9|affid--12479|offerid--2443|urlid--13090|source--8996&utm_source=cpa_aff&utm_medium=cpa&utm_content=origin--ho--clickid--9ecd39334bd232ba-31600ffbfe770beb-f296ce717438baab-f9ad0a298bbbedd9--affid--12479--offerid--2443--urlid--13090--source--8996&utm_term=affclid----affsub1----affsub2--GmuBAukDAAALAAAAAeUJ--affsub3--rs--affsub4----affsub5--",
+      "statusCode": 200,
+      "error": ""
+    },
+    {
+      "sourceUrl": "https://sovtrk.ru/c/ez2wr",
+      "finalUrl": "https://www.zaymer.ru/?utm_source=sravniru&utm_campaign=home&utm_medium=cpa&wmid=12479&utm_term=12479&click_id=9390cd7f82113937-fc78a3b68425a243-c12c88cdb41343a0-738d34930ab66644",
+      "statusCode": 200,
+      "error": ""
+    },
+    {
+      "sourceUrl": "https://sovtrk.ru/c/26q2z",
+      "finalUrl": "https://moneyman.ru/lp/mkk/?partner=sravniru_partners&utm_source=sravniru_partners&utm_medium=affiliate&utm_campaign=sravniru_loan&clickid=b8b0a4fb2e363e47-7f40adb2c415056d-a1fef4a120c57ccf-5d8627b7638c0d5b&wmid=12479",
+      "statusCode": 200,
+      "error": ""
+    }
+  ]
+}
