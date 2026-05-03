@@ -2,27 +2,30 @@ import { Controller, HttpCode, Param, Post, Req } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import type { Request } from 'express';
 import { TelegramWebhookAuthService } from './telegram-webhook-auth.service';
+import { TelegramWebhookInboundService } from './telegram-webhook-inbound.service';
 
 @Controller('telegram')
 export class TelegramWebhookController {
   constructor(
     private readonly telegramWebhookAuth: TelegramWebhookAuthService,
+    private readonly telegramWebhookInbound: TelegramWebhookInboundService,
     private readonly configService: ConfigService,
   ) {}
 
-  /** E1.2 will enqueue `body`; here we only verify and ACK. */
+  /** Verifies secrets, enqueues raw update (E1.2), returns 200. */
   @Post(['webhook', 'webhook/:pathSecret'])
   @HttpCode(200)
-  receiveUpdate(
+  async receiveUpdate(
     @Req() req: Request,
     @Param('pathSecret') pathSecret: string | undefined,
-  ): void {
+  ): Promise<void> {
     const headerName = this.configService.getOrThrow<string>(
       'telegram.webhookSecretHeaderName',
     );
-    const raw = req.headers[headerName];
+    const hdr = req.headers[headerName];
     const headerSecret =
-      typeof raw === 'string' ? raw : Array.isArray(raw) ? raw[0] : undefined;
+      typeof hdr === 'string' ? hdr : Array.isArray(hdr) ? hdr[0] : undefined;
     this.telegramWebhookAuth.assertWebhookAuthorized(pathSecret, headerSecret);
+    await this.telegramWebhookInbound.enqueueWebhookUpdate(req.body);
   }
 }
