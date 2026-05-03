@@ -53,6 +53,19 @@ const EnvSchema = z.object({
   TELEGRAM_WEBHOOK_SECRET_TOKEN: z.string().min(1).optional(),
   TELEGRAM_WEBHOOK_PATH_SECRET: z.string().min(1).optional(),
   TELEGRAM_WEBHOOK_SECRET_HEADER_NAME: z.string().min(1).optional(),
+  TELEGRAM_WEBHOOK_MAX_BODY_BYTES: z.coerce
+    .number()
+    .int()
+    .min(1024)
+    .max(20 * 1024 * 1024)
+    .optional(),
+  TELEGRAM_WEBHOOK_REQUEST_TIMEOUT_MS: z.coerce
+    .number()
+    .int()
+    .min(0)
+    .max(120_000)
+    .optional(),
+  TELEGRAM_WEBHOOK_LOG_SUMMARY: z.enum(['true', 'false']).optional(),
 });
 
 export function validate(config: Record<string, unknown>) {

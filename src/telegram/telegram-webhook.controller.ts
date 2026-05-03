@@ -1,9 +1,18 @@
-import { Controller, HttpCode, Param, Post, Req } from '@nestjs/common';
+import {
+  Controller,
+  HttpCode,
+  Param,
+  Post,
+  Req,
+  UseInterceptors,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import type { Request } from 'express';
 import { TelegramWebhookAuthService } from './telegram-webhook-auth.service';
 import { TelegramWebhookInboundService } from './telegram-webhook-inbound.service';
+import { TelegramWebhookLimitsInterceptor } from './telegram-webhook-limits.interceptor';
 
+@UseInterceptors(TelegramWebhookLimitsInterceptor)
 @Controller('telegram')
 export class TelegramWebhookController {
   constructor(

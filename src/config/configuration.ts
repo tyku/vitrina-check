@@ -43,5 +43,26 @@ export default () => ({
       process.env.TELEGRAM_WEBHOOK_SECRET_HEADER_NAME?.trim() ||
       'x-telegram-bot-api-secret-token'
     ).toLowerCase(),
+    /** Max JSON body (UTF-8 bytes) after parse; Telegram updates are usually small. */
+    webhookMaxBodyBytes: (() => {
+      const n = parseInt(
+        process.env.TELEGRAM_WEBHOOK_MAX_BODY_BYTES || '524288',
+        10,
+      );
+      return Number.isFinite(n) && n >= 1024 ? n : 524288;
+    })(),
+    /** 0 = leave socket default. */
+    webhookRequestTimeoutMs: (() => {
+      const raw = process.env.TELEGRAM_WEBHOOK_REQUEST_TIMEOUT_MS;
+      if (raw === undefined || raw.trim() === '') {
+        return 0;
+      }
+      const n = parseInt(raw, 10);
+      return Number.isFinite(n) && n >= 0 ? n : 0;
+    })(),
+    /** If true, logs only `summarizeTelegramUpdateForLog` (no PII fields). */
+    webhookLogSummary:
+      (process.env.TELEGRAM_WEBHOOK_LOG_SUMMARY ?? '').toLowerCase() ===
+      'true',
   },
 });

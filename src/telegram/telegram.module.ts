@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { TelegramWebhookController } from './telegram-webhook.controller';
 import { TelegramWebhookAuthService } from './telegram-webhook-auth.service';
 import { TelegramWebhookInboundService } from './telegram-webhook-inbound.service';
+import { TelegramWebhookLimitsInterceptor } from './telegram-webhook-limits.interceptor';
 import { TELEGRAM_INCOMING_QUEUE } from './telegram-incoming.constants';
 
 @Module({
@@ -15,6 +16,7 @@ import { TELEGRAM_INCOMING_QUEUE } from './telegram-incoming.constants';
   providers: [
     TelegramWebhookAuthService,
     TelegramWebhookInboundService,
+    TelegramWebhookLimitsInterceptor,
   ],
   exports: [TelegramWebhookAuthService, BullModule],
 })

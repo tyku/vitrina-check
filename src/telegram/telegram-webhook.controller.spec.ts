@@ -5,22 +5,35 @@ import request from 'supertest';
 import { TelegramWebhookController } from './telegram-webhook.controller';
 import { TelegramWebhookAuthService } from './telegram-webhook-auth.service';
 import { TelegramWebhookInboundService } from './telegram-webhook-inbound.service';
+import { TelegramWebhookLimitsInterceptor } from './telegram-webhook-limits.interceptor';
 
 const HEADER_DEFAULT = 'x-telegram-bot-api-secret-token';
 const HEADER_TOKEN = 'h'.repeat(32);
 const PATH_TOKEN = 'p'.repeat(24);
 
-type TelegramConfig = {
+type TelegramCfg = {
   nodeEnv: string;
   telegram: {
+    webhookSecretHeaderName: string;
     webhookSecretToken?: string;
     webhookPathSecret?: string;
-    webhookSecretHeaderName: string;
+    webhookMaxBodyBytes?: number;
+    webhookRequestTimeoutMs?: number;
+    webhookLogSummary?: boolean;
   };
 };
 
+function withTelegramDefaults(t: TelegramCfg['telegram']): TelegramCfg['telegram'] {
+  return {
+    webhookMaxBodyBytes: 524288,
+    webhookRequestTimeoutMs: 0,
+    webhookLogSummary: false,
+    ...t,
+  };
+}
+
 async function bootstrapWithConfig(
-  cfg: TelegramConfig,
+  cfg: TelegramCfg,
   enqueueWebhookUpdate: jest.Mock,
 ): Promise<INestApplication> {
   const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -28,12 +41,18 @@ async function bootstrapWithConfig(
       ConfigModule.forRoot({
         isGlobal: true,
         ignoreEnvFile: true,
-        load: [() => cfg],
+        load: [
+          () => ({
+            nodeEnv: cfg.nodeEnv,
+            telegram: withTelegramDefaults(cfg.telegram),
+          }),
+        ],
       }),
     ],
     controllers: [TelegramWebhookController],
     providers: [
       TelegramWebhookAuthService,
+      TelegramWebhookLimitsInterceptor,
       {
         provide: TelegramWebhookInboundService,
         useValue: { enqueueWebhookUpdate },
@@ -280,6 +299,29 @@ describe('TelegramWebhookController', () => {
         .set(HEADER_DEFAULT, HEADER_TOKEN)
         .send({})
         .expect(401);
+      expect(enqueueMock).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('E1.3 payload size limit', () => {
+    beforeEach(async () => {
+      app = await bootstrapWithConfig(
+        {
+          nodeEnv: 'development',
+          telegram: {
+            webhookSecretHeaderName: HEADER_DEFAULT,
+            webhookMaxBodyBytes: 80,
+          },
+        },
+        enqueueMock,
+      );
+    });
+
+    it('413 when JSON body exceeds max and does not enqueue', async () => {
+      await request(app.getHttpServer())
+        .post('/telegram/webhook')
+        .send({ update_id: 1, pad: 'y'.repeat(200) })
+        .expect(413);
       expect(enqueueMock).not.toHaveBeenCalled();
     });
   });
