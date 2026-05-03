@@ -31,10 +31,7 @@ export class TelegramWebhookLimitsInterceptor implements NestInterceptor {
 
     let byteLength: number;
     try {
-      byteLength = Buffer.byteLength(
-        JSON.stringify(req.body ?? null),
-        'utf8',
-      );
+      byteLength = Buffer.byteLength(JSON.stringify(req.body ?? null), 'utf8');
     } catch {
       throw new BadRequestException('Invalid JSON body');
     }

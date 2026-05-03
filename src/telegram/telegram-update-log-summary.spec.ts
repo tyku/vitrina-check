@@ -18,9 +18,9 @@ describe('summarizeTelegramUpdateForLog', () => {
 
   it('does not include message text in output', () => {
     const s = summarizeTelegramUpdateForLog({
-        update_id: 1,
-        message: { text: 'password=123' },
-      }) as Record<string, unknown>;
+      update_id: 1,
+      message: { text: 'password=123' },
+    }) as Record<string, unknown>;
     expect(JSON.stringify(s)).not.toContain('password');
   });
 });

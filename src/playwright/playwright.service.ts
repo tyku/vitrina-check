@@ -205,7 +205,10 @@ export class PlaywrightService implements OnModuleInit, OnModuleDestroy {
       ? this.sanitizeArtifactBaseName(params.artifactId)
       : (() => {
           const stamp = new Date().toISOString().replace(/[:.]/g, '-');
-          const host = new URL(params.url).hostname.replace(/[^a-zA-Z0-9.-]/g, '_');
+          const host = new URL(params.url).hostname.replace(
+            /[^a-zA-Z0-9.-]/g,
+            '_',
+          );
           return `${host}_${stamp}`;
         })();
 

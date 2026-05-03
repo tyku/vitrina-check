@@ -82,7 +82,10 @@ describe('TelegramWebhookUpdateDedupService', () => {
       mod = await Test.createTestingModule({
         providers: [
           TelegramWebhookUpdateDedupService,
-          { provide: TELEGRAM_WEBHOOK_DEDUP_REDIS, useValue: { set, quit: jest.fn() } },
+          {
+            provide: TELEGRAM_WEBHOOK_DEDUP_REDIS,
+            useValue: { set, quit: jest.fn() },
+          },
           {
             provide: ConfigService,
             useValue: {
@@ -108,7 +111,10 @@ describe('TelegramWebhookUpdateDedupService', () => {
       mod = await Test.createTestingModule({
         providers: [
           TelegramWebhookUpdateDedupService,
-          { provide: TELEGRAM_WEBHOOK_DEDUP_REDIS, useValue: { set, quit: jest.fn() } },
+          {
+            provide: TELEGRAM_WEBHOOK_DEDUP_REDIS,
+            useValue: { set, quit: jest.fn() },
+          },
           {
             provide: ConfigService,
             useValue: {
@@ -142,7 +148,10 @@ describe('TelegramWebhookUpdateDedupService', () => {
       mod = await Test.createTestingModule({
         providers: [
           TelegramWebhookUpdateDedupService,
-          { provide: TELEGRAM_WEBHOOK_DEDUP_REDIS, useValue: { set, quit: jest.fn() } },
+          {
+            provide: TELEGRAM_WEBHOOK_DEDUP_REDIS,
+            useValue: { set, quit: jest.fn() },
+          },
           {
             provide: ConfigService,
             useValue: {

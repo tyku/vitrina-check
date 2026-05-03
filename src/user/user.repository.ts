@@ -30,5 +30,4 @@ export class UserRepository {
       .findByIdAndUpdate(id, updateData, { new: true })
       .exec();
   }
-
 }

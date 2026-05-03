@@ -33,8 +33,7 @@ export class TelegramWebhookUpdateDedupService {
     if (callbackId === undefined) {
       return true;
     }
-    const botId =
-      this.configService.get<string>('telegram.botId') ?? 'default';
+    const botId = this.configService.get<string>('telegram.botId') ?? 'default';
     const ttlSeconds =
       this.configService.get<number>('telegram.callbackDedupeTtlSeconds') ??
       300;
@@ -59,8 +58,7 @@ export class TelegramWebhookUpdateDedupService {
     if (updateId === undefined) {
       return true;
     }
-    const botId =
-      this.configService.get<string>('telegram.botId') ?? 'default';
+    const botId = this.configService.get<string>('telegram.botId') ?? 'default';
     const ttlSeconds =
       this.configService.get<number>('telegram.webhookDedupeTtlSeconds') ??
       86400;

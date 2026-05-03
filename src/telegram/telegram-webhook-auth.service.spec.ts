@@ -6,13 +6,15 @@ import { TelegramWebhookAuthService } from './telegram-webhook-auth.service';
 describe('TelegramWebhookAuthService', () => {
   function createService(config: Record<string, string | undefined>) {
     return new TelegramWebhookAuthService({
-      get: (key: string) => config[key] as string | undefined,
+      get: (key: string) => config[key],
     } as ConfigService);
   }
 
   it('development: allows when no secrets configured', () => {
     const svc = createService({ nodeEnv: 'development' });
-    expect(() => svc.assertWebhookAuthorized(undefined, undefined)).not.toThrow();
+    expect(() =>
+      svc.assertWebhookAuthorized(undefined, undefined),
+    ).not.toThrow();
   });
 
   it('production: rejects when no secrets configured', () => {
@@ -45,9 +47,9 @@ describe('TelegramWebhookAuthService', () => {
       'telegram.webhookPathSecret': secret,
     });
     expect(() => svc.assertWebhookAuthorized(secret, undefined)).not.toThrow();
-    expect(() =>
-      svc.assertWebhookAuthorized(secret + 'x', undefined),
-    ).toThrow(UnauthorizedException);
+    expect(() => svc.assertWebhookAuthorized(secret + 'x', undefined)).toThrow(
+      UnauthorizedException,
+    );
   });
 
   it('requires both when both configured', () => {
@@ -72,9 +74,9 @@ describe('TelegramWebhookAuthService', () => {
       nodeEnv: 'production',
       'telegram.webhookSecretToken': 'short',
     });
-    expect(() =>
-      svc.assertWebhookAuthorized(undefined, 'different'),
-    ).toThrow(UnauthorizedException);
+    expect(() => svc.assertWebhookAuthorized(undefined, 'different')).toThrow(
+      UnauthorizedException,
+    );
   });
 });
 

@@ -76,7 +76,10 @@ export class DispatchParserProcessor extends WorkerHost {
 
       const safeId = sanitizeDispatchQueueIdForFilename(queueId);
       const reportPath = join(this.artifactsDir, `report_${safeId}.json`);
-      const pageHtmlPath = dispatchQueuePageHtmlPath(this.artifactsDir, queueId);
+      const pageHtmlPath = dispatchQueuePageHtmlPath(
+        this.artifactsDir,
+        queueId,
+      );
 
       if (htmlPathForAnalysis !== pageHtmlPath) {
         await rename(htmlPathForAnalysis, pageHtmlPath);
@@ -90,7 +93,11 @@ export class DispatchParserProcessor extends WorkerHost {
         ...analysis,
         artifactHtmlPath: pageHtmlPath,
       };
-      await writeFile(reportPath, `${JSON.stringify(report, null, 2)}\n`, 'utf-8');
+      await writeFile(
+        reportPath,
+        `${JSON.stringify(report, null, 2)}\n`,
+        'utf-8',
+      );
 
       await this.dispatchQueueRepository.markDone(queueId);
       this.logger.log(

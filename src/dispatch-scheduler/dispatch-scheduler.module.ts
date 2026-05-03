@@ -21,7 +21,10 @@ import {
     }),
     MongooseModule.forFeature([
       { name: Schedule.name, schema: ScheduleSchema },
-      { name: DispatchSchedulerQueue.name, schema: DispatchSchedulerQueueSchema },
+      {
+        name: DispatchSchedulerQueue.name,
+        schema: DispatchSchedulerQueueSchema,
+      },
     ]),
   ],
   providers: [

@@ -50,4 +50,7 @@ DispatchSchedulerQueueSchema.index(
   { scheduleId: 1, executeAt: 1, href: 1 },
   { unique: true },
 );
-DispatchSchedulerQueueSchema.index({ doneAt: 1 }, { expireAfterSeconds: 86400 });
+DispatchSchedulerQueueSchema.index(
+  { doneAt: 1 },
+  { expireAfterSeconds: 86400 },
+);

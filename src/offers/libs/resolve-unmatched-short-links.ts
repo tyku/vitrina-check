@@ -70,7 +70,11 @@ async function resolveUniqueShortLinks(
     while (queue.length > 0) {
       const url = queue.shift();
       if (!url) continue;
-      const resolved = await resolveOneShortLink(url, timeoutMs, requestHeaders);
+      const resolved = await resolveOneShortLink(
+        url,
+        timeoutMs,
+        requestHeaders,
+      );
       results.push(resolved);
     }
   };

@@ -23,7 +23,9 @@ type TelegramCfg = {
   };
 };
 
-function withTelegramDefaults(t: TelegramCfg['telegram']): TelegramCfg['telegram'] {
+function withTelegramDefaults(
+  t: TelegramCfg['telegram'],
+): TelegramCfg['telegram'] {
   return {
     webhookMaxBodyBytes: 524288,
     webhookRequestTimeoutMs: 0,
@@ -159,7 +161,10 @@ describe('TelegramWebhookController', () => {
     });
 
     it('401 missing header', async () => {
-      await request(app.getHttpServer()).post('/telegram/webhook').send({}).expect(401);
+      await request(app.getHttpServer())
+        .post('/telegram/webhook')
+        .send({})
+        .expect(401);
       expect(enqueueMock).not.toHaveBeenCalled();
     });
 

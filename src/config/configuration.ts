@@ -62,8 +62,7 @@ export default () => ({
     })(),
     /** If true, logs only `summarizeTelegramUpdateForLog` (no PII fields). */
     webhookLogSummary:
-      (process.env.TELEGRAM_WEBHOOK_LOG_SUMMARY ?? '').toLowerCase() ===
-      'true',
+      (process.env.TELEGRAM_WEBHOOK_LOG_SUMMARY ?? '').toLowerCase() === 'true',
     /** Namespace for Redis dedup keys (E2.1); default if unset. */
     botId: process.env.TELEGRAM_BOT_ID?.trim() || undefined,
     webhookDedupeTtlSeconds: (() => {

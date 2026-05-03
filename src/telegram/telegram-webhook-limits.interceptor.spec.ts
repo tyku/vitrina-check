@@ -28,7 +28,9 @@ describe('TelegramWebhookLimitsInterceptor', () => {
     } as ConfigService);
     const ctx = makeContext({ update_id: 1, pad: 'x'.repeat(200) });
     expect(() =>
-      interceptor.intercept(ctx, { handle: () => of(undefined) } as CallHandler),
+      interceptor.intercept(ctx, {
+        handle: () => of(undefined),
+      } as CallHandler),
     ).toThrow(PayloadTooLargeException);
   });
 
@@ -57,7 +59,9 @@ describe('TelegramWebhookLimitsInterceptor', () => {
     } as ConfigService);
     const ctx = makeContext(circular);
     expect(() =>
-      interceptor.intercept(ctx, { handle: () => of(undefined) } as CallHandler),
+      interceptor.intercept(ctx, {
+        handle: () => of(undefined),
+      } as CallHandler),
     ).toThrow(BadRequestException);
   });
 });

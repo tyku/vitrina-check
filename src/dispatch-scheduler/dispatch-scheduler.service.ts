@@ -73,7 +73,11 @@ export class DispatchSchedulerService {
       })
       .filter((executeAt) => executeAt >= windowStart && executeAt <= windowEnd)
       .filter((executeAt) =>
-        this.matchesPeriodicity(schedule.periodicity, schedule.createdAt, executeAt),
+        this.matchesPeriodicity(
+          schedule.periodicity,
+          schedule.createdAt,
+          executeAt,
+        ),
       )
       .map((executeAt) => ({
         userId: schedule.userId,
@@ -98,7 +102,9 @@ export class DispatchSchedulerService {
     for (const item of dueItems) {
       let userHrefs = hrefsByUserId.get(item.userId);
       if (!userHrefs) {
-        const checklists = await this.checklistsRepository.findByUserId(item.userId);
+        const checklists = await this.checklistsRepository.findByUserId(
+          item.userId,
+        );
         userHrefs = checklists
           .map((checklist) => checklist.href)
           .filter((href): href is string => Boolean(href));

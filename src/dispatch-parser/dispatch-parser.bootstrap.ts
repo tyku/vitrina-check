@@ -18,10 +18,8 @@ export class DispatchParserBootstrap implements OnModuleInit {
 
   async onModuleInit(): Promise<void> {
     const intervalMinutes =
-      this.configService.get<number>(
-        'dispatchParser.pollIntervalMinutes',
-        1,
-      ) ?? 1;
+      this.configService.get<number>('dispatchParser.pollIntervalMinutes', 1) ??
+      1;
     const repeatEveryMs = intervalMinutes * 60 * 1000;
 
     this.logger.log(

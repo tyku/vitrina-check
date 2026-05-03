@@ -25,8 +25,7 @@ export class TelegramWebhookAuthService {
     pathSecret: string | undefined,
     headerSecret: string | undefined,
   ): void {
-    const nodeEnv =
-      this.configService.get<string>('nodeEnv') ?? 'development';
+    const nodeEnv = this.configService.get<string>('nodeEnv') ?? 'development';
     const expectedHeader = this.configService.get<string>(
       'telegram.webhookSecretToken',
     );
@@ -36,8 +35,7 @@ export class TelegramWebhookAuthService {
 
     const hasHeader =
       typeof expectedHeader === 'string' && expectedHeader.length > 0;
-    const hasPath =
-      typeof expectedPath === 'string' && expectedPath.length > 0;
+    const hasPath = typeof expectedPath === 'string' && expectedPath.length > 0;
 
     if (!hasHeader && !hasPath) {
       if (nodeEnv === 'production') {
