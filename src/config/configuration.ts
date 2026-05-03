@@ -64,5 +64,15 @@ export default () => ({
     webhookLogSummary:
       (process.env.TELEGRAM_WEBHOOK_LOG_SUMMARY ?? '').toLowerCase() ===
       'true',
+    /** Namespace for Redis dedup keys (E2.1); default if unset. */
+    botId: process.env.TELEGRAM_BOT_ID?.trim() || undefined,
+    webhookDedupeTtlSeconds: (() => {
+      const raw = process.env.TELEGRAM_WEBHOOK_DEDUPE_TTL_SECONDS;
+      if (raw === undefined || raw.trim() === '') {
+        return 86400;
+      }
+      const n = parseInt(raw, 10);
+      return Number.isFinite(n) && n >= 60 && n <= 604800 ? n : 86400;
+    })(),
   },
 });

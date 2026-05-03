@@ -66,6 +66,13 @@ const EnvSchema = z.object({
     .max(120_000)
     .optional(),
   TELEGRAM_WEBHOOK_LOG_SUMMARY: z.enum(['true', 'false']).optional(),
+  TELEGRAM_BOT_ID: z.string().min(1).max(64).optional(),
+  TELEGRAM_WEBHOOK_DEDUPE_TTL_SECONDS: z.coerce
+    .number()
+    .int()
+    .min(60)
+    .max(604800)
+    .optional(),
 });
 
 export function validate(config: Record<string, unknown>) {

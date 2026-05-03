@@ -4,6 +4,11 @@ import { TelegramWebhookController } from './telegram-webhook.controller';
 import { TelegramWebhookAuthService } from './telegram-webhook-auth.service';
 import { TelegramWebhookInboundService } from './telegram-webhook-inbound.service';
 import { TelegramWebhookLimitsInterceptor } from './telegram-webhook-limits.interceptor';
+import {
+  telegramWebhookDedupRedisProvider,
+  TelegramWebhookDedupRedisLifecycle,
+} from './telegram-webhook-dedup-redis.provider';
+import { TelegramWebhookUpdateDedupService } from './telegram-webhook-update-dedup.service';
 import { TELEGRAM_INCOMING_QUEUE } from './telegram-incoming.constants';
 
 @Module({
@@ -15,6 +20,9 @@ import { TELEGRAM_INCOMING_QUEUE } from './telegram-incoming.constants';
   controllers: [TelegramWebhookController],
   providers: [
     TelegramWebhookAuthService,
+    telegramWebhookDedupRedisProvider,
+    TelegramWebhookDedupRedisLifecycle,
+    TelegramWebhookUpdateDedupService,
     TelegramWebhookInboundService,
     TelegramWebhookLimitsInterceptor,
   ],

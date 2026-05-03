@@ -40,7 +40,7 @@
 
 ## Epic E2 — Дедупликация и идемпотентность
 
-- E2.1 Дедуп по `update_id` (Redis `SET` NX + TTL)
+- [x] E2.1 Дедуп по `update_id` (Redis `SET` NX + TTL) — ключ `telegram:webhook:dedup:v1:{TELEGRAM_BOT_ID|default}:{update_id}`, TTL `TELEGRAM_WEBHOOK_DEDUPE_TTL_SECONDS` (60..604800 с, дефолт 86400); перед Bull `claimFirstDelivery`; дубликат → не ставим job, **200**; без `update_id` / ошибка Redis → **fail-open** (ставим job)
 - E2.2 Идемпотентность `callback_query.id` (короткий TTL, опционально)
 - E2.3 Идempotency-key для дорогих действий (запуск обхода в окне)
 
