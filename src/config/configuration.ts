@@ -74,5 +74,17 @@ export default () => ({
       const n = parseInt(raw, 10);
       return Number.isFinite(n) && n >= 60 && n <= 604800 ? n : 86400;
     })(),
+    /** E2.2: optional second dedup layer for `callback_query.id` (short TTL). */
+    callbackDedupeEnabled:
+      (process.env.TELEGRAM_CALLBACK_DEDUPE_ENABLED ?? '').toLowerCase() ===
+      'true',
+    callbackDedupeTtlSeconds: (() => {
+      const raw = process.env.TELEGRAM_CALLBACK_DEDUPE_TTL_SECONDS;
+      if (raw === undefined || raw.trim() === '') {
+        return 300;
+      }
+      const n = parseInt(raw, 10);
+      return Number.isFinite(n) && n >= 30 && n <= 3600 ? n : 300;
+    })(),
   },
 });

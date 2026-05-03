@@ -68,4 +68,98 @@ describe('TelegramWebhookUpdateDedupService', () => {
       true,
     );
   });
+
+  describe('claimFirstCallbackDelivery (E2.2)', () => {
+    let svc: TelegramWebhookUpdateDedupService;
+    let mod: TestingModule;
+
+    afterEach(async () => {
+      await mod.close();
+    });
+
+    it('returns true when disabled without calling Redis', async () => {
+      set.mockClear();
+      mod = await Test.createTestingModule({
+        providers: [
+          TelegramWebhookUpdateDedupService,
+          { provide: TELEGRAM_WEBHOOK_DEDUP_REDIS, useValue: { set, quit: jest.fn() } },
+          {
+            provide: ConfigService,
+            useValue: {
+              get: (k: string) => {
+                if (k === 'telegram.callbackDedupeEnabled') return false;
+                return undefined;
+              },
+            },
+          },
+        ],
+      }).compile();
+      svc = mod.get(TelegramWebhookUpdateDedupService);
+      await expect(
+        svc.claimFirstCallbackDelivery({
+          callback_query: { id: 'cb-1' },
+        }),
+      ).resolves.toBe(true);
+      expect(set).not.toHaveBeenCalled();
+    });
+
+    it('sets NX with short TTL when enabled', async () => {
+      set.mockResolvedValueOnce('OK');
+      mod = await Test.createTestingModule({
+        providers: [
+          TelegramWebhookUpdateDedupService,
+          { provide: TELEGRAM_WEBHOOK_DEDUP_REDIS, useValue: { set, quit: jest.fn() } },
+          {
+            provide: ConfigService,
+            useValue: {
+              get: (k: string) => {
+                if (k === 'telegram.callbackDedupeEnabled') return true;
+                if (k === 'telegram.botId') return 'bot1';
+                if (k === 'telegram.callbackDedupeTtlSeconds') return 90;
+                return undefined;
+              },
+            },
+          },
+        ],
+      }).compile();
+      svc = mod.get(TelegramWebhookUpdateDedupService);
+      await expect(
+        svc.claimFirstCallbackDelivery({
+          callback_query: { id: 'cb-xyz' },
+        }),
+      ).resolves.toBe(true);
+      expect(set).toHaveBeenCalledWith(
+        'telegram:webhook:callback:v1:bot1:cb-xyz',
+        '1',
+        'EX',
+        90,
+        'NX',
+      );
+    });
+
+    it('returns false on duplicate callback id', async () => {
+      set.mockResolvedValueOnce(null);
+      mod = await Test.createTestingModule({
+        providers: [
+          TelegramWebhookUpdateDedupService,
+          { provide: TELEGRAM_WEBHOOK_DEDUP_REDIS, useValue: { set, quit: jest.fn() } },
+          {
+            provide: ConfigService,
+            useValue: {
+              get: (k: string) => {
+                if (k === 'telegram.callbackDedupeEnabled') return true;
+                if (k === 'telegram.botId') return 'b';
+                if (k === 'telegram.callbackDedupeTtlSeconds') return 60;
+                return undefined;
+              },
+            },
+          },
+        ],
+      }).compile();
+      svc = mod.get(TelegramWebhookUpdateDedupService);
+      await expect(
+        svc.claimFirstCallbackDelivery({ callback_query: { id: 'dup' } }),
+      ).resolves.toBe(false);
+    });
+  });
 });

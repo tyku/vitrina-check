@@ -73,6 +73,13 @@ const EnvSchema = z.object({
     .min(60)
     .max(604800)
     .optional(),
+  TELEGRAM_CALLBACK_DEDUPE_ENABLED: z.enum(['true', 'false']).optional(),
+  TELEGRAM_CALLBACK_DEDUPE_TTL_SECONDS: z.coerce
+    .number()
+    .int()
+    .min(30)
+    .max(3600)
+    .optional(),
 });
 
 export function validate(config: Record<string, unknown>) {

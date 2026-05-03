@@ -16,9 +16,13 @@ export class TelegramWebhookInboundService {
   ) {}
 
   /**
-   * Dedupes by `update_id` (E2.1), then pushes the raw body to BullMQ.
+   * Dedupes by `callback_query.id` (E2.2, optional), then `update_id` (E2.1), then BullMQ.
    */
   async enqueueWebhookUpdate(raw: unknown): Promise<void> {
+    const firstCb = await this.updateDedup.claimFirstCallbackDelivery(raw);
+    if (!firstCb) {
+      return;
+    }
     const first = await this.updateDedup.claimFirstDelivery(raw);
     if (!first) {
       return;
