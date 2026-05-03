@@ -50,6 +50,8 @@ const EnvSchema = z.object({
     .min(1)
     .max(1440)
     .optional(),
+  TELEGRAM_WEBHOOK_SECRET_TOKEN: z.string().min(1).optional(),
+  TELEGRAM_WEBHOOK_PATH_SECRET: z.string().min(1).optional(),
 });
 
 export function validate(config: Record<string, unknown>) {

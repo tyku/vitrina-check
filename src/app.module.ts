@@ -13,6 +13,7 @@ import { ChecklistsModule } from './checklists';
 import { DispatchParserModule } from './dispatch-parser';
 import { SchedulesModule } from './schedules';
 import { DispatchSchedulerModule } from './dispatch-scheduler';
+import { TelegramModule } from './telegram';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { DispatchSchedulerModule } from './dispatch-scheduler';
     DispatchParserModule,
     SchedulesModule,
     DispatchSchedulerModule,
+    TelegramModule,
   ],
   controllers: [AppController],
   providers: [AppService],

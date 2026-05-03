@@ -18,7 +18,7 @@
 
 ## Epic E1 — TelegramDelivery (webhook + безопасность)
 
-- [ ] E1.1 HTTP POST webhook: путь, проверка `secret_token` или path secret
+- [x] E1.1 HTTP POST webhook: путь, проверка `secret_token` или path secret — `POST /telegram/webhook` и `POST /telegram/webhook/:pathSecret`; env: `TELEGRAM_WEBHOOK_SECRET_TOKEN` (заголовок `X-Telegram-Bot-Api-Secret-Token` при `setWebhook`), опционально `TELEGRAM_WEBHOOK_PATH_SECRET`; в `production` без секретов — `401`
 - [ ] E1.2 Быстрый ACK: 200 сразу, тело update в очередь (BullMQ)
 - [ ] E1.3 Опционально: лимит размера тела, таймауты, маскирование PII в логах
 

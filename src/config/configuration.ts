@@ -35,4 +35,8 @@ export default () => ({
       parseInt(process.env.DISPATCH_PARSER_POLL_INTERVAL_MINUTES || '1', 10) ||
       1,
   },
+  telegram: {
+    webhookSecretToken: process.env.TELEGRAM_WEBHOOK_SECRET_TOKEN,
+    webhookPathSecret: process.env.TELEGRAM_WEBHOOK_PATH_SECRET,
+  },
 });
