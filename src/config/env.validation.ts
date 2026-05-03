@@ -52,6 +52,7 @@ const EnvSchema = z.object({
     .optional(),
   TELEGRAM_WEBHOOK_SECRET_TOKEN: z.string().min(1).optional(),
   TELEGRAM_WEBHOOK_PATH_SECRET: z.string().min(1).optional(),
+  TELEGRAM_WEBHOOK_SECRET_HEADER_NAME: z.string().min(1).optional(),
 });
 
 export function validate(config: Record<string, unknown>) {

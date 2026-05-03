@@ -38,5 +38,10 @@ export default () => ({
   telegram: {
     webhookSecretToken: process.env.TELEGRAM_WEBHOOK_SECRET_TOKEN,
     webhookPathSecret: process.env.TELEGRAM_WEBHOOK_PATH_SECRET,
+    /** Telegram Bot API: header present when `secret_token` was set in setWebhook. */
+    webhookSecretHeaderName: (
+      process.env.TELEGRAM_WEBHOOK_SECRET_HEADER_NAME?.trim() ||
+      'x-telegram-bot-api-secret-token'
+    ).toLowerCase(),
   },
 });
