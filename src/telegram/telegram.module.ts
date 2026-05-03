@@ -10,11 +10,16 @@ import {
 } from './telegram-webhook-dedup-redis.provider';
 import { TelegramWebhookUpdateDedupService } from './telegram-webhook-update-dedup.service';
 import { TELEGRAM_INCOMING_QUEUE } from './telegram-incoming.constants';
+import { TELEGRAM_OUTBOUND_QUEUE } from './telegram-outbound.constants';
+import { TelegramOutboundService } from './telegram-outbound.service';
 
 @Module({
   imports: [
     BullModule.registerQueue({
       name: TELEGRAM_INCOMING_QUEUE,
+    }),
+    BullModule.registerQueue({
+      name: TELEGRAM_OUTBOUND_QUEUE,
     }),
   ],
   controllers: [TelegramWebhookController],
@@ -25,7 +30,8 @@ import { TELEGRAM_INCOMING_QUEUE } from './telegram-incoming.constants';
     TelegramWebhookUpdateDedupService,
     TelegramWebhookInboundService,
     TelegramWebhookLimitsInterceptor,
+    TelegramOutboundService,
   ],
-  exports: [TelegramWebhookAuthService, BullModule],
+  exports: [TelegramWebhookAuthService, TelegramOutboundService, BullModule],
 })
 export class TelegramModule {}

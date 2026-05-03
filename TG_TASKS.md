@@ -49,7 +49,7 @@
 
 ## Epic E3 — Исходящие сообщения и лимиты Telegram
 
-- E3.1 Очередь `telegram-outbound` (BullMQ)
+- [x] E3.1 Очередь `telegram-outbound` (BullMQ) — `BullModule.registerQueue({ name: 'telegram-outbound' })`, `TelegramOutboundService.enqueueApiCall({ method, params, correlationId? })` → job `telegram-outbound-api-call`; воркер / лимиты / HTTP — E3.2+
 - E3.2 Token-bucket: глобально ~20–25 msg/s + per-chat ~1 msg/s
 - E3.3 Обработка HTTP 429 и `retry_after`
 - E3.4 Длинные отчёты: чанки, паузы, при необходимости `sendDocument`
