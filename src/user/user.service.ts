@@ -5,7 +5,7 @@ import {
   NotFoundException,
   Logger,
 } from '@nestjs/common';
-import { UserDocument } from './schemas/user.schema';
+import { SourceType, UserDocument } from './schemas/user.schema';
 import { UserRepository } from './user.repository';
 
 import type { TCreateUserDto } from './dto/create-user.dto';
@@ -55,6 +55,46 @@ export class UserService {
       throw new NotFoundException('User not found');
     }
     return this.mapToResponseDto(user);
+  }
+
+  /**
+   * Ensures a Mongo user exists for this Telegram account (E6.1-lite for E7).
+   */
+  async ensureTelegramUser(from: {
+    id: number;
+    first_name?: string;
+    last_name?: string;
+    username?: string;
+    language_code?: string;
+  }): Promise<TResponseUserDto> {
+    const userId = String(from.id);
+    const existing = await this.userRepository.findByTelegramId(userId);
+    if (existing) {
+      return this.mapToResponseDto(existing);
+    }
+    try {
+      const created = await this.userRepository.create({
+        sourceType: SourceType.TG,
+        userId,
+        firstName: from.first_name,
+        lastName: from.last_name,
+        username: from.username,
+        languageCode: from.language_code,
+      });
+      return this.mapToResponseDto(created);
+    } catch (error) {
+      const errorCode =
+        typeof error === 'object' && error
+          ? (error as Record<string, unknown>).code
+          : undefined;
+      if (typeof errorCode === 'number' && errorCode === 11000) {
+        const again = await this.userRepository.findByTelegramId(userId);
+        if (again) {
+          return this.mapToResponseDto(again);
+        }
+      }
+      throw error;
+    }
   }
 
   async update(

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { UserDocument, User } from './schemas/user.schema';
+import { SourceType, UserDocument, User } from './schemas/user.schema';
 import type { TCreateUserDto } from './dto/create-user.dto';
 import type { TUpdateUserDto } from './dto/update-user.dto';
 
@@ -20,6 +20,13 @@ export class UserRepository {
 
   async findByUsername(username: string): Promise<UserDocument | null> {
     return this.userModel.findOne({ username }).exec();
+  }
+
+  /** Telegram `from.id` as string in `userId` when `sourceType` is TG (E6.1 / E7). */
+  async findByTelegramId(telegramUserId: string): Promise<UserDocument | null> {
+    return this.userModel
+      .findOne({ sourceType: SourceType.TG, userId: telegramUserId })
+      .exec();
   }
 
   async update(
