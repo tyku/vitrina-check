@@ -52,7 +52,6 @@
 - [x] E3.1 Очередь `telegram-outbound` (BullMQ) — `BullModule.registerQueue({ name: 'telegram-outbound' })`, `TelegramOutboundService.enqueueApiCall({ method, params, correlationId? })` → job `telegram-outbound-api-call`; воркер / лимиты / HTTP — E3.2+
 - [x] E3.2 Token-bucket: глобально ~20–25 msg/s + per-chat ~1 msg/s — Redis Lua в `TelegramOutboundRateLimitService` (ключи `telegram:outbound:tb:v1:{botId}:…`), дефолты 22 / 25 / 1 / 2 (`TELEGRAM_OUTBOUND_GLOBAL_RATE_PER_SEC` …), без `chat_id` в params — только глобальный bucket; `TelegramOutboundProcessor` (concurrency 8) ждёт слот, затем `POST` к Bot API при `TELEGRAM_BOT_TOKEN`, иначе warn и без HTTP
 - [x] E3.3 Обработка HTTP 429 и `retry_after` — `postTelegramBotApi`: JSON `parameters.retry_after` (сек) или `TELEGRAM_OUTBOUND_429_DEFAULT_RETRY_SECONDS`, пауза `min(sec*1000, TELEGRAM_OUTBOUND_429_MAX_WAIT_MS)`, до `TELEGRAM_OUTBOUND_429_MAX_ROUNDS` раундов подряд; иначе 4xx/5xx — ошибка (Bull retry по job); парсер `parseRetryAfterSecondsFromTelegramBody` в `telegram-bot-api-error.ts`
-- E3.4 Длинные отчёты: чанки, паузы, при необходимости `sendDocument`
 
 ---
 
@@ -128,17 +127,18 @@
 
 ---
 
-## Epic E11 — Идемпотентность доменных действий (после появления сценариев)
+## Epic E11 — Идемпотентность и отложенная доставка (после появления сценариев)
 
-Эпик **вне** E2: здесь не входящий webhook, а **повторные намерения пользователя** (кнопка / LLM / callback), когда уже есть сервис «запустить обход» и т.п.
+Эпик **вне** E2: здесь не входящий webhook, а **доменные** вещи, которые имеет смысл делать после того, как есть реальные точки входа (кнопки, отчёт из артефактов).
 
 - E11.1 **Idempotency-key** для дорогих действий (запуск обхода в окне) — Redis `SET … NX EX` по ключу `user + action + scope` (или `jobId` в Bull), окно из env; **после** E6.5 (или эквивалента), где в коде реально ставится job dispatch; при ошибке Redis — политика fail-open / fail-closed зафиксировать в реализации
+- E11.2 **Длинные отчёты в TG** — чанки, паузы, при необходимости `sendDocument` (перенесено из **E3.4**); опирается на outbound E3.1–E3.3; ориентир **E6.6** (отчёт в TG из артефактов)
 
 ---
 
 ## Зависимости
 
-E1–E3 — база для продакшена. E6 параллельно E4; выполнение команд E4 после E6.1–E6.2. E8 после базового E6 или заглушки. **E10.3 зависит от E10.1–E10.2 и E8.5**; **E4.6 и E10.5 — после E7.4 для MVP-качества** (сначала полный UI, потом гарантия отключения LLM без потери функций). **E11.1** — после появления точки «запуск обхода» из бота/команд (ориентир **E6.5**).
+E1–E3 — база для продакшена. E6 параллельно E4; выполнение команд E4 после E6.1–E6.2. E8 после базового E6 или заглушки. **E10.3 зависит от E10.1–E10.2 и E8.5**; **E4.6 и E10.5 — после E7.4 для MVP-качества** (сначала полный UI, потом гарантия отключения LLM без потери функций). **E11.1** — после появления точки «запуск обхода» из бота/команд (ориентир **E6.5**). **E11.2** — после или вместе с **E6.6**, когда нужна полноценная доставка длинного отчёта в чат.
 
 ## Критерий MVP
 
