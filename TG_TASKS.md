@@ -50,8 +50,8 @@
 ## Epic E3 — Исходящие сообщения и лимиты Telegram
 
 - [x] E3.1 Очередь `telegram-outbound` (BullMQ) — `BullModule.registerQueue({ name: 'telegram-outbound' })`, `TelegramOutboundService.enqueueApiCall({ method, params, correlationId? })` → job `telegram-outbound-api-call`; воркер / лимиты / HTTP — E3.2+
-- [x] E3.2 Token-bucket: глобально ~20–25 msg/s + per-chat ~1 msg/s — Redis Lua в `TelegramOutboundRateLimitService` (ключи `telegram:outbound:tb:v1:{botId}:…`), дефолты 22 / 25 / 1 / 2 (`TELEGRAM_OUTBOUND_GLOBAL_RATE_PER_SEC` …), без `chat_id` в params — только глобальный bucket; `TelegramOutboundProcessor` (concurrency 8) ждёт слот, затем `POST` к Bot API при `TELEGRAM_BOT_TOKEN`, иначе warn и без HTTP; 429 — E3.3
-- E3.3 Обработка HTTP 429 и `retry_after`
+- [x] E3.2 Token-bucket: глобально ~20–25 msg/s + per-chat ~1 msg/s — Redis Lua в `TelegramOutboundRateLimitService` (ключи `telegram:outbound:tb:v1:{botId}:…`), дефолты 22 / 25 / 1 / 2 (`TELEGRAM_OUTBOUND_GLOBAL_RATE_PER_SEC` …), без `chat_id` в params — только глобальный bucket; `TelegramOutboundProcessor` (concurrency 8) ждёт слот, затем `POST` к Bot API при `TELEGRAM_BOT_TOKEN`, иначе warn и без HTTP
+- [x] E3.3 Обработка HTTP 429 и `retry_after` — `postTelegramBotApi`: JSON `parameters.retry_after` (сек) или `TELEGRAM_OUTBOUND_429_DEFAULT_RETRY_SECONDS`, пауза `min(sec*1000, TELEGRAM_OUTBOUND_429_MAX_WAIT_MS)`, до `TELEGRAM_OUTBOUND_429_MAX_ROUNDS` раундов подряд; иначе 4xx/5xx — ошибка (Bull retry по job); парсер `parseRetryAfterSecondsFromTelegramBody` в `telegram-bot-api-error.ts`
 - E3.4 Длинные отчёты: чанки, паузы, при необходимости `sendDocument`
 
 ---

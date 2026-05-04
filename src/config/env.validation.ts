@@ -93,6 +93,24 @@ const EnvSchema = z.object({
     .max(10)
     .optional(),
   TELEGRAM_OUTBOUND_CHAT_BURST: z.coerce.number().min(1).max(20).optional(),
+  TELEGRAM_OUTBOUND_429_DEFAULT_RETRY_SECONDS: z.coerce
+    .number()
+    .int()
+    .min(1)
+    .max(3600)
+    .optional(),
+  TELEGRAM_OUTBOUND_429_MAX_ROUNDS: z.coerce
+    .number()
+    .int()
+    .min(1)
+    .max(100)
+    .optional(),
+  TELEGRAM_OUTBOUND_429_MAX_WAIT_MS: z.coerce
+    .number()
+    .int()
+    .min(1000)
+    .max(86_400_000)
+    .optional(),
 });
 
 export function validate(config: Record<string, unknown>) {

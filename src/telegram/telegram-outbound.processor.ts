@@ -7,6 +7,7 @@ import {
   TELEGRAM_OUTBOUND_JOB_API_CALL,
   TELEGRAM_OUTBOUND_QUEUE,
 } from './telegram-outbound.constants';
+import { parseRetryAfterSecondsFromTelegramBody } from './telegram-bot-api-error';
 import { TelegramOutboundRateLimitService } from './telegram-outbound-rate-limit.service';
 
 const OutboundJobDataSchema = z.object({
@@ -71,18 +72,60 @@ export class TelegramOutboundProcessor extends WorkerHost {
       return;
     }
 
-    const url = `https://api.telegram.org/bot${token}/${payload.method}`;
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload.params),
-    });
+    await this.postTelegramBotApi(token, payload, job);
+  }
 
-    if (!res.ok) {
-      const body = await res.text();
+  /**
+   * POST JSON to Bot API; on 429 waits `retry_after` (or default) and retries until success or limits.
+   */
+  private async postTelegramBotApi(
+    token: string,
+    payload: z.infer<typeof OutboundJobDataSchema>,
+    job: Job,
+  ): Promise<void> {
+    const url = `https://api.telegram.org/bot${token}/${payload.method}`;
+    const defaultRetrySec =
+      this.configService.get<number>(
+        'telegram.outbound429DefaultRetrySeconds',
+      ) ?? 5;
+    const maxRounds =
+      this.configService.get<number>('telegram.outbound429MaxRounds') ?? 30;
+    const maxWaitMs =
+      this.configService.get<number>('telegram.outbound429MaxWaitMs') ??
+      3_600_000;
+
+    for (let round = 0; round < maxRounds; round++) {
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload.params),
+      });
+      const bodyText = await res.text();
+
+      if (res.ok) {
+        return;
+      }
+
+      if (res.status === 429) {
+        const sec = parseRetryAfterSecondsFromTelegramBody(
+          bodyText,
+          defaultRetrySec,
+        );
+        const waitMs = Math.min(sec * 1000, maxWaitMs);
+        this.logger.warn(
+          `Telegram 429 ${payload.method} job=${job.id?.toString() ?? 'n/a'} round=${round + 1}/${maxRounds} retry_after=${sec}s sleep=${waitMs}ms`,
+        );
+        await new Promise((r) => setTimeout(r, waitMs));
+        continue;
+      }
+
       throw new Error(
-        `Telegram API ${res.status} for ${payload.method}: ${body.slice(0, 500)}`,
+        `Telegram API ${res.status} for ${payload.method}: ${bodyText.slice(0, 500)}`,
       );
     }
+
+    throw new Error(
+      `Telegram 429: exceeded outbound429MaxRounds (${maxRounds}) for ${payload.method}`,
+    );
   }
 }

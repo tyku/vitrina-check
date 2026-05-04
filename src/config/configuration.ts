@@ -111,5 +111,29 @@ export default () => ({
       const n = parseFloat(process.env.TELEGRAM_OUTBOUND_CHAT_BURST ?? '2');
       return Number.isFinite(n) && n >= 1 && n <= 20 ? n : 2;
     })(),
+    /** E3.3: if Telegram omits `retry_after` on 429, wait this many seconds (default 5). */
+    outbound429DefaultRetrySeconds: (() => {
+      const n = parseInt(
+        process.env.TELEGRAM_OUTBOUND_429_DEFAULT_RETRY_SECONDS ?? '5',
+        10,
+      );
+      return Number.isFinite(n) && n >= 1 && n <= 3600 ? n : 5;
+    })(),
+    /** E3.3: max inner HTTP retries per job run on consecutive 429 (before failing the attempt). */
+    outbound429MaxRounds: (() => {
+      const n = parseInt(
+        process.env.TELEGRAM_OUTBOUND_429_MAX_ROUNDS ?? '30',
+        10,
+      );
+      return Number.isFinite(n) && n >= 1 && n <= 100 ? n : 30;
+    })(),
+    /** E3.3: cap one sleep after 429 (ms). */
+    outbound429MaxWaitMs: (() => {
+      const n = parseInt(
+        process.env.TELEGRAM_OUTBOUND_429_MAX_WAIT_MS ?? '3600000',
+        10,
+      );
+      return Number.isFinite(n) && n >= 1000 && n <= 86_400_000 ? n : 3_600_000;
+    })(),
   },
 });

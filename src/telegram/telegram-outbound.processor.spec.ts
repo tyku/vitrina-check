@@ -84,6 +84,74 @@ describe('TelegramOutboundProcessor', () => {
     fetchSpy.mockRestore();
   });
 
+  it('sleeps and retries on 429 with retry_after then succeeds', async () => {
+    jest.useFakeTimers();
+    const fetchSpy = jest
+      .spyOn(global, 'fetch')
+      .mockResolvedValueOnce({
+        ok: false,
+        status: 429,
+        text: () =>
+          Promise.resolve(
+            JSON.stringify({
+              ok: false,
+              error_code: 429,
+              parameters: { retry_after: 2 },
+            }),
+          ),
+      } as Response)
+      .mockResolvedValueOnce({
+        ok: true,
+        status: 200,
+        text: () => Promise.resolve('{"ok":true}'),
+      } as Response);
+    const config = {
+      get: jest.fn((k: string) => {
+        if (k === 'telegram.botToken') return 'tok';
+        if (k === 'telegram.outbound429DefaultRetrySeconds') return 5;
+        if (k === 'telegram.outbound429MaxRounds') return 30;
+        if (k === 'telegram.outbound429MaxWaitMs') return 3_600_000;
+        return undefined;
+      }),
+    } as unknown as ConfigService;
+    const processor = new TelegramOutboundProcessor(
+      config,
+      rateLimit as TelegramOutboundRateLimitService,
+    );
+    const done = processor.process(makeJob({}));
+    await jest.advanceTimersByTimeAsync(2000);
+    await done;
+    expect(fetchSpy).toHaveBeenCalledTimes(2);
+    jest.useRealTimers();
+    fetchSpy.mockRestore();
+  });
+
+  it('throws on non-429 error without retry', async () => {
+    const fetchSpy = jest.spyOn(global, 'fetch').mockResolvedValue({
+      ok: false,
+      status: 400,
+      text: () => Promise.resolve('{"ok":false,"description":"bad"}'),
+    } as Response);
+    const config = {
+      get: jest.fn((k: string) => {
+        if (k === 'telegram.botToken') return 'tok';
+        if (k === 'telegram.outbound429DefaultRetrySeconds') return 5;
+        if (k === 'telegram.outbound429MaxRounds') return 30;
+        if (k === 'telegram.outbound429MaxWaitMs') return 3_600_000;
+        return undefined;
+      }),
+    } as unknown as ConfigService;
+    const processor = new TelegramOutboundProcessor(
+      config,
+      rateLimit as TelegramOutboundRateLimitService,
+    );
+    await expect(processor.process(makeJob({}))).rejects.toThrow(
+      'Telegram API 400',
+    );
+    expect(fetchSpy).toHaveBeenCalledTimes(1);
+    fetchSpy.mockRestore();
+  });
+
   it('throws UnrecoverableError on invalid payload', async () => {
     const config = { get: jest.fn() } as unknown as ConfigService;
     const processor = new TelegramOutboundProcessor(
