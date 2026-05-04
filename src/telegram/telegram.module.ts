@@ -11,6 +11,8 @@ import {
 import { TelegramWebhookUpdateDedupService } from './telegram-webhook-update-dedup.service';
 import { TELEGRAM_INCOMING_QUEUE } from './telegram-incoming.constants';
 import { TELEGRAM_OUTBOUND_QUEUE } from './telegram-outbound.constants';
+import { TelegramOutboundProcessor } from './telegram-outbound.processor';
+import { TelegramOutboundRateLimitService } from './telegram-outbound-rate-limit.service';
 import { TelegramOutboundService } from './telegram-outbound.service';
 
 @Module({
@@ -31,6 +33,8 @@ import { TelegramOutboundService } from './telegram-outbound.service';
     TelegramWebhookInboundService,
     TelegramWebhookLimitsInterceptor,
     TelegramOutboundService,
+    TelegramOutboundRateLimitService,
+    TelegramOutboundProcessor,
   ],
   exports: [TelegramWebhookAuthService, TelegramOutboundService, BullModule],
 })

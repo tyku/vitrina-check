@@ -80,6 +80,19 @@ const EnvSchema = z.object({
     .min(30)
     .max(3600)
     .optional(),
+  TELEGRAM_BOT_TOKEN: z.string().min(1).optional(),
+  TELEGRAM_OUTBOUND_GLOBAL_RATE_PER_SEC: z.coerce
+    .number()
+    .min(1)
+    .max(50)
+    .optional(),
+  TELEGRAM_OUTBOUND_GLOBAL_BURST: z.coerce.number().min(1).max(100).optional(),
+  TELEGRAM_OUTBOUND_CHAT_RATE_PER_SEC: z.coerce
+    .number()
+    .min(0.1)
+    .max(10)
+    .optional(),
+  TELEGRAM_OUTBOUND_CHAT_BURST: z.coerce.number().min(1).max(20).optional(),
 });
 
 export function validate(config: Record<string, unknown>) {

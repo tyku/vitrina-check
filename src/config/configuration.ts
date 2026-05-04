@@ -85,5 +85,31 @@ export default () => ({
       const n = parseInt(raw, 10);
       return Number.isFinite(n) && n >= 30 && n <= 3600 ? n : 300;
     })(),
+    /** Bot API token for outbound calls (optional until integration tests use mock). */
+    botToken: process.env.TELEGRAM_BOT_TOKEN?.trim() || undefined,
+    /** E3.2: sustained global sends per second (~Bot API ~30/s cap; default 22). */
+    outboundGlobalRatePerSec: (() => {
+      const n = parseFloat(
+        process.env.TELEGRAM_OUTBOUND_GLOBAL_RATE_PER_SEC ?? '22',
+      );
+      return Number.isFinite(n) && n >= 1 && n <= 50 ? n : 22;
+    })(),
+    /** E3.2: max burst tokens for global bucket. */
+    outboundGlobalBurst: (() => {
+      const n = parseFloat(process.env.TELEGRAM_OUTBOUND_GLOBAL_BURST ?? '25');
+      return Number.isFinite(n) && n >= 1 && n <= 100 ? n : 25;
+    })(),
+    /** E3.2: sustained per-chat sends per second. */
+    outboundChatRatePerSec: (() => {
+      const n = parseFloat(
+        process.env.TELEGRAM_OUTBOUND_CHAT_RATE_PER_SEC ?? '1',
+      );
+      return Number.isFinite(n) && n >= 0.1 && n <= 10 ? n : 1;
+    })(),
+    /** E3.2: per-chat burst (quick double-send tolerance). */
+    outboundChatBurst: (() => {
+      const n = parseFloat(process.env.TELEGRAM_OUTBOUND_CHAT_BURST ?? '2');
+      return Number.isFinite(n) && n >= 1 && n <= 20 ? n : 2;
+    })(),
   },
 });
