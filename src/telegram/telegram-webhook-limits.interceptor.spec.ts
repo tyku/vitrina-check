@@ -24,8 +24,8 @@ describe('TelegramWebhookLimitsInterceptor', () => {
   it('throws PayloadTooLarge when serialized body exceeds max', () => {
     const interceptor = new TelegramWebhookLimitsInterceptor({
       get: (k: string) =>
-        (k === 'telegram.webhookMaxBodyBytes' ? 50 : undefined) as never,
-    } as ConfigService);
+        k === 'telegram.webhookMaxBodyBytes' ? 50 : undefined,
+    } as unknown as ConfigService);
     const ctx = makeContext({ update_id: 1, pad: 'x'.repeat(200) });
     expect(() =>
       interceptor.intercept(ctx, {
@@ -40,14 +40,16 @@ describe('TelegramWebhookLimitsInterceptor', () => {
         if (k === 'telegram.webhookMaxBodyBytes') return 10240;
         if (k === 'telegram.webhookRequestTimeoutMs') return 0;
         if (k === 'telegram.webhookLogSummary') return false;
-        return undefined as never;
+        return undefined;
       },
-    } as ConfigService);
+    } as unknown as ConfigService);
     const ctx = makeContext({ update_id: 1 });
     interceptor
       .intercept(ctx, { handle: () => of(undefined) } as CallHandler)
       .subscribe({
-        complete: () => done(),
+        complete: () => {
+          done();
+        },
       });
   });
 
@@ -55,8 +57,8 @@ describe('TelegramWebhookLimitsInterceptor', () => {
     const circular: Record<string, unknown> = { a: 1 };
     circular.self = circular;
     const interceptor = new TelegramWebhookLimitsInterceptor({
-      get: () => 10240 as never,
-    } as ConfigService);
+      get: () => 10240,
+    } as unknown as ConfigService);
     const ctx = makeContext(circular);
     expect(() =>
       interceptor.intercept(ctx, {
