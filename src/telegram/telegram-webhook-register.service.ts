@@ -15,13 +15,19 @@ function trimTrailingSlash(v: string): string {
   return v.replace(/\/+$/, '');
 }
 
-function buildWebhookUrls(baseUrl: string, pathSecret?: string): string[] {
+function buildWebhookUrls(
+  baseUrl: string,
+  pathSecret?: string,
+): {
+  plain: string;
+  withSecret?: string;
+} {
   const normalizedBase = trimTrailingSlash(baseUrl);
   const plain = `${normalizedBase}/telegram/webhook`;
   if (!pathSecret) {
-    return [plain];
+    return { plain };
   }
-  return [plain, `${plain}/${encodeURIComponent(pathSecret)}`];
+  return { plain, withSecret: `${plain}/${encodeURIComponent(pathSecret)}` };
 }
 
 @Injectable()
@@ -54,15 +60,27 @@ export class TelegramWebhookRegisterService implements OnApplicationBootstrap {
     const secretToken = this.configService
       .get<string>('telegram.webhookSecretToken')
       ?.trim();
-    const allowedUrls = buildWebhookUrls(publicBaseUrl, pathSecret);
-    const targetUrl = allowedUrls[allowedUrls.length - 1];
+    const webhookUrls = buildWebhookUrls(publicBaseUrl, pathSecret);
+    const targetUrl = webhookUrls.withSecret ?? webhookUrls.plain;
 
     const webhookInfo = await this.callTelegramApi<TelegramWebhookInfo>(
       token,
       'getWebhookInfo',
     );
     const currentUrl = webhookInfo.url.trim();
-    if (currentUrl.length > 0 && allowedUrls.includes(currentUrl)) {
+    if (pathSecret) {
+      if (currentUrl === webhookUrls.withSecret) {
+        this.logger.log(
+          `webhook already configured with path secret: ${currentUrl}`,
+        );
+        return;
+      }
+      if (currentUrl === webhookUrls.plain) {
+        this.logger.log(
+          `webhook without path secret detected, migrating to secret path: ${targetUrl}`,
+        );
+      }
+    } else if (currentUrl === webhookUrls.plain) {
       this.logger.log(`webhook already configured: ${currentUrl}`);
       return;
     }
