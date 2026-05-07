@@ -36,6 +36,9 @@ export default () => ({
       1,
   },
   telegram: {
+    /** Public base URL for auto `setWebhook` on startup (no trailing slash needed). */
+    webhookPublicBaseUrl:
+      process.env.TELEGRAM_WEBHOOK_PUBLIC_BASE_URL?.trim() || undefined,
     webhookSecretToken: process.env.TELEGRAM_WEBHOOK_SECRET_TOKEN,
     webhookPathSecret: process.env.TELEGRAM_WEBHOOK_PATH_SECRET,
     /** Telegram Bot API: header present when `secret_token` was set in setWebhook. */

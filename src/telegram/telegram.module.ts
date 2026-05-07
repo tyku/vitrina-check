@@ -17,6 +17,7 @@ import { TelegramOutboundRateLimitService } from './telegram-outbound-rate-limit
 import { TelegramOutboundService } from './telegram-outbound.service';
 import { TelegramBotUiService } from './telegram-bot-ui.service';
 import { TelegramIncomingProcessor } from './telegram-incoming.processor';
+import { TelegramWebhookRegisterService } from './telegram-webhook-register.service';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { TelegramIncomingProcessor } from './telegram-incoming.processor';
     TelegramOutboundProcessor,
     TelegramBotUiService,
     TelegramIncomingProcessor,
+    TelegramWebhookRegisterService,
   ],
   exports: [
     TelegramWebhookAuthService,

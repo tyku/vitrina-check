@@ -51,6 +51,7 @@ const EnvSchema = z.object({
     .max(1440)
     .optional(),
   TELEGRAM_WEBHOOK_SECRET_TOKEN: z.string().min(1).optional(),
+  TELEGRAM_WEBHOOK_PUBLIC_BASE_URL: z.url().optional(),
   TELEGRAM_WEBHOOK_PATH_SECRET: z.string().min(1).optional(),
   TELEGRAM_WEBHOOK_SECRET_HEADER_NAME: z.string().min(1).optional(),
   TELEGRAM_WEBHOOK_MAX_BODY_BYTES: z.coerce
