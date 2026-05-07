@@ -1,6 +1,7 @@
 import {
   Controller,
   HttpCode,
+  Logger,
   Param,
   Post,
   Req,
@@ -11,10 +12,13 @@ import type { Request } from 'express';
 import { TelegramWebhookAuthService } from './telegram-webhook-auth.service';
 import { TelegramWebhookInboundService } from './telegram-webhook-inbound.service';
 import { TelegramWebhookLimitsInterceptor } from './telegram-webhook-limits.interceptor';
+import { summarizeTelegramUpdateForLog } from './telegram-update-log-summary';
 
 @UseInterceptors(TelegramWebhookLimitsInterceptor)
 @Controller('telegram')
 export class TelegramWebhookController {
+  private readonly logger = new Logger(TelegramWebhookController.name);
+
   constructor(
     private readonly telegramWebhookAuth: TelegramWebhookAuthService,
     private readonly telegramWebhookInbound: TelegramWebhookInboundService,
@@ -35,6 +39,10 @@ export class TelegramWebhookController {
     const headerSecret =
       typeof hdr === 'string' ? hdr : Array.isArray(hdr) ? hdr[0] : undefined;
     this.telegramWebhookAuth.assertWebhookAuthorized(pathSecret, headerSecret);
+    const summary = summarizeTelegramUpdateForLog(req.body);
+    this.logger.log(
+      `webhook inbound pathSecret=${pathSecret !== undefined ? 'yes' : 'no'} ${JSON.stringify(summary)}`,
+    );
     await this.telegramWebhookInbound.enqueueWebhookUpdate(req.body);
   }
 }
