@@ -67,6 +67,7 @@ export class DispatchParserProcessor extends WorkerHost {
         artifactHtmlPath: htmlPathForAnalysis,
         patterns: [...DISPATCH_PARSER_OFFER_PATTERNS],
         resolveShortLinks: true,
+        shortLinkResolveMode: 'chain',
         shortLinkRequestHeaders: {
           'user-agent': this.configService.getOrThrow<string>(
             'playwright.userAgent',
@@ -104,11 +105,11 @@ export class DispatchParserProcessor extends WorkerHost {
         `Dispatch parser processed queue item id=${queueId}, jobId=${job.id?.toString() ?? 'n/a'}, href=${queueItem.href}, reportPath=${reportPath}, pageHtmlPath=${pageHtmlPath}`,
       );
     } catch (error) {
-      await this.dispatchQueueRepository.releasePending(queueId);
+      const message = error instanceof Error ? error.message : String(error);
+      await this.dispatchQueueRepository.markFailed(queueId, message);
       this.logger.error(
-        `Dispatch parser failed queue item id=${queueId}, href=${queueItem.href}: ${(error as Error).message}`,
+        `Dispatch parser failed queue item id=${queueId}, href=${queueItem.href}: ${message}`,
       );
-      throw error;
     } finally {
       if (scratchCapturePath) {
         try {

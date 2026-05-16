@@ -84,6 +84,24 @@ export class DispatchSchedulerQueueRepository {
             status: DispatchSchedulerQueueStatus.DONE,
             doneAt: new Date(),
           },
+          $unset: { failedAt: 1, errorMessage: 1 },
+        },
+      )
+      .exec();
+  }
+
+  async markFailed(id: string, errorMessage: string): Promise<void> {
+    const trimmed = errorMessage.trim().slice(0, 2000);
+    await this.queueModel
+      .updateOne(
+        { _id: id, status: DispatchSchedulerQueueStatus.PENDING },
+        {
+          $set: {
+            status: DispatchSchedulerQueueStatus.FAILED,
+            failedAt: new Date(),
+            errorMessage: trimmed || 'unknown error',
+          },
+          $unset: { doneAt: 1 },
         },
       )
       .exec();
@@ -95,7 +113,7 @@ export class DispatchSchedulerQueueRepository {
         { _id: id, status: DispatchSchedulerQueueStatus.PENDING },
         {
           $set: { status: DispatchSchedulerQueueStatus.CREATED },
-          $unset: { doneAt: 1 },
+          $unset: { doneAt: 1, failedAt: 1, errorMessage: 1 },
         },
       )
       .exec();

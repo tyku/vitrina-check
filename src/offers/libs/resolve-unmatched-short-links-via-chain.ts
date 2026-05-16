@@ -1,33 +1,32 @@
 import {
   TMatchedResolvedOffer,
   TOfferLink,
-  TResolvedShortLink,
+  TResolvedShortLinkWithChain,
   TResolveShortLinksOptions,
 } from '../types';
 
-import {
-  findLinksByPattern,
-  matchesAnyPattern,
-  normalizePatterns,
-} from './find-links-by-pattern';
+import { findLinksByPattern, normalizePatterns } from './find-links-by-pattern';
 import { isShortLink } from './is-short-link';
-import { resolveShortLinkToFinal } from './resolve-short-link-final';
+import { findFirstUrlPatternMatchInChain } from './match-url-patterns';
+import { resolveShortLinkChain } from './resolve-short-link-chain';
 import {
+  DEFAULT_SHORT_LINK_MAX_HOPS,
   mapUniqueUrlsWithConcurrency,
 } from './short-link-resolver.shared';
 
-export async function resolveUnmatchedShortLinks(
+export async function resolveUnmatchedShortLinksViaChain(
   offers: TOfferLink[],
   options: TResolveShortLinksOptions,
 ): Promise<{
   directMatches: TOfferLink[];
-  resolvedMatches: TResolvedShortLink[];
+  resolvedMatches: TResolvedShortLinkWithChain[];
   resolvedMatchedOffers: TMatchedResolvedOffer[];
-  allResolved: TResolvedShortLink[];
+  allResolved: TResolvedShortLinkWithChain[];
 }> {
   const patterns = normalizePatterns(options.patterns);
   const timeoutMs = options.timeoutMs ?? 12_000;
   const concurrency = options.concurrency ?? 8;
+  const maxHops = options.maxHops ?? DEFAULT_SHORT_LINK_MAX_HOPS;
 
   const directMatches = findLinksByPattern(offers, patterns);
   const directUrlSet = new Set(directMatches.map((offer) => offer.href));
@@ -41,11 +40,27 @@ export async function resolveUnmatchedShortLinks(
     unresolvedShortLinks,
     concurrency,
     (url) =>
-      resolveShortLinkToFinal(url, timeoutMs, options.requestHeaders),
+      resolveShortLinkChain(
+        url,
+        timeoutMs,
+        options.requestHeaders,
+        maxHops,
+      ),
   );
-  const resolvedMatches = allResolved.filter((item) =>
-    matchesAnyPattern(item.finalUrl, patterns),
-  );
+
+  const resolvedWithMatch = allResolved.map((item) => {
+    const patternMatch = findFirstUrlPatternMatchInChain(item.chain, patterns);
+    return { item, patternMatch };
+  });
+
+  const resolvedMatches = resolvedWithMatch
+    .filter(({ patternMatch }) => patternMatch !== null)
+    .map(({ item, patternMatch }) => ({
+      ...item,
+      matchedUrl: patternMatch?.matchedUrl,
+      matchedHopIndex: patternMatch?.hopIndex,
+    }));
+
   const matchedBySource = new Map(
     resolvedMatches.map((item) => [item.sourceUrl, item]),
   );
@@ -58,6 +73,9 @@ export async function resolveUnmatchedShortLinks(
         ...offer,
         finalUrl: resolution?.finalUrl || '',
         statusCode: resolution?.statusCode || 0,
+        matchedUrl: resolution?.matchedUrl,
+        matchedHopIndex: resolution?.matchedHopIndex,
+        chain: resolution?.chain,
       };
     });
 
@@ -65,6 +83,10 @@ export async function resolveUnmatchedShortLinks(
     directMatches,
     resolvedMatches,
     resolvedMatchedOffers,
-    allResolved,
+    allResolved: resolvedWithMatch.map(({ item, patternMatch }) => ({
+      ...item,
+      matchedUrl: patternMatch?.matchedUrl,
+      matchedHopIndex: patternMatch?.hopIndex,
+    })),
   };
 }

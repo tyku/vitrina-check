@@ -7,7 +7,9 @@ import {
   findLinksByPattern,
   normalizePatterns,
   resolveUnmatchedShortLinks,
+  resolveUnmatchedShortLinksViaChain,
 } from './libs';
+import type { TShortLinkResolveMode } from './types';
 
 @Injectable()
 export class OffersArtifactAnalyzerService {
@@ -31,16 +33,38 @@ export class OffersArtifactAnalyzerService {
       };
     }
 
-    const resolved = await resolveUnmatchedShortLinks(offers, {
+    const shortLinkResolveMode: TShortLinkResolveMode =
+      input.shortLinkResolveMode ?? 'final';
+    const resolveOptions = {
       patterns,
       timeoutMs: input.shortLinkTimeoutMs ?? 12_000,
       concurrency: input.shortLinkConcurrency ?? 8,
+      maxHops: input.shortLinkMaxHops,
       requestHeaders: input.shortLinkRequestHeaders,
-    });
+    };
+
+    if (shortLinkResolveMode === 'chain') {
+      const resolved = await resolveUnmatchedShortLinksViaChain(
+        offers,
+        resolveOptions,
+      );
+      return {
+        artifactHtmlPath,
+        patterns,
+        shortLinkResolveMode,
+        totalOffers: offers.length,
+        directMatches,
+        resolvedMatches: resolved.resolvedMatchedOffers,
+        shortLinkResolutions: resolved.allResolved,
+      };
+    }
+
+    const resolved = await resolveUnmatchedShortLinks(offers, resolveOptions);
 
     return {
       artifactHtmlPath,
       patterns,
+      shortLinkResolveMode,
       totalOffers: offers.length,
       directMatches,
       resolvedMatches: resolved.resolvedMatchedOffers,

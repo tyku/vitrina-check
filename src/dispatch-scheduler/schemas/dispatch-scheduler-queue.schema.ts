@@ -8,6 +8,7 @@ export enum DispatchSchedulerQueueStatus {
   CREATED = 'created',
   PENDING = 'pending',
   DONE = 'done',
+  FAILED = 'failed',
 }
 
 @Schema()
@@ -36,6 +37,12 @@ export class DispatchSchedulerQueue {
   doneAt?: Date;
 
   @Prop()
+  failedAt?: Date;
+
+  @Prop()
+  errorMessage?: string;
+
+  @Prop()
   createdAt: Date;
 
   @Prop()
@@ -52,5 +59,9 @@ DispatchSchedulerQueueSchema.index(
 );
 DispatchSchedulerQueueSchema.index(
   { doneAt: 1 },
+  { expireAfterSeconds: 86400 },
+);
+DispatchSchedulerQueueSchema.index(
+  { failedAt: 1 },
   { expireAfterSeconds: 86400 },
 );

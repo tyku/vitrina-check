@@ -1,0 +1,435 @@
+{
+  "dispatchQueueItemId": "6a08600a1ca55ea6138ffbc4",
+  "url": "https://kredya.ru",
+  "analyzedAt": "2026-05-16T12:20:31.573Z",
+  "artifactHtmlPath": "/Users/artemkud/dev/vitrina-check-telegram-01/artifacts/page_6a08600a1ca55ea6138ffbc4.html",
+  "patterns": [
+    "sravni",
+    "startracking"
+  ],
+  "shortLinkResolveMode": "chain",
+  "totalOffers": 16,
+  "directMatches": [],
+  "resolvedMatches": [
+    {
+      "href": "https://sovtrk.com/c/0vmqg",
+      "anchorText": "ТОП МФОдо 30 000 ₽суммадо 180 днейсрокот 18 летвозрастПодать заявку",
+      "blockName": "best_list",
+      "blockSelector": "div.best_list",
+      "positionOnPage": 1,
+      "positionInBlock": 1,
+      "finalUrl": "https://bistrodengi-mkk.ru/get/?utm_source=sravniru&utm_content=77d8b746a55a3fd8-207a2bacee3e7c8f-e914e8a5410bac42-d32ff2fa0c227a81&wmid=12479&utm_term=12479&utm_medium=cpa",
+      "statusCode": 200,
+      "matchedUrl": "https://goto.startracking.ru/api/v1/redirect?offer_id=811&aff_id=12479&source=8996&landing_id=12996&aff_sub2=Y9uTAukDAAAYAAAAASwN&aff_sub3=rs",
+      "matchedHopIndex": 1,
+      "chain": [
+        {
+          "url": "https://sovtrk.com/c/0vmqg?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://goto.startracking.ru/api/v1/redirect?offer_id=811&aff_id=12479&source=8996&landing_id=12996&aff_sub2=Y9uTAukDAAAYAAAAASwN&aff_sub3=rs",
+          "statusCode": 302
+        },
+        {
+          "url": "https://bistrodengi-mkk.ru/get/?utm_source=sravniru&utm_content=77d8b746a55a3fd8-207a2bacee3e7c8f-e914e8a5410bac42-d32ff2fa0c227a81&wmid=12479&utm_term=12479&utm_medium=cpa",
+          "statusCode": 200
+        }
+      ]
+    },
+    {
+      "href": "https://sovtrk.ru/c/ez2wr",
+      "anchorText": "ТОП-МФОдо 30 000 ₽суммадо 30 нед.срокот 18 летвозрастПодать заявку",
+      "blockName": "best_list",
+      "blockSelector": "div.best_list",
+      "positionOnPage": 2,
+      "positionInBlock": 2,
+      "finalUrl": "https://www.zaymer.ru/?utm_source=sravniru&utm_campaign=home&utm_medium=cpa&wmid=12479&utm_term=12479&click_id=bf40027356543789-b64ae238d170344b-9d5f3f9f8e6cea5f-de4431b2a35cd302",
+      "statusCode": 200,
+      "matchedUrl": "https://goto.startracking.ru/api/v1/redirect?aff_id=12479&offer_id=1234&landing_id=13071&source=8996&aff_sub2=Y9uTAukDAABBCAAAAR8I&aff_sub3=rs",
+      "matchedHopIndex": 1,
+      "chain": [
+        {
+          "url": "https://sovtrk.ru/c/ez2wr?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://goto.startracking.ru/api/v1/redirect?aff_id=12479&offer_id=1234&landing_id=13071&source=8996&aff_sub2=Y9uTAukDAABBCAAAAR8I&aff_sub3=rs",
+          "statusCode": 302
+        },
+        {
+          "url": "https://www.zaymer.ru/?utm_source=sravniru&utm_campaign=home&utm_medium=cpa&wmid=12479&utm_term=12479&click_id=bf40027356543789-b64ae238d170344b-9d5f3f9f8e6cea5f-de4431b2a35cd302",
+          "statusCode": 200
+        }
+      ]
+    },
+    {
+      "href": "https://sovtrk.com/c/egzwg",
+      "anchorText": "Первый займ бесплатнодо 100 000 ₽суммадо 30 днейсрокот 18 летвозрастПодать заявку",
+      "blockName": "best_list",
+      "blockSelector": "div.best_list",
+      "positionOnPage": 4,
+      "positionInBlock": 4,
+      "finalUrl": "https://turbozaim.ru/?utm_source=sravni&utm_medium=affiliate&utm_campaign=turbozaim&wmid=12479&transaction_id=50431c1aa3003eb2-862c0a3e5c56a9e9-832597a24eadf3c2-7847d40b0bcd4833",
+      "statusCode": 200,
+      "matchedUrl": "https://goto.startracking.ru/api/v1/redirect?offer_id=1539&aff_id=12479&source=8996&landing_id=12995&aff_sub2=Y9uTAukDAAACAAAAAZEK&aff_sub3=rs",
+      "matchedHopIndex": 1,
+      "chain": [
+        {
+          "url": "https://sovtrk.com/c/egzwg?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://goto.startracking.ru/api/v1/redirect?offer_id=1539&aff_id=12479&source=8996&landing_id=12995&aff_sub2=Y9uTAukDAAACAAAAAZEK&aff_sub3=rs",
+          "statusCode": 302
+        },
+        {
+          "url": "https://turbozaim.ru/?utm_source=sravni&utm_medium=affiliate&utm_campaign=turbozaim&wmid=12479&transaction_id=50431c1aa3003eb2-862c0a3e5c56a9e9-832597a24eadf3c2-7847d40b0bcd4833",
+          "statusCode": 200
+        }
+      ]
+    },
+    {
+      "href": "https://sovtrk.com/c/dxjwv",
+      "anchorText": "Высокий % одобрениядо 30 000 ₽суммадо 21 днясрокот 18 летвозрастПодать заявку",
+      "blockName": "basic_list",
+      "blockSelector": "div.basic_list",
+      "positionOnPage": 9,
+      "positionInBlock": 5,
+      "finalUrl": "https://ekapusta.ru/?utm_source=sravniru&utm_medium=lead&utm_campaign=12479&utm_content=325a7acd167936eb-1b8d6839b3d8704e-5e50f10eb6dc5441-5b68e2b0eb916951",
+      "statusCode": 200,
+      "matchedUrl": "https://goto.startracking.ru/api/v1/redirect?offer_id=1235&aff_id=12479&source=8996&landing_id=13033&aff_sub2=Y9uTAukDAAAIAAAAAUII&aff_sub3=rs",
+      "matchedHopIndex": 1,
+      "chain": [
+        {
+          "url": "https://sovtrk.com/c/dxjwv?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://goto.startracking.ru/api/v1/redirect?offer_id=1235&aff_id=12479&source=8996&landing_id=13033&aff_sub2=Y9uTAukDAAAIAAAAAUII&aff_sub3=rs",
+          "statusCode": 302
+        },
+        {
+          "url": "https://ekapusta.com/?utm_source=sravniru&utm_medium=lead&utm_campaign=12479&utm_content=325a7acd167936eb-1b8d6839b3d8704e-5e50f10eb6dc5441-5b68e2b0eb916951",
+          "statusCode": 301
+        },
+        {
+          "url": "https://ekapusta.ru/?utm_source=sravniru&utm_medium=lead&utm_campaign=12479&utm_content=325a7acd167936eb-1b8d6839b3d8704e-5e50f10eb6dc5441-5b68e2b0eb916951",
+          "statusCode": 200
+        }
+      ]
+    },
+    {
+      "href": "https://sovtrk.com/c/0vmqg",
+      "anchorText": "ТОП МФОдо 30 000 ₽суммадо 180 днейсрокот 18 летвозрастПодать заявку",
+      "blockName": "best_list",
+      "blockSelector": "div.best_list",
+      "positionOnPage": 13,
+      "positionInBlock": 5,
+      "finalUrl": "https://bistrodengi-mkk.ru/get/?utm_source=sravniru&utm_content=77d8b746a55a3fd8-207a2bacee3e7c8f-e914e8a5410bac42-d32ff2fa0c227a81&wmid=12479&utm_term=12479&utm_medium=cpa",
+      "statusCode": 200,
+      "matchedUrl": "https://goto.startracking.ru/api/v1/redirect?offer_id=811&aff_id=12479&source=8996&landing_id=12996&aff_sub2=Y9uTAukDAAAYAAAAASwN&aff_sub3=rs",
+      "matchedHopIndex": 1,
+      "chain": [
+        {
+          "url": "https://sovtrk.com/c/0vmqg?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://goto.startracking.ru/api/v1/redirect?offer_id=811&aff_id=12479&source=8996&landing_id=12996&aff_sub2=Y9uTAukDAAAYAAAAASwN&aff_sub3=rs",
+          "statusCode": 302
+        },
+        {
+          "url": "https://bistrodengi-mkk.ru/get/?utm_source=sravniru&utm_content=77d8b746a55a3fd8-207a2bacee3e7c8f-e914e8a5410bac42-d32ff2fa0c227a81&wmid=12479&utm_term=12479&utm_medium=cpa",
+          "statusCode": 200
+        }
+      ]
+    },
+    {
+      "href": "https://sovtrk.ru/c/ez2wr",
+      "anchorText": "ТОП-МФОдо 30 000 ₽суммадо 30 нед.срокот 18 летвозрастПодать заявку",
+      "blockName": "best_list",
+      "blockSelector": "div.best_list",
+      "positionOnPage": 14,
+      "positionInBlock": 6,
+      "finalUrl": "https://www.zaymer.ru/?utm_source=sravniru&utm_campaign=home&utm_medium=cpa&wmid=12479&utm_term=12479&click_id=bf40027356543789-b64ae238d170344b-9d5f3f9f8e6cea5f-de4431b2a35cd302",
+      "statusCode": 200,
+      "matchedUrl": "https://goto.startracking.ru/api/v1/redirect?aff_id=12479&offer_id=1234&landing_id=13071&source=8996&aff_sub2=Y9uTAukDAABBCAAAAR8I&aff_sub3=rs",
+      "matchedHopIndex": 1,
+      "chain": [
+        {
+          "url": "https://sovtrk.ru/c/ez2wr?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://goto.startracking.ru/api/v1/redirect?aff_id=12479&offer_id=1234&landing_id=13071&source=8996&aff_sub2=Y9uTAukDAABBCAAAAR8I&aff_sub3=rs",
+          "statusCode": 302
+        },
+        {
+          "url": "https://www.zaymer.ru/?utm_source=sravniru&utm_campaign=home&utm_medium=cpa&wmid=12479&utm_term=12479&click_id=bf40027356543789-b64ae238d170344b-9d5f3f9f8e6cea5f-de4431b2a35cd302",
+          "statusCode": 200
+        }
+      ]
+    },
+    {
+      "href": "https://sovtrk.com/c/egzwg",
+      "anchorText": "Первый займ бесплатнодо 100 000 ₽суммадо 30 днейсрокот 18 летвозрастПодать заявку",
+      "blockName": "best_list",
+      "blockSelector": "div.best_list",
+      "positionOnPage": 16,
+      "positionInBlock": 8,
+      "finalUrl": "https://turbozaim.ru/?utm_source=sravni&utm_medium=affiliate&utm_campaign=turbozaim&wmid=12479&transaction_id=50431c1aa3003eb2-862c0a3e5c56a9e9-832597a24eadf3c2-7847d40b0bcd4833",
+      "statusCode": 200,
+      "matchedUrl": "https://goto.startracking.ru/api/v1/redirect?offer_id=1539&aff_id=12479&source=8996&landing_id=12995&aff_sub2=Y9uTAukDAAACAAAAAZEK&aff_sub3=rs",
+      "matchedHopIndex": 1,
+      "chain": [
+        {
+          "url": "https://sovtrk.com/c/egzwg?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://goto.startracking.ru/api/v1/redirect?offer_id=1539&aff_id=12479&source=8996&landing_id=12995&aff_sub2=Y9uTAukDAAACAAAAAZEK&aff_sub3=rs",
+          "statusCode": 302
+        },
+        {
+          "url": "https://turbozaim.ru/?utm_source=sravni&utm_medium=affiliate&utm_campaign=turbozaim&wmid=12479&transaction_id=50431c1aa3003eb2-862c0a3e5c56a9e9-832597a24eadf3c2-7847d40b0bcd4833",
+          "statusCode": 200
+        }
+      ]
+    }
+  ],
+  "shortLinkResolutions": [
+    {
+      "sourceUrl": "https://sovtrk.com/c/v6kmp",
+      "finalUrl": "https://pxl.leads.su/click/3ca7b3ef41e34dd5d9d3f459b2e95f21?erid=2W5zFGghJoa&aff_sub1=Y9uTAukDAABwBAAAAU0J",
+      "statusCode": 200,
+      "error": "",
+      "chain": [
+        {
+          "url": "https://sovtrk.com/c/v6kmp?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://pxl.leads.su/click/3ca7b3ef41e34dd5d9d3f459b2e95f21?erid=2W5zFGghJoa&aff_sub1=Y9uTAukDAABwBAAAAU0J",
+          "statusCode": 200
+        }
+      ]
+    },
+    {
+      "sourceUrl": "https://sovtrk.com/c/v9r5l",
+      "finalUrl": "https://pxl.leads.su/click/6ac75b803574809cddbbd6d186495d24?aff_sub1=Y9uTAukDAAA9BgAAAWIH",
+      "statusCode": 200,
+      "error": "",
+      "chain": [
+        {
+          "url": "https://sovtrk.com/c/v9r5l?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://pxl.leads.su/click/6ac75b803574809cddbbd6d186495d24?aff_sub1=Y9uTAukDAAA9BgAAAWIH",
+          "statusCode": 200
+        }
+      ]
+    },
+    {
+      "sourceUrl": "https://sovtrk.com/c/g013x",
+      "finalUrl": "https://pxl.leads.su/click/bf358a69485dcd8a1081752210914809?erid=2W5zFJkUBEY&aff_sub1=Y9uTAukDAABJAAAAAR0I",
+      "statusCode": 200,
+      "error": "",
+      "chain": [
+        {
+          "url": "https://sovtrk.com/c/g013x?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://pxl.leads.su/click/bf358a69485dcd8a1081752210914809?erid=2W5zFJkUBEY&aff_sub1=Y9uTAukDAABJAAAAAR0I",
+          "statusCode": 200
+        }
+      ]
+    },
+    {
+      "sourceUrl": "https://sovtrk.com/c/0vmqg",
+      "finalUrl": "https://bistrodengi-mkk.ru/get/?utm_source=sravniru&utm_content=77d8b746a55a3fd8-207a2bacee3e7c8f-e914e8a5410bac42-d32ff2fa0c227a81&wmid=12479&utm_term=12479&utm_medium=cpa",
+      "statusCode": 200,
+      "error": "",
+      "chain": [
+        {
+          "url": "https://sovtrk.com/c/0vmqg?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://goto.startracking.ru/api/v1/redirect?offer_id=811&aff_id=12479&source=8996&landing_id=12996&aff_sub2=Y9uTAukDAAAYAAAAASwN&aff_sub3=rs",
+          "statusCode": 302
+        },
+        {
+          "url": "https://bistrodengi-mkk.ru/get/?utm_source=sravniru&utm_content=77d8b746a55a3fd8-207a2bacee3e7c8f-e914e8a5410bac42-d32ff2fa0c227a81&wmid=12479&utm_term=12479&utm_medium=cpa",
+          "statusCode": 200
+        }
+      ],
+      "matchedUrl": "https://goto.startracking.ru/api/v1/redirect?offer_id=811&aff_id=12479&source=8996&landing_id=12996&aff_sub2=Y9uTAukDAAAYAAAAASwN&aff_sub3=rs",
+      "matchedHopIndex": 1
+    },
+    {
+      "sourceUrl": "https://sovtrk.com/c/egzwg",
+      "finalUrl": "https://turbozaim.ru/?utm_source=sravni&utm_medium=affiliate&utm_campaign=turbozaim&wmid=12479&transaction_id=50431c1aa3003eb2-862c0a3e5c56a9e9-832597a24eadf3c2-7847d40b0bcd4833",
+      "statusCode": 200,
+      "error": "",
+      "chain": [
+        {
+          "url": "https://sovtrk.com/c/egzwg?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://goto.startracking.ru/api/v1/redirect?offer_id=1539&aff_id=12479&source=8996&landing_id=12995&aff_sub2=Y9uTAukDAAACAAAAAZEK&aff_sub3=rs",
+          "statusCode": 302
+        },
+        {
+          "url": "https://turbozaim.ru/?utm_source=sravni&utm_medium=affiliate&utm_campaign=turbozaim&wmid=12479&transaction_id=50431c1aa3003eb2-862c0a3e5c56a9e9-832597a24eadf3c2-7847d40b0bcd4833",
+          "statusCode": 200
+        }
+      ],
+      "matchedUrl": "https://goto.startracking.ru/api/v1/redirect?offer_id=1539&aff_id=12479&source=8996&landing_id=12995&aff_sub2=Y9uTAukDAAACAAAAAZEK&aff_sub3=rs",
+      "matchedHopIndex": 1
+    },
+    {
+      "sourceUrl": "https://sovtrk.ru/c/88qww",
+      "finalUrl": "https://pxl.leads.su/click/8f06199421ff2977d50620faf144c97f?aff_sub1=Y9uTAukDAACDBgAAAR8I",
+      "statusCode": 200,
+      "error": "",
+      "chain": [
+        {
+          "url": "https://sovtrk.ru/c/88qww?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://pxl.leads.su/click/8f06199421ff2977d50620faf144c97f?aff_sub1=Y9uTAukDAACDBgAAAR8I",
+          "statusCode": 200
+        }
+      ]
+    },
+    {
+      "sourceUrl": "https://sovtrk.com/c/gpdym",
+      "finalUrl": "https://wbbankir.ru/promo/online-zaim-cpa/?utm_source=finuslugi&utm_term=wb&utm_medium=cpa&utm_campaign=d8461oo33e4s73csb0q0&utm_content=MB56850",
+      "statusCode": 200,
+      "error": "",
+      "chain": [
+        {
+          "url": "https://sovtrk.com/c/gpdym?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://fnslg.ru/click.php?key=6aad810ac20d22b0a7d3&external_id=Y9uTAukDAABOBQAAAX8B&utm_medium=affiliate&utm_source=sovabaing&utm_content=external_share&utm_term=agasd",
+          "statusCode": 307
+        },
+        {
+          "url": "https://wbbankir.ru/promo/online-zaim-cpa/?utm_source=finuslugi&utm_term=wb&utm_medium=cpa&utm_campaign=d8461oo33e4s73csb0q0&utm_content=MB56850",
+          "statusCode": 200
+        }
+      ]
+    },
+    {
+      "sourceUrl": "https://sovtrk.com/c/xwl5r",
+      "finalUrl": "https://cashtoyou.ru/?utm_source=CC_finuslugi_zaim&clickid=d8461oo33e4s73csb0pg&wmid=MB56799",
+      "statusCode": 200,
+      "error": "",
+      "chain": [
+        {
+          "url": "https://sovtrk.com/c/xwl5r?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://fnslg.ru/click.php?key=d605caa53a2488aaa818&external_id=Y9uTAukDAAByAwAAARoG&utm_medium=affiliate&utm_source=sovabaing&utm_content=external_share&utm_term=agasd",
+          "statusCode": 307
+        },
+        {
+          "url": "https://cashtoyou.ru/?utm_source=CC_finuslugi_zaim&clickid=d8461oo33e4s73csb0pg&wmid=MB56799",
+          "statusCode": 200
+        }
+      ]
+    },
+    {
+      "sourceUrl": "https://sovtrk.ru/c/r1e32",
+      "finalUrl": "https://zarubas.ru/?cpa=1&utm_source=logistikslidzr&utm_term=Y9uTAukDAACaBgAAAcAB&wmid=agasd",
+      "statusCode": 200,
+      "error": "",
+      "chain": [
+        {
+          "url": "https://sovtrk.ru/c/r1e32?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://zarubas.ru/?cpa=1&utm_source=logistikslidzr&utm_term=Y9uTAukDAACaBgAAAcAB&wmid=agasd",
+          "statusCode": 200
+        }
+      ]
+    },
+    {
+      "sourceUrl": "https://sovtrk.com/c/dxjwv",
+      "finalUrl": "https://ekapusta.ru/?utm_source=sravniru&utm_medium=lead&utm_campaign=12479&utm_content=325a7acd167936eb-1b8d6839b3d8704e-5e50f10eb6dc5441-5b68e2b0eb916951",
+      "statusCode": 200,
+      "error": "",
+      "chain": [
+        {
+          "url": "https://sovtrk.com/c/dxjwv?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://goto.startracking.ru/api/v1/redirect?offer_id=1235&aff_id=12479&source=8996&landing_id=13033&aff_sub2=Y9uTAukDAAAIAAAAAUII&aff_sub3=rs",
+          "statusCode": 302
+        },
+        {
+          "url": "https://ekapusta.com/?utm_source=sravniru&utm_medium=lead&utm_campaign=12479&utm_content=325a7acd167936eb-1b8d6839b3d8704e-5e50f10eb6dc5441-5b68e2b0eb916951",
+          "statusCode": 301
+        },
+        {
+          "url": "https://ekapusta.ru/?utm_source=sravniru&utm_medium=lead&utm_campaign=12479&utm_content=325a7acd167936eb-1b8d6839b3d8704e-5e50f10eb6dc5441-5b68e2b0eb916951",
+          "statusCode": 200
+        }
+      ],
+      "matchedUrl": "https://goto.startracking.ru/api/v1/redirect?offer_id=1235&aff_id=12479&source=8996&landing_id=13033&aff_sub2=Y9uTAukDAAAIAAAAAUII&aff_sub3=rs",
+      "matchedHopIndex": 1
+    },
+    {
+      "sourceUrl": "https://sovtrk.com/c/go0og",
+      "finalUrl": "https://greenmoney.ru/?utm_source=finuslugi_flff&utm_medium=affiliate&utm_campaign=finuslugi3&utm_content={click_id}&transaction_id=d8461oo33e4s73csb0qg&utm_term=MB56799&wm_chan=MB56799",
+      "statusCode": 200,
+      "error": "",
+      "chain": [
+        {
+          "url": "https://sovtrk.com/c/go0og?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://fnslg.ru/click.php?key=d5913d15c9ecddcbcb3d&external_id=Y9uTAukDAABhAAAAAcMO&utm_medium=affiliate&utm_source=sovabaing&utm_content=external_share&utm_term=agasd",
+          "statusCode": 307
+        },
+        {
+          "url": "https://greenmoney.ru/?utm_source=finuslugi_flff&utm_medium=affiliate&utm_campaign=finuslugi3&utm_content={click_id}&transaction_id=d8461oo33e4s73csb0qg&utm_term=MB56799&wm_chan=MB56799",
+          "statusCode": 200
+        }
+      ]
+    },
+    {
+      "sourceUrl": "https://sovtrk.ru/c/ez2wr",
+      "finalUrl": "https://www.zaymer.ru/?utm_source=sravniru&utm_campaign=home&utm_medium=cpa&wmid=12479&utm_term=12479&click_id=bf40027356543789-b64ae238d170344b-9d5f3f9f8e6cea5f-de4431b2a35cd302",
+      "statusCode": 200,
+      "error": "",
+      "chain": [
+        {
+          "url": "https://sovtrk.ru/c/ez2wr?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://goto.startracking.ru/api/v1/redirect?aff_id=12479&offer_id=1234&landing_id=13071&source=8996&aff_sub2=Y9uTAukDAABBCAAAAR8I&aff_sub3=rs",
+          "statusCode": 302
+        },
+        {
+          "url": "https://www.zaymer.ru/?utm_source=sravniru&utm_campaign=home&utm_medium=cpa&wmid=12479&utm_term=12479&click_id=bf40027356543789-b64ae238d170344b-9d5f3f9f8e6cea5f-de4431b2a35cd302",
+          "statusCode": 200
+        }
+      ],
+      "matchedUrl": "https://goto.startracking.ru/api/v1/redirect?aff_id=12479&offer_id=1234&landing_id=13071&source=8996&aff_sub2=Y9uTAukDAABBCAAAAR8I&aff_sub3=rs",
+      "matchedHopIndex": 1
+    }
+  ]
+}
