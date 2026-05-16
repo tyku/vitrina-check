@@ -10,7 +10,9 @@ import {
   TG_CB_MENU_VITRINY,
   TG_MAIN_MENU_CALLBACKS,
 } from './telegram-bot-ui.constants';
+import { isVitrinyCallback } from './telegram-vitriny-ui.constants';
 import { TelegramOutboundService } from './telegram-outbound.service';
+import { TelegramVitrinyUiService } from './telegram-vitriny-ui.service';
 import {
   ParsedTelegramUpdate,
   TelegramUpdateSchema,
@@ -61,6 +63,7 @@ export class TelegramBotUiService {
   constructor(
     private readonly outbound: TelegramOutboundService,
     private readonly users: UserService,
+    private readonly vitrinyUi: TelegramVitrinyUiService,
   ) {}
 
   /**
@@ -98,15 +101,28 @@ export class TelegramBotUiService {
       return;
     }
 
-    await this.users.ensureTelegramUser(from);
-
+    const user = await this.users.ensureTelegramUser(from);
+    const telegramUserId = String(from.id);
     const cmd = normalizeBotCommand(text);
     const chatId = chatIdString(chat);
+
+    if (!cmd) {
+      const handled = await this.vitrinyUi.handleTextMessage(
+        text,
+        chatId,
+        user,
+        telegramUserId,
+        correlationId,
+      );
+      if (handled) {
+        return;
+      }
+    }
 
     if (cmd === '/start') {
       await this.enqueueSendMessage({
         chat_id: chatId,
-        text: 'Привет. Я помогу с витринами и проверками — пока главное меню ниже (разделы в разработке).',
+        text: 'Привет. Я помогу с витринами и проверками — выберите раздел в меню ниже.',
         reply_markup: mainMenuReplyMarkup(),
         correlationId,
       });
@@ -123,10 +139,9 @@ export class TelegramBotUiService {
     }
 
     if (cmd === '/status') {
-      const u = await this.users.ensureTelegramUser(from);
       await this.enqueueSendMessage({
         chat_id: chatId,
-        text: `Бот работает. Ваш user id в базе: ${u.id}\nTelegram id: ${u.userId}`,
+        text: `Бот работает. Ваш user id в базе: ${user.id}\nTelegram id: ${user.userId}`,
         correlationId,
       });
       return;
@@ -138,6 +153,11 @@ export class TelegramBotUiService {
     correlationId: string,
   ): Promise<void> {
     const data = cq.data?.trim() ?? '';
+    const from = cq.from;
+    if (!from) {
+      return;
+    }
+
     await this.enqueueAnswerCallbackQuery({
       callback_query_id: cq.id,
       correlationId,
@@ -148,6 +168,31 @@ export class TelegramBotUiService {
       return;
     }
     const chatId = chatIdString(msg.chat);
+    const user = await this.users.ensureTelegramUser(from);
+    const telegramUserId = String(from.id);
+
+    if (data === TG_CB_MENU_VITRINY || isVitrinyCallback(data)) {
+      if (data === TG_CB_MENU_VITRINY) {
+        await this.vitrinyUi.showMenu(chatId, user, correlationId);
+        return;
+      }
+      const vitrinyResult = await this.vitrinyUi.handleCallback(
+        data,
+        chatId,
+        user,
+        telegramUserId,
+        correlationId,
+      );
+      if (vitrinyResult === 'back_main') {
+        await this.enqueueSendMessage({
+          chat_id: chatId,
+          text: 'Главное меню:',
+          reply_markup: mainMenuReplyMarkup(),
+          correlationId,
+        });
+      }
+      return;
+    }
 
     if (!TG_MAIN_MENU_CALLBACKS.has(data)) {
       await this.enqueueSendMessage({
@@ -159,7 +204,6 @@ export class TelegramBotUiService {
     }
 
     const stubs: Record<string, string> = {
-      [TG_CB_MENU_VITRINY]: 'Раздел «Витрины» скоро будет доступен.',
       [TG_CB_MENU_TAGS]: 'Раздел «Метки» скоро будет доступен.',
       [TG_CB_MENU_SCHEDULE]: 'Раздел «Расписание» скоро будет доступен.',
       [TG_CB_MENU_RUN]: 'Запуск проверки — скоро будет доступен.',

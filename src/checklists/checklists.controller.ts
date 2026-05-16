@@ -8,6 +8,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { ZodValidationPipe } from '../user/pipes/zod-validation.pipe';
 import { ChecklistsService } from './checklists.service';
@@ -41,12 +42,16 @@ export class ChecklistsController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  async findAll(): Promise<{
+  async findAll(
+    @Query('userId') userId?: string,
+  ): Promise<{
     success: boolean;
     data: TResponseChecklistDto[];
     message: string;
   }> {
-    const checklists = await this.checklistsService.findAll();
+    const checklists = userId
+      ? await this.checklistsService.findByUserId(userId)
+      : await this.checklistsService.findAll();
     return {
       success: true,
       data: checklists,

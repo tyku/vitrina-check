@@ -1,5 +1,6 @@
 import { BullModule } from '@nestjs/bullmq';
 import { Module } from '@nestjs/common';
+import { ChecklistsModule } from '../checklists';
 import { UserModule } from '../user/user.module';
 import { TelegramWebhookController } from './telegram-webhook.controller';
 import { TelegramWebhookAuthService } from './telegram-webhook-auth.service';
@@ -17,11 +18,14 @@ import { TelegramOutboundRateLimitService } from './telegram-outbound-rate-limit
 import { TelegramOutboundService } from './telegram-outbound.service';
 import { TelegramBotUiService } from './telegram-bot-ui.service';
 import { TelegramIncomingProcessor } from './telegram-incoming.processor';
+import { TelegramUserSessionService } from './telegram-user-session.service';
+import { TelegramVitrinyUiService } from './telegram-vitriny-ui.service';
 import { TelegramWebhookRegisterService } from './telegram-webhook-register.service';
 
 @Module({
   imports: [
     UserModule,
+    ChecklistsModule,
     BullModule.registerQueue({
       name: TELEGRAM_INCOMING_QUEUE,
     }),
@@ -41,6 +45,8 @@ import { TelegramWebhookRegisterService } from './telegram-webhook-register.serv
     TelegramOutboundRateLimitService,
     TelegramOutboundProcessor,
     TelegramBotUiService,
+    TelegramVitrinyUiService,
+    TelegramUserSessionService,
     TelegramIncomingProcessor,
     TelegramWebhookRegisterService,
   ],

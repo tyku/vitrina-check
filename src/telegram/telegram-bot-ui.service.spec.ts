@@ -7,6 +7,7 @@ import {
   TelegramBotUiService,
 } from './telegram-bot-ui.service';
 import { TelegramOutboundService } from './telegram-outbound.service';
+import { TelegramVitrinyUiService } from './telegram-vitriny-ui.service';
 
 type EnqueuePayload = {
   method: string;
@@ -29,6 +30,7 @@ describe('TelegramBotUiService', () => {
   let service: TelegramBotUiService;
   let outbound: { enqueueApiCall: jest.Mock };
   let users: { ensureTelegramUser: jest.Mock };
+  let vitrinyUi: { showMenu: jest.Mock; handleCallback: jest.Mock; handleTextMessage: jest.Mock };
 
   beforeEach(async () => {
     outbound = { enqueueApiCall: jest.fn().mockResolvedValue(undefined) };
@@ -39,11 +41,17 @@ describe('TelegramBotUiService', () => {
         sourceType: 'tg',
       }),
     };
+    vitrinyUi = {
+      showMenu: jest.fn().mockResolvedValue(undefined),
+      handleCallback: jest.fn().mockResolvedValue('handled'),
+      handleTextMessage: jest.fn().mockResolvedValue(false),
+    };
     const moduleRef: TestingModule = await Test.createTestingModule({
       providers: [
         TelegramBotUiService,
         { provide: TelegramOutboundService, useValue: outbound },
         { provide: UserService, useValue: users },
+        { provide: TelegramVitrinyUiService, useValue: vitrinyUi },
       ],
     }).compile();
     service = moduleRef.get(TelegramBotUiService);
@@ -77,7 +85,7 @@ describe('TelegramBotUiService', () => {
     expect(params.reply_markup).toBeDefined();
   });
 
-  it('handles callback with stub message', async () => {
+  it('opens vitriny menu on main menu callback', async () => {
     await service.handleInboundJob({
       id: 'j2',
       data: {
@@ -92,16 +100,10 @@ describe('TelegramBotUiService', () => {
         },
       },
     } as Job<{ raw?: unknown }>);
-    expect(outbound.enqueueApiCall).toHaveBeenCalledWith(
-      expect.objectContaining({ method: 'answerCallbackQuery' }),
-    );
-    expect(outbound.enqueueApiCall).toHaveBeenCalledWith(
-      expect.objectContaining({
-        method: 'sendMessage',
-        params: expect.objectContaining({
-          text: expect.stringContaining('Витрины') as string,
-        }) as Record<string, unknown>,
-      }),
+    expect(vitrinyUi.showMenu).toHaveBeenCalledWith(
+      '100',
+      expect.objectContaining({ id: 'u1' }),
+      expect.stringContaining('in:2:j2'),
     );
   });
 });

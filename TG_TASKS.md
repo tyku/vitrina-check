@@ -78,7 +78,7 @@
 ## Epic E6 — Интеграция с доменом витрин (Nest)
 
 - [x] E6.1 Маппинг Telegram user ↔ `User` — в схеме поле `userId` + `sourceType: tg` (= Telegram id); `UserRepository.findByTelegramId`, `UserService.ensureTelegramUser` при `/start` и callback (E7)
-- E6.2 CRUD витрин через существующий модуль чеклистов
+- [x] E6.2 CRUD витрин через существующий модуль чеклистов — `ChecklistsService` (`findByUserId`, `createForUser`, `removeForUser`), валидация URL; Telegram: список / добавить (сессия Redis) / удалить с подтверждением (`TelegramVitrinyUiService`); `GET /checklists?userId=`
 - E6.3 Метки оферов: хранение и передача в offers/dispatch
 - E6.4 Политика «одно расписание на все обходы»
 - E6.5 Кнопка «Проверить сейчас» → dispatch
