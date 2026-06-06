@@ -3,6 +3,7 @@ export type TResponseChecklistDto = {
   userId: string;
   href: string;
   name?: string;
+  tags: string[];
   createdAt: Date;
   updatedAt: Date;
 };

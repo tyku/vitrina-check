@@ -11,7 +11,9 @@ import {
   TG_MAIN_MENU_CALLBACKS,
 } from './telegram-bot-ui.constants';
 import { isVitrinyCallback } from './telegram-vitriny-ui.constants';
+import { isTagsCallback } from './telegram-tags-ui.constants';
 import { TelegramOutboundService } from './telegram-outbound.service';
+import { TelegramTagsUiService } from './telegram-tags-ui.service';
 import { TelegramVitrinyUiService } from './telegram-vitriny-ui.service';
 import {
   ParsedTelegramUpdate,
@@ -64,6 +66,7 @@ export class TelegramBotUiService {
     private readonly outbound: TelegramOutboundService,
     private readonly users: UserService,
     private readonly vitrinyUi: TelegramVitrinyUiService,
+    private readonly tagsUi: TelegramTagsUiService,
   ) {}
 
   /**
@@ -107,14 +110,24 @@ export class TelegramBotUiService {
     const chatId = chatIdString(chat);
 
     if (!cmd) {
-      const handled = await this.vitrinyUi.handleTextMessage(
+      const handledByVitriny = await this.vitrinyUi.handleTextMessage(
         text,
         chatId,
         user,
         telegramUserId,
         correlationId,
       );
-      if (handled) {
+      if (handledByVitriny) {
+        return;
+      }
+      const handledByTags = await this.tagsUi.handleTextMessage(
+        text,
+        chatId,
+        user,
+        telegramUserId,
+        correlationId,
+      );
+      if (handledByTags) {
         return;
       }
     }
@@ -171,6 +184,29 @@ export class TelegramBotUiService {
     const user = await this.users.ensureTelegramUser(from);
     const telegramUserId = String(from.id);
 
+    if (data === TG_CB_MENU_TAGS || isTagsCallback(data)) {
+      if (data === TG_CB_MENU_TAGS) {
+        await this.tagsUi.showMenu(chatId, user, correlationId);
+        return;
+      }
+      const tagsResult = await this.tagsUi.handleCallback(
+        data,
+        chatId,
+        user,
+        telegramUserId,
+        correlationId,
+      );
+      if (tagsResult === 'back_main') {
+        await this.enqueueSendMessage({
+          chat_id: chatId,
+          text: 'Главное меню:',
+          reply_markup: mainMenuReplyMarkup(),
+          correlationId,
+        });
+      }
+      return;
+    }
+
     if (data === TG_CB_MENU_VITRINY || isVitrinyCallback(data)) {
       if (data === TG_CB_MENU_VITRINY) {
         await this.vitrinyUi.showMenu(chatId, user, correlationId);
@@ -204,7 +240,6 @@ export class TelegramBotUiService {
     }
 
     const stubs: Record<string, string> = {
-      [TG_CB_MENU_TAGS]: 'Раздел «Метки» скоро будет доступен.',
       [TG_CB_MENU_SCHEDULE]: 'Раздел «Расписание» скоро будет доступен.',
       [TG_CB_MENU_RUN]: 'Запуск проверки — скоро будет доступен.',
       [TG_CB_MENU_REPORT]: 'Отчёты — скоро будут доступны.',

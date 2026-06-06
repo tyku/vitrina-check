@@ -6,11 +6,14 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { ChecklistsRepository } from './checklists.repository';
-import { ChecklistDocument } from './schemas/checklist.schema';
+import {
+  ChecklistDocument,
+} from './schemas/checklist.schema';
 import type { TCreateChecklistDto } from './dto/create-checklist.dto';
 import type { TUpdateChecklistDto } from './dto/update-checklist.dto';
 import type { TResponseChecklistDto } from './dto/response-checklist.dto';
 import { validateVitrinaUrl } from './libs/validate-vitrina-url';
+import { normalizeOfferTags } from './libs/normalize-offer-tags';
 
 @Injectable()
 export class ChecklistsService {
@@ -101,6 +104,66 @@ export class ChecklistsService {
     await this.checklistsRepository.remove(id);
   }
 
+  /** Patterns for offers/dispatch analysis (normalized, may be empty). */
+  async getPatternsForChecklist(checklistId: string): Promise<string[]> {
+    const checklist = await this.checklistsRepository.findById(checklistId);
+    return checklist?.tags ?? [];
+  }
+
+  async setTagsForChecklist(
+    checklistId: string,
+    ownerUserId: string,
+    rawTags: string[],
+  ): Promise<TResponseChecklistDto> {
+    await this.assertChecklistOwner(checklistId, ownerUserId);
+
+    const normalized = normalizeOfferTags(rawTags);
+    if (!normalized.ok) {
+      throw new BadRequestException(normalized.error);
+    }
+
+    const updated = await this.checklistsRepository.updateTags(
+      checklistId,
+      normalized.tags,
+    );
+    if (!updated) {
+      throw new NotFoundException('Checklist not found');
+    }
+
+    return this.mapToResponseDto(updated);
+  }
+
+  async removeTagByIndexForChecklist(
+    checklistId: string,
+    ownerUserId: string,
+    index: number,
+  ): Promise<TResponseChecklistDto> {
+    const checklist = await this.assertChecklistOwner(
+      checklistId,
+      ownerUserId,
+    );
+    const tags = checklist.tags ?? [];
+    if (index < 0 || index >= tags.length) {
+      throw new BadRequestException('Метка не найдена.');
+    }
+    const next = tags.filter((_, i) => i !== index);
+    return this.setTagsForChecklist(checklistId, ownerUserId, next);
+  }
+
+  private async assertChecklistOwner(
+    checklistId: string,
+    ownerUserId: string,
+  ): Promise<ChecklistDocument> {
+    const checklist = await this.checklistsRepository.findById(checklistId);
+    if (!checklist) {
+      throw new NotFoundException('Checklist not found');
+    }
+    if (checklist.userId !== ownerUserId) {
+      throw new ForbiddenException('Checklist does not belong to this user');
+    }
+    return checklist;
+  }
+
   private mapToResponseDto(
     checklist: ChecklistDocument,
   ): TResponseChecklistDto {
@@ -109,6 +172,7 @@ export class ChecklistsService {
       userId: checklist.userId,
       href: checklist.href,
       name: checklist.name,
+      tags: checklist.tags ?? [],
       createdAt: checklist.createdAt,
       updatedAt: checklist.updatedAt,
     };

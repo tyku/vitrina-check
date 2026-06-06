@@ -40,6 +40,15 @@ export class ChecklistsRepository {
       .exec();
   }
 
+  async updateTags(
+    id: string,
+    tags: string[],
+  ): Promise<ChecklistDocument | null> {
+    return this.checklistModel
+      .findByIdAndUpdate(id, { tags }, { new: true })
+      .exec();
+  }
+
   async remove(id: string): Promise<ChecklistDocument | null> {
     return this.checklistModel.findByIdAndDelete(id).exec();
   }

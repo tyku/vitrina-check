@@ -19,6 +19,7 @@ import { TelegramOutboundService } from './telegram-outbound.service';
 import { TelegramBotUiService } from './telegram-bot-ui.service';
 import { TelegramIncomingProcessor } from './telegram-incoming.processor';
 import { TelegramUserSessionService } from './telegram-user-session.service';
+import { TelegramTagsUiService } from './telegram-tags-ui.service';
 import { TelegramVitrinyUiService } from './telegram-vitriny-ui.service';
 import { TelegramWebhookRegisterService } from './telegram-webhook-register.service';
 
@@ -46,6 +47,7 @@ import { TelegramWebhookRegisterService } from './telegram-webhook-register.serv
     TelegramOutboundProcessor,
     TelegramBotUiService,
     TelegramVitrinyUiService,
+    TelegramTagsUiService,
     TelegramUserSessionService,
     TelegramIncomingProcessor,
     TelegramWebhookRegisterService,

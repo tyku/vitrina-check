@@ -8,6 +8,7 @@ import {
   Param,
   Patch,
   Post,
+  Put,
   Query,
 } from '@nestjs/common';
 import { ZodValidationPipe } from '../user/pipes/zod-validation.pipe';
@@ -17,6 +18,8 @@ import { UpdateChecklistSchema } from './dto/update-checklist.dto';
 import type { TCreateChecklistDto } from './dto/create-checklist.dto';
 import type { TResponseChecklistDto } from './dto/response-checklist.dto';
 import type { TUpdateChecklistDto } from './dto/update-checklist.dto';
+import { SetChecklistTagsSchema } from './dto/set-checklist-tags.dto';
+import type { TSetChecklistTagsDto } from './dto/set-checklist-tags.dto';
 
 @Controller('checklists')
 export class ChecklistsController {
@@ -93,6 +96,29 @@ export class ChecklistsController {
       success: true,
       data: checklist,
       message: 'Checklist updated successfully',
+    };
+  }
+
+  @Put(':id/tags')
+  @HttpCode(HttpStatus.OK)
+  async setTags(
+    @Param('id') id: string,
+    @Body(new ZodValidationPipe(SetChecklistTagsSchema))
+    body: TSetChecklistTagsDto,
+  ): Promise<{
+    success: boolean;
+    data: TResponseChecklistDto;
+    message: string;
+  }> {
+    const checklist = await this.checklistsService.setTagsForChecklist(
+      id,
+      body.userId,
+      body.tags,
+    );
+    return {
+      success: true,
+      data: checklist,
+      message: 'Checklist tags updated successfully',
     };
   }
 

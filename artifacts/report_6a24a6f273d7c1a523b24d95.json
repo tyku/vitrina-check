@@ -1,0 +1,535 @@
+{
+  "dispatchQueueItemId": "6a24a6f273d7c1a523b24d95",
+  "checklistId": "6a24a026bcbd450a999da278",
+  "url": "https://kredya.ru",
+  "userId": "69ee8ab5dc8b2e6d4652bd15",
+  "analyzedAt": "2026-06-06T23:05:40.541Z",
+  "artifactHtmlPath": "/Users/artemkud/dev/vitrina-check-telegram-01/artifacts/page_6a24a6f273d7c1a523b24d95.html",
+  "patterns": [
+    "sravni",
+    "startracking"
+  ],
+  "shortLinkResolveMode": "chain",
+  "totalOffers": 19,
+  "directMatches": [],
+  "resolvedMatches": [
+    {
+      "href": "https://sovtrk.ru/c/g5jo9",
+      "anchorText": "ТОП МФОсуммадо 30 000 ₽срокдо 180 днейвозрастот 18 летПолучить деньги",
+      "blockName": "last_list",
+      "blockSelector": "div.last_list",
+      "positionOnPage": 2,
+      "positionInBlock": 2,
+      "finalUrl": "https://goto.startracking.ru/api/v1/redirect?aff_id=12479&offer_id=100628&source=8996&aff_sub2=ECKwAukDAABPBgAAAekP&aff_sub3=rs",
+      "statusCode": 200,
+      "matchedUrl": "https://goto.startracking.ru/api/v1/redirect?aff_id=12479&offer_id=100628&source=8996&aff_sub2=ECKwAukDAABPBgAAAekP&aff_sub3=rs",
+      "matchedHopIndex": 1,
+      "chain": [
+        {
+          "url": "https://sovtrk.ru/c/g5jo9?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://goto.startracking.ru/api/v1/redirect?aff_id=12479&offer_id=100628&source=8996&aff_sub2=ECKwAukDAABPBgAAAekP&aff_sub3=rs",
+          "statusCode": 200
+        }
+      ]
+    },
+    {
+      "href": "https://sovtrk.ru/c/ez2wr",
+      "anchorText": "ТОП-МФОсуммадо 30 000 ₽срокдо 30 нед.возрастот 18 летПолучить деньги",
+      "blockName": "last_list",
+      "blockSelector": "div.last_list",
+      "positionOnPage": 3,
+      "positionInBlock": 3,
+      "finalUrl": "https://goto.startracking.ru/api/v1/redirect?aff_id=12479&offer_id=1234&landing_id=13071&source=8996&aff_sub2=ECKwAukDAABBCAAAAbgL&aff_sub3=rs",
+      "statusCode": 200,
+      "matchedUrl": "https://goto.startracking.ru/api/v1/redirect?aff_id=12479&offer_id=1234&landing_id=13071&source=8996&aff_sub2=ECKwAukDAABBCAAAAbgL&aff_sub3=rs",
+      "matchedHopIndex": 1,
+      "chain": [
+        {
+          "url": "https://sovtrk.ru/c/ez2wr?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://goto.startracking.ru/api/v1/redirect?aff_id=12479&offer_id=1234&landing_id=13071&source=8996&aff_sub2=ECKwAukDAABBCAAAAbgL&aff_sub3=rs",
+          "statusCode": 200
+        }
+      ]
+    },
+    {
+      "href": "https://sovtrk.com/c/egzwg",
+      "anchorText": "Первый займ бесплатносуммадо 100 000 ₽срокдо 30 днейвозрастот 18 летПолучить деньги",
+      "blockName": "last_list",
+      "blockSelector": "div.last_list",
+      "positionOnPage": 4,
+      "positionInBlock": 4,
+      "finalUrl": "https://goto.startracking.ru/api/v1/redirect?offer_id=1539&aff_id=12479&source=8996&landing_id=12995&aff_sub2=ECKwAukDAAACAAAAAesC&aff_sub3=rs",
+      "statusCode": 200,
+      "matchedUrl": "https://goto.startracking.ru/api/v1/redirect?offer_id=1539&aff_id=12479&source=8996&landing_id=12995&aff_sub2=ECKwAukDAAACAAAAAesC&aff_sub3=rs",
+      "matchedHopIndex": 1,
+      "chain": [
+        {
+          "url": "https://sovtrk.com/c/egzwg?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://goto.startracking.ru/api/v1/redirect?offer_id=1539&aff_id=12479&source=8996&landing_id=12995&aff_sub2=ECKwAukDAAACAAAAAesC&aff_sub3=rs",
+          "statusCode": 200
+        }
+      ]
+    },
+    {
+      "href": "https://sovtrk.com/c/gkm7v",
+      "anchorText": "Увеличено одобрение!суммадо 30 000 ₽срокдо 30 нед.возрастот 20 летПодать заявку",
+      "blockName": "basic_list",
+      "blockSelector": "div.basic_list",
+      "positionOnPage": 5,
+      "positionInBlock": 1,
+      "finalUrl": "https://goto.startracking.ru/api/v1/redirect?offer_id=2015&aff_id=12479&source=8996&landing_id=13095&aff_sub2=ECKwAukDAAApAAAAAYsN&aff_sub3=rs",
+      "statusCode": 200,
+      "matchedUrl": "https://goto.startracking.ru/api/v1/redirect?offer_id=2015&aff_id=12479&source=8996&landing_id=13095&aff_sub2=ECKwAukDAAApAAAAAYsN&aff_sub3=rs",
+      "matchedHopIndex": 1,
+      "chain": [
+        {
+          "url": "https://sovtrk.com/c/gkm7v?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://goto.startracking.ru/api/v1/redirect?offer_id=2015&aff_id=12479&source=8996&landing_id=13095&aff_sub2=ECKwAukDAAApAAAAAYsN&aff_sub3=rs",
+          "statusCode": 200
+        }
+      ]
+    },
+    {
+      "href": "https://sovtrk.com/c/zg06g",
+      "anchorText": "Новое МФО!суммадо 50 000 ₽срокдо 100 днейвозрастот 18 летПодать заявку",
+      "blockName": "basic_list",
+      "blockSelector": "div.basic_list",
+      "positionOnPage": 6,
+      "positionInBlock": 2,
+      "finalUrl": "https://goto.startracking.ru/api/v1/redirect?offer_id=1991&aff_id=12479&source=8996&landing_id=13063&aff_sub2=ECKwAukDAAAFAAAAATUM&aff_sub3=rs",
+      "statusCode": 200,
+      "matchedUrl": "https://goto.startracking.ru/api/v1/redirect?offer_id=1991&aff_id=12479&source=8996&landing_id=13063&aff_sub2=ECKwAukDAAAFAAAAATUM&aff_sub3=rs",
+      "matchedHopIndex": 1,
+      "chain": [
+        {
+          "url": "https://sovtrk.com/c/zg06g?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://goto.startracking.ru/api/v1/redirect?offer_id=1991&aff_id=12479&source=8996&landing_id=13063&aff_sub2=ECKwAukDAAAFAAAAATUM&aff_sub3=rs",
+          "statusCode": 200
+        }
+      ]
+    },
+    {
+      "href": "https://sovtrk.com/c/7v61g",
+      "anchorText": "Заявка за 3 минсуммадо 30 000 рубсрокдо 31 днявозрастот 18 летПодать заявку",
+      "blockName": "basic_list",
+      "blockSelector": "div.basic_list",
+      "positionOnPage": 10,
+      "positionInBlock": 6,
+      "finalUrl": "https://goto.startracking.ru/api/v1/redirect?offer_id=2590&aff_id=12479&source=8996&landing_id=13218&aff_sub2=ECKwAukDAAAQAAAAAQEM&aff_sub3=rs",
+      "statusCode": 200,
+      "matchedUrl": "https://goto.startracking.ru/api/v1/redirect?offer_id=2590&aff_id=12479&source=8996&landing_id=13218&aff_sub2=ECKwAukDAAAQAAAAAQEM&aff_sub3=rs",
+      "matchedHopIndex": 1,
+      "chain": [
+        {
+          "url": "https://sovtrk.com/c/7v61g?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://goto.startracking.ru/api/v1/redirect?offer_id=2590&aff_id=12479&source=8996&landing_id=13218&aff_sub2=ECKwAukDAAAQAAAAAQEM&aff_sub3=rs",
+          "statusCode": 200
+        }
+      ]
+    },
+    {
+      "href": "https://sovtrk.com/c/dxjwv",
+      "anchorText": "Высокий % одобрениясуммадо 30 000 ₽срокдо 21 днявозрастот 18 летПодать заявку",
+      "blockName": "basic_list",
+      "blockSelector": "div.basic_list",
+      "positionOnPage": 11,
+      "positionInBlock": 7,
+      "finalUrl": "https://goto.startracking.ru/api/v1/redirect?offer_id=1235&aff_id=12479&source=8996&landing_id=13033&aff_sub2=ECKwAukDAAAIAAAAATQG&aff_sub3=rs",
+      "statusCode": 200,
+      "matchedUrl": "https://goto.startracking.ru/api/v1/redirect?offer_id=1235&aff_id=12479&source=8996&landing_id=13033&aff_sub2=ECKwAukDAAAIAAAAATQG&aff_sub3=rs",
+      "matchedHopIndex": 1,
+      "chain": [
+        {
+          "url": "https://sovtrk.com/c/dxjwv?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://goto.startracking.ru/api/v1/redirect?offer_id=1235&aff_id=12479&source=8996&landing_id=13033&aff_sub2=ECKwAukDAAAIAAAAATQG&aff_sub3=rs",
+          "statusCode": 200
+        }
+      ]
+    },
+    {
+      "href": "https://sovtrk.com/c/rx70g",
+      "anchorText": "Лучшие условиясуммадо 100 000 рубсрокдо 60 днейвозрастот 18 летПодать заявку",
+      "blockName": "basic_list",
+      "blockSelector": "div.basic_list",
+      "positionOnPage": 12,
+      "positionInBlock": 8,
+      "finalUrl": "https://goto.startracking.ru/api/v1/redirect?offer_id=2443&aff_id=12479&landing_id=13090&source=8996&aff_sub2=ECKwAukDAAALAAAAAWEK&aff_sub3=rs",
+      "statusCode": 200,
+      "matchedUrl": "https://goto.startracking.ru/api/v1/redirect?offer_id=2443&aff_id=12479&landing_id=13090&source=8996&aff_sub2=ECKwAukDAAALAAAAAWEK&aff_sub3=rs",
+      "matchedHopIndex": 1,
+      "chain": [
+        {
+          "url": "https://sovtrk.com/c/rx70g?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://goto.startracking.ru/api/v1/redirect?offer_id=2443&aff_id=12479&landing_id=13090&source=8996&aff_sub2=ECKwAukDAAALAAAAAWEK&aff_sub3=rs",
+          "statusCode": 200
+        }
+      ]
+    },
+    {
+      "href": "https://sovtrk.ru/c/g5jo9",
+      "anchorText": "ТОП МФОсуммадо 30 000 ₽срокдо 180 днейвозрастот 18 летПодать заявку",
+      "blockName": "top_list",
+      "blockSelector": "div.top_list",
+      "positionOnPage": 14,
+      "positionInBlock": 2,
+      "finalUrl": "https://goto.startracking.ru/api/v1/redirect?aff_id=12479&offer_id=100628&source=8996&aff_sub2=ECKwAukDAABPBgAAAekP&aff_sub3=rs",
+      "statusCode": 200,
+      "matchedUrl": "https://goto.startracking.ru/api/v1/redirect?aff_id=12479&offer_id=100628&source=8996&aff_sub2=ECKwAukDAABPBgAAAekP&aff_sub3=rs",
+      "matchedHopIndex": 1,
+      "chain": [
+        {
+          "url": "https://sovtrk.ru/c/g5jo9?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://goto.startracking.ru/api/v1/redirect?aff_id=12479&offer_id=100628&source=8996&aff_sub2=ECKwAukDAABPBgAAAekP&aff_sub3=rs",
+          "statusCode": 200
+        }
+      ]
+    },
+    {
+      "href": "https://sovtrk.ru/c/ez2wr",
+      "anchorText": "ТОП-МФОсуммадо 30 000 ₽срокдо 30 нед.возрастот 18 летПодать заявку",
+      "blockName": "top_list",
+      "blockSelector": "div.top_list",
+      "positionOnPage": 15,
+      "positionInBlock": 3,
+      "finalUrl": "https://goto.startracking.ru/api/v1/redirect?aff_id=12479&offer_id=1234&landing_id=13071&source=8996&aff_sub2=ECKwAukDAABBCAAAAbgL&aff_sub3=rs",
+      "statusCode": 200,
+      "matchedUrl": "https://goto.startracking.ru/api/v1/redirect?aff_id=12479&offer_id=1234&landing_id=13071&source=8996&aff_sub2=ECKwAukDAABBCAAAAbgL&aff_sub3=rs",
+      "matchedHopIndex": 1,
+      "chain": [
+        {
+          "url": "https://sovtrk.ru/c/ez2wr?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://goto.startracking.ru/api/v1/redirect?aff_id=12479&offer_id=1234&landing_id=13071&source=8996&aff_sub2=ECKwAukDAABBCAAAAbgL&aff_sub3=rs",
+          "statusCode": 200
+        }
+      ]
+    },
+    {
+      "href": "https://sovtrk.com/c/egzwg",
+      "anchorText": "Первый займ бесплатносуммадо 100 000 ₽срокдо 30 днейвозрастот 18 летПодать заявку",
+      "blockName": "top_list",
+      "blockSelector": "div.top_list",
+      "positionOnPage": 16,
+      "positionInBlock": 4,
+      "finalUrl": "https://goto.startracking.ru/api/v1/redirect?offer_id=1539&aff_id=12479&source=8996&landing_id=12995&aff_sub2=ECKwAukDAAACAAAAAesC&aff_sub3=rs",
+      "statusCode": 200,
+      "matchedUrl": "https://goto.startracking.ru/api/v1/redirect?offer_id=1539&aff_id=12479&source=8996&landing_id=12995&aff_sub2=ECKwAukDAAACAAAAAesC&aff_sub3=rs",
+      "matchedHopIndex": 1,
+      "chain": [
+        {
+          "url": "https://sovtrk.com/c/egzwg?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://goto.startracking.ru/api/v1/redirect?offer_id=1539&aff_id=12479&source=8996&landing_id=12995&aff_sub2=ECKwAukDAAACAAAAAesC&aff_sub3=rs",
+          "statusCode": 200
+        }
+      ]
+    },
+    {
+      "href": "https://sovtrk.ru/c/g5jo9",
+      "anchorText": "ТОП МФОсуммадо 30 000 ₽срокдо 180 днейвозрастот 18 летПолучить деньги",
+      "blockName": "last_list",
+      "blockSelector": "div.last_list",
+      "positionOnPage": 17,
+      "positionInBlock": 5,
+      "finalUrl": "https://goto.startracking.ru/api/v1/redirect?aff_id=12479&offer_id=100628&source=8996&aff_sub2=ECKwAukDAABPBgAAAekP&aff_sub3=rs",
+      "statusCode": 200,
+      "matchedUrl": "https://goto.startracking.ru/api/v1/redirect?aff_id=12479&offer_id=100628&source=8996&aff_sub2=ECKwAukDAABPBgAAAekP&aff_sub3=rs",
+      "matchedHopIndex": 1,
+      "chain": [
+        {
+          "url": "https://sovtrk.ru/c/g5jo9?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://goto.startracking.ru/api/v1/redirect?aff_id=12479&offer_id=100628&source=8996&aff_sub2=ECKwAukDAABPBgAAAekP&aff_sub3=rs",
+          "statusCode": 200
+        }
+      ]
+    },
+    {
+      "href": "https://sovtrk.ru/c/ez2wr",
+      "anchorText": "ТОП-МФОсуммадо 30 000 ₽срокдо 30 нед.возрастот 18 летПолучить деньги",
+      "blockName": "last_list",
+      "blockSelector": "div.last_list",
+      "positionOnPage": 18,
+      "positionInBlock": 6,
+      "finalUrl": "https://goto.startracking.ru/api/v1/redirect?aff_id=12479&offer_id=1234&landing_id=13071&source=8996&aff_sub2=ECKwAukDAABBCAAAAbgL&aff_sub3=rs",
+      "statusCode": 200,
+      "matchedUrl": "https://goto.startracking.ru/api/v1/redirect?aff_id=12479&offer_id=1234&landing_id=13071&source=8996&aff_sub2=ECKwAukDAABBCAAAAbgL&aff_sub3=rs",
+      "matchedHopIndex": 1,
+      "chain": [
+        {
+          "url": "https://sovtrk.ru/c/ez2wr?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://goto.startracking.ru/api/v1/redirect?aff_id=12479&offer_id=1234&landing_id=13071&source=8996&aff_sub2=ECKwAukDAABBCAAAAbgL&aff_sub3=rs",
+          "statusCode": 200
+        }
+      ]
+    },
+    {
+      "href": "https://sovtrk.com/c/egzwg",
+      "anchorText": "Первый займ бесплатносуммадо 100 000 ₽срокдо 30 днейвозрастот 18 летПолучить деньги",
+      "blockName": "last_list",
+      "blockSelector": "div.last_list",
+      "positionOnPage": 19,
+      "positionInBlock": 7,
+      "finalUrl": "https://goto.startracking.ru/api/v1/redirect?offer_id=1539&aff_id=12479&source=8996&landing_id=12995&aff_sub2=ECKwAukDAAACAAAAAesC&aff_sub3=rs",
+      "statusCode": 200,
+      "matchedUrl": "https://goto.startracking.ru/api/v1/redirect?offer_id=1539&aff_id=12479&source=8996&landing_id=12995&aff_sub2=ECKwAukDAAACAAAAAesC&aff_sub3=rs",
+      "matchedHopIndex": 1,
+      "chain": [
+        {
+          "url": "https://sovtrk.com/c/egzwg?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://goto.startracking.ru/api/v1/redirect?offer_id=1539&aff_id=12479&source=8996&landing_id=12995&aff_sub2=ECKwAukDAAACAAAAAesC&aff_sub3=rs",
+          "statusCode": 200
+        }
+      ]
+    }
+  ],
+  "shortLinkResolutions": [
+    {
+      "sourceUrl": "https://sovtrk.com/c/zg06g",
+      "finalUrl": "https://goto.startracking.ru/api/v1/redirect?offer_id=1991&aff_id=12479&source=8996&landing_id=13063&aff_sub2=ECKwAukDAAAFAAAAATUM&aff_sub3=rs",
+      "statusCode": 200,
+      "error": "",
+      "chain": [
+        {
+          "url": "https://sovtrk.com/c/zg06g?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://goto.startracking.ru/api/v1/redirect?offer_id=1991&aff_id=12479&source=8996&landing_id=13063&aff_sub2=ECKwAukDAAAFAAAAATUM&aff_sub3=rs",
+          "statusCode": 200
+        }
+      ],
+      "matchedUrl": "https://goto.startracking.ru/api/v1/redirect?offer_id=1991&aff_id=12479&source=8996&landing_id=13063&aff_sub2=ECKwAukDAAAFAAAAATUM&aff_sub3=rs",
+      "matchedHopIndex": 1
+    },
+    {
+      "sourceUrl": "https://sovtrk.com/c/egzwg",
+      "finalUrl": "https://goto.startracking.ru/api/v1/redirect?offer_id=1539&aff_id=12479&source=8996&landing_id=12995&aff_sub2=ECKwAukDAAACAAAAAesC&aff_sub3=rs",
+      "statusCode": 200,
+      "error": "",
+      "chain": [
+        {
+          "url": "https://sovtrk.com/c/egzwg?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://goto.startracking.ru/api/v1/redirect?offer_id=1539&aff_id=12479&source=8996&landing_id=12995&aff_sub2=ECKwAukDAAACAAAAAesC&aff_sub3=rs",
+          "statusCode": 200
+        }
+      ],
+      "matchedUrl": "https://goto.startracking.ru/api/v1/redirect?offer_id=1539&aff_id=12479&source=8996&landing_id=12995&aff_sub2=ECKwAukDAAACAAAAAesC&aff_sub3=rs",
+      "matchedHopIndex": 1
+    },
+    {
+      "sourceUrl": "https://sovtrk.com/c/gkm7v",
+      "finalUrl": "https://goto.startracking.ru/api/v1/redirect?offer_id=2015&aff_id=12479&source=8996&landing_id=13095&aff_sub2=ECKwAukDAAApAAAAAYsN&aff_sub3=rs",
+      "statusCode": 200,
+      "error": "",
+      "chain": [
+        {
+          "url": "https://sovtrk.com/c/gkm7v?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://goto.startracking.ru/api/v1/redirect?offer_id=2015&aff_id=12479&source=8996&landing_id=13095&aff_sub2=ECKwAukDAAApAAAAAYsN&aff_sub3=rs",
+          "statusCode": 200
+        }
+      ],
+      "matchedUrl": "https://goto.startracking.ru/api/v1/redirect?offer_id=2015&aff_id=12479&source=8996&landing_id=13095&aff_sub2=ECKwAukDAAApAAAAAYsN&aff_sub3=rs",
+      "matchedHopIndex": 1
+    },
+    {
+      "sourceUrl": "https://sovtrk.ru/c/g5jo9",
+      "finalUrl": "https://goto.startracking.ru/api/v1/redirect?aff_id=12479&offer_id=100628&source=8996&aff_sub2=ECKwAukDAABPBgAAAekP&aff_sub3=rs",
+      "statusCode": 200,
+      "error": "",
+      "chain": [
+        {
+          "url": "https://sovtrk.ru/c/g5jo9?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://goto.startracking.ru/api/v1/redirect?aff_id=12479&offer_id=100628&source=8996&aff_sub2=ECKwAukDAABPBgAAAekP&aff_sub3=rs",
+          "statusCode": 200
+        }
+      ],
+      "matchedUrl": "https://goto.startracking.ru/api/v1/redirect?aff_id=12479&offer_id=100628&source=8996&aff_sub2=ECKwAukDAABPBgAAAekP&aff_sub3=rs",
+      "matchedHopIndex": 1
+    },
+    {
+      "sourceUrl": "https://sovtrk.com/c/v6kmp",
+      "finalUrl": "https://pxl.leads.su/click/3ca7b3ef41e34dd5d9d3f459b2e95f21?erid=2W5zFGghJoa&aff_sub1=ECKwAukDAABwBAAAAXwJ",
+      "statusCode": 200,
+      "error": "",
+      "chain": [
+        {
+          "url": "https://sovtrk.com/c/v6kmp?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://pxl.leads.su/click/3ca7b3ef41e34dd5d9d3f459b2e95f21?erid=2W5zFGghJoa&aff_sub1=ECKwAukDAABwBAAAAXwJ",
+          "statusCode": 200
+        }
+      ]
+    },
+    {
+      "sourceUrl": "https://sovtrk.ru/c/88qww",
+      "finalUrl": "https://pxl.leads.su/click/8f06199421ff2977d50620faf144c97f?aff_sub1=ECKwAukDAACDBgAAAWkA",
+      "statusCode": 200,
+      "error": "",
+      "chain": [
+        {
+          "url": "https://sovtrk.ru/c/88qww?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://pxl.leads.su/click/8f06199421ff2977d50620faf144c97f?aff_sub1=ECKwAukDAACDBgAAAWkA",
+          "statusCode": 200
+        }
+      ]
+    },
+    {
+      "sourceUrl": "https://sovtrk.com/c/v9r5l",
+      "finalUrl": "https://pxl.leads.su/click/6ac75b803574809cddbbd6d186495d24?aff_sub1=ECKwAukDAAA9BgAAAcoJ",
+      "statusCode": 200,
+      "error": "",
+      "chain": [
+        {
+          "url": "https://sovtrk.com/c/v9r5l?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://pxl.leads.su/click/6ac75b803574809cddbbd6d186495d24?aff_sub1=ECKwAukDAAA9BgAAAcoJ",
+          "statusCode": 200
+        }
+      ]
+    },
+    {
+      "sourceUrl": "https://sovtrk.ru/c/ez2wr",
+      "finalUrl": "https://goto.startracking.ru/api/v1/redirect?aff_id=12479&offer_id=1234&landing_id=13071&source=8996&aff_sub2=ECKwAukDAABBCAAAAbgL&aff_sub3=rs",
+      "statusCode": 200,
+      "error": "",
+      "chain": [
+        {
+          "url": "https://sovtrk.ru/c/ez2wr?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://goto.startracking.ru/api/v1/redirect?aff_id=12479&offer_id=1234&landing_id=13071&source=8996&aff_sub2=ECKwAukDAABBCAAAAbgL&aff_sub3=rs",
+          "statusCode": 200
+        }
+      ],
+      "matchedUrl": "https://goto.startracking.ru/api/v1/redirect?aff_id=12479&offer_id=1234&landing_id=13071&source=8996&aff_sub2=ECKwAukDAABBCAAAAbgL&aff_sub3=rs",
+      "matchedHopIndex": 1
+    },
+    {
+      "sourceUrl": "https://sovtrk.com/c/rx70g",
+      "finalUrl": "https://goto.startracking.ru/api/v1/redirect?offer_id=2443&aff_id=12479&landing_id=13090&source=8996&aff_sub2=ECKwAukDAAALAAAAAWEK&aff_sub3=rs",
+      "statusCode": 200,
+      "error": "",
+      "chain": [
+        {
+          "url": "https://sovtrk.com/c/rx70g?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://goto.startracking.ru/api/v1/redirect?offer_id=2443&aff_id=12479&landing_id=13090&source=8996&aff_sub2=ECKwAukDAAALAAAAAWEK&aff_sub3=rs",
+          "statusCode": 200
+        }
+      ],
+      "matchedUrl": "https://goto.startracking.ru/api/v1/redirect?offer_id=2443&aff_id=12479&landing_id=13090&source=8996&aff_sub2=ECKwAukDAAALAAAAAWEK&aff_sub3=rs",
+      "matchedHopIndex": 1
+    },
+    {
+      "sourceUrl": "https://sovtrk.com/c/dxjwv",
+      "finalUrl": "https://goto.startracking.ru/api/v1/redirect?offer_id=1235&aff_id=12479&source=8996&landing_id=13033&aff_sub2=ECKwAukDAAAIAAAAATQG&aff_sub3=rs",
+      "statusCode": 200,
+      "error": "",
+      "chain": [
+        {
+          "url": "https://sovtrk.com/c/dxjwv?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://goto.startracking.ru/api/v1/redirect?offer_id=1235&aff_id=12479&source=8996&landing_id=13033&aff_sub2=ECKwAukDAAAIAAAAATQG&aff_sub3=rs",
+          "statusCode": 200
+        }
+      ],
+      "matchedUrl": "https://goto.startracking.ru/api/v1/redirect?offer_id=1235&aff_id=12479&source=8996&landing_id=13033&aff_sub2=ECKwAukDAAAIAAAAATQG&aff_sub3=rs",
+      "matchedHopIndex": 1
+    },
+    {
+      "sourceUrl": "https://sovtrk.com/c/7v61g",
+      "finalUrl": "https://goto.startracking.ru/api/v1/redirect?offer_id=2590&aff_id=12479&source=8996&landing_id=13218&aff_sub2=ECKwAukDAAAQAAAAAQEM&aff_sub3=rs",
+      "statusCode": 200,
+      "error": "",
+      "chain": [
+        {
+          "url": "https://sovtrk.com/c/7v61g?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://goto.startracking.ru/api/v1/redirect?offer_id=2590&aff_id=12479&source=8996&landing_id=13218&aff_sub2=ECKwAukDAAAQAAAAAQEM&aff_sub3=rs",
+          "statusCode": 200
+        }
+      ],
+      "matchedUrl": "https://goto.startracking.ru/api/v1/redirect?offer_id=2590&aff_id=12479&source=8996&landing_id=13218&aff_sub2=ECKwAukDAAAQAAAAAQEM&aff_sub3=rs",
+      "matchedHopIndex": 1
+    },
+    {
+      "sourceUrl": "https://sovtrk.com/c/goywz",
+      "finalUrl": "https://lk.finuslugi.ru/credits/new?productType=microloan&csc_new=true&utm_source=sbaing&utm_medium=affiliate&utm_campaign=pr%3Amfo_12558&utm_term=ECKwAukDAAAtBgAAAfEP&offer_id=12558&utm_content=agasd&%2F=",
+      "statusCode": 200,
+      "error": "",
+      "chain": [
+        {
+          "url": "https://sovtrk.com/c/goywz?nc=1",
+          "statusCode": 303
+        },
+        {
+          "url": "https://lk.finuslugi.ru/credits/new?productType=microloan&csc_new=true&utm_source=sbaing&utm_medium=affiliate&utm_campaign=pr%3Amfo_12558&utm_term=ECKwAukDAAAtBgAAAfEP&offer_id=12558&utm_content=agasd&%2F=",
+          "statusCode": 200
+        }
+      ]
+    }
+  ]
+}

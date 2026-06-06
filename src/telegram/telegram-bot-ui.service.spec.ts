@@ -7,6 +7,7 @@ import {
   TelegramBotUiService,
 } from './telegram-bot-ui.service';
 import { TelegramOutboundService } from './telegram-outbound.service';
+import { TelegramTagsUiService } from './telegram-tags-ui.service';
 import { TelegramVitrinyUiService } from './telegram-vitriny-ui.service';
 
 type EnqueuePayload = {
@@ -31,6 +32,7 @@ describe('TelegramBotUiService', () => {
   let outbound: { enqueueApiCall: jest.Mock };
   let users: { ensureTelegramUser: jest.Mock };
   let vitrinyUi: { showMenu: jest.Mock; handleCallback: jest.Mock; handleTextMessage: jest.Mock };
+  let tagsUi: { showMenu: jest.Mock; handleCallback: jest.Mock; handleTextMessage: jest.Mock };
 
   beforeEach(async () => {
     outbound = { enqueueApiCall: jest.fn().mockResolvedValue(undefined) };
@@ -46,12 +48,18 @@ describe('TelegramBotUiService', () => {
       handleCallback: jest.fn().mockResolvedValue('handled'),
       handleTextMessage: jest.fn().mockResolvedValue(false),
     };
+    tagsUi = {
+      showMenu: jest.fn().mockResolvedValue(undefined),
+      handleCallback: jest.fn().mockResolvedValue('handled'),
+      handleTextMessage: jest.fn().mockResolvedValue(false),
+    };
     const moduleRef: TestingModule = await Test.createTestingModule({
       providers: [
         TelegramBotUiService,
         { provide: TelegramOutboundService, useValue: outbound },
         { provide: UserService, useValue: users },
         { provide: TelegramVitrinyUiService, useValue: vitrinyUi },
+        { provide: TelegramTagsUiService, useValue: tagsUi },
       ],
     }).compile();
     service = moduleRef.get(TelegramBotUiService);

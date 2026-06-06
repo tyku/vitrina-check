@@ -12,6 +12,7 @@ type TCreateDispatchQueueItem = {
   scheduleId: string;
   executeAt: Date;
   href: string;
+  checklistId: string;
 };
 
 @Injectable()
@@ -35,7 +36,7 @@ export class DispatchSchedulerQueueRepository {
           filter: {
             scheduleId: item.scheduleId,
             executeAt: item.executeAt,
-            href: item.href,
+            checklistId: item.checklistId,
           },
           update: {
             $setOnInsert: {
@@ -43,6 +44,7 @@ export class DispatchSchedulerQueueRepository {
               scheduleId: item.scheduleId,
               executeAt: item.executeAt,
               href: item.href,
+              checklistId: item.checklistId,
               status: DispatchSchedulerQueueStatus.CREATED,
             },
           },

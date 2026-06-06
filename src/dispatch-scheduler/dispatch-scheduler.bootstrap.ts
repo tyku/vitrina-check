@@ -25,7 +25,7 @@ export class DispatchSchedulerBootstrap implements OnModuleInit {
     const repeatEveryMs = intervalMinutes * 60 * 1000;
 
     this.logger.log(
-      `Initializing dispatch scheduler repeat job, interval=${intervalMinutes}m (${repeatEveryMs}ms)`,
+      `Initializing dispatch scheduler repeat job, interval=${intervalMinutes}m (${repeatEveryMs}ms, timenow(${new Date().toISOString()}))`,
     );
 
     await this.dispatchSchedulerQueue.upsertJobScheduler(

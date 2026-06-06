@@ -89,41 +89,55 @@ export class DispatchSchedulerService {
   private async expandDueItemsWithChecklistHref(
     dueItems: Array<{ userId: string; scheduleId: string; executeAt: Date }>,
   ): Promise<
-    Array<{ userId: string; scheduleId: string; executeAt: Date; href: string }>
+    Array<{
+      userId: string;
+      scheduleId: string;
+      executeAt: Date;
+      href: string;
+      checklistId: string;
+    }>
   > {
-    const hrefsByUserId = new Map<string, string[]>();
+    const checklistsByUserId = new Map<
+      string,
+      Array<{ id: string; href: string }>
+    >();
     const queueItems: Array<{
       userId: string;
       scheduleId: string;
       executeAt: Date;
       href: string;
+      checklistId: string;
     }> = [];
 
     for (const item of dueItems) {
-      let userHrefs = hrefsByUserId.get(item.userId);
-      if (!userHrefs) {
+      let userChecklists = checklistsByUserId.get(item.userId);
+      if (!userChecklists) {
         const checklists = await this.checklistsRepository.findByUserId(
           item.userId,
         );
-        userHrefs = checklists
-          .map((checklist) => checklist.href)
-          .filter((href): href is string => Boolean(href));
-        hrefsByUserId.set(item.userId, userHrefs);
+        userChecklists = checklists
+          .filter((checklist) => Boolean(checklist.href))
+          .map((checklist) => ({
+            id: checklist._id.toString(),
+            href: checklist.href,
+          }));
+        checklistsByUserId.set(item.userId, userChecklists);
       }
 
-      if (!userHrefs.length) {
+      if (!userChecklists.length) {
         this.logger.warn(
           `No checklist href found for user=${item.userId}; schedule=${item.scheduleId}`,
         );
         continue;
       }
 
-      for (const href of userHrefs) {
+      for (const checklist of userChecklists) {
         queueItems.push({
           userId: item.userId,
           scheduleId: item.scheduleId,
           executeAt: item.executeAt,
-          href,
+          href: checklist.href,
+          checklistId: checklist.id,
         });
       }
     }

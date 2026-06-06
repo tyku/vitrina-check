@@ -7,13 +7,12 @@ import { join } from 'node:path';
 import { OffersArtifactAnalyzerService } from '../offers/offers-artifact-analyzer.service';
 import { PlaywrightService } from '../playwright/playwright.service';
 import { DispatchSchedulerQueueRepository } from '../dispatch-scheduler';
+import { ChecklistsService } from '../checklists/checklists.service';
 import {
   dispatchQueuePageHtmlPath,
   getExistingUsableDispatchQueueHtmlPath,
   sanitizeDispatchQueueIdForFilename,
 } from './libs';
-
-const DISPATCH_PARSER_OFFER_PATTERNS = ['sravni', 'startracking'] as const;
 
 @Processor('checklistScheduler')
 export class DispatchParserProcessor extends WorkerHost {
@@ -24,6 +23,7 @@ export class DispatchParserProcessor extends WorkerHost {
     private readonly dispatchQueueRepository: DispatchSchedulerQueueRepository,
     private readonly playwrightService: PlaywrightService,
     private readonly offersArtifactAnalyzer: OffersArtifactAnalyzerService,
+    private readonly checklistsService: ChecklistsService,
     private readonly configService: ConfigService,
   ) {
     super();
@@ -41,6 +41,15 @@ export class DispatchParserProcessor extends WorkerHost {
     let scratchCapturePath: string | undefined;
 
     try {
+      const patterns = await this.resolveOfferPatterns(queueItem);
+      if (patterns.length === 0) {
+        this.logger.log(
+          `Skipping queue item id=${queueId}, checklist=${queueItem.checklistId}: no offer tags configured`,
+        );
+        await this.dispatchQueueRepository.markDone(queueId);
+        return;
+      }
+
       await mkdir(this.artifactsDir, { recursive: true });
 
       const existingHtmlPath = await getExistingUsableDispatchQueueHtmlPath({
@@ -65,7 +74,7 @@ export class DispatchParserProcessor extends WorkerHost {
 
       const analysis = await this.offersArtifactAnalyzer.analyzeFromArtifacts({
         artifactHtmlPath: htmlPathForAnalysis,
-        patterns: [...DISPATCH_PARSER_OFFER_PATTERNS],
+        patterns,
         resolveShortLinks: true,
         shortLinkResolveMode: 'chain',
         shortLinkRequestHeaders: {
@@ -89,9 +98,12 @@ export class DispatchParserProcessor extends WorkerHost {
 
       const report = {
         dispatchQueueItemId: queueId,
+        checklistId: queueItem.checklistId,
         url: queueItem.href,
+        userId: queueItem.userId,
         analyzedAt: new Date().toISOString(),
         ...analysis,
+        patterns,
         artifactHtmlPath: pageHtmlPath,
       };
       await writeFile(
@@ -121,5 +133,19 @@ export class DispatchParserProcessor extends WorkerHost {
         }
       }
     }
+  }
+
+  private async resolveOfferPatterns(queueItem: {
+    checklistId: string;
+  }): Promise<string[]> {
+    const checklistTags = await this.checklistsService.getPatternsForChecklist(
+      queueItem.checklistId,
+    );
+    if (checklistTags.length > 0) {
+      this.logger.log(
+        `Using ${checklistTags.length} offer tag(s) for checklist=${queueItem.checklistId}: ${checklistTags.join(', ')}`,
+      );
+    }
+    return checklistTags;
   }
 }

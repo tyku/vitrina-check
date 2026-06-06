@@ -15,6 +15,9 @@ export class Checklist {
   @Prop()
   name?: string;
 
+  @Prop({ type: [String], default: [] })
+  tags: string[];
+
   @Prop()
   createdAt: Date;
 

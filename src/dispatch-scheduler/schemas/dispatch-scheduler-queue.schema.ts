@@ -25,6 +25,9 @@ export class DispatchSchedulerQueue {
   @Prop({ required: true, index: true })
   href: string;
 
+  @Prop({ required: true, index: true })
+  checklistId: string;
+
   @Prop({
     required: true,
     enum: DispatchSchedulerQueueStatus,
@@ -54,7 +57,7 @@ export const DispatchSchedulerQueueSchema = SchemaFactory.createForClass(
 );
 
 DispatchSchedulerQueueSchema.index(
-  { scheduleId: 1, executeAt: 1, href: 1 },
+  { scheduleId: 1, executeAt: 1, checklistId: 1 },
   { unique: true },
 );
 DispatchSchedulerQueueSchema.index(

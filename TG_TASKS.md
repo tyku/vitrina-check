@@ -79,7 +79,8 @@
 
 - [x] E6.1 Маппинг Telegram user ↔ `User` — в схеме поле `userId` + `sourceType: tg` (= Telegram id); `UserRepository.findByTelegramId`, `UserService.ensureTelegramUser` при `/start` и callback (E7)
 - [x] E6.2 CRUD витрин через существующий модуль чеклистов — `ChecklistsService` (`findByUserId`, `createForUser`, `removeForUser`), валидация URL; Telegram: список / добавить (сессия Redis) / удалить с подтверждением (`TelegramVitrinyUiService`); `GET /checklists?userId=`
-- E6.3 Метки оферов: хранение и передача в offers/dispatch
+- [x] E6.3 Метки оферов: хранение и передача в offers/dispatch — первый MVP: глобально на `userId` (заменён в E6.3.1)
+- [x] E6.3.1 Метки на уровне чеклиста — `Checklist.tags[]`, `PUT /checklists/:id/tags`, TG «Метки» → выбор витрины → CRUD; очередь dispatch с `checklistId`; parser/report по меткам витрины (fallback `DISPATCH_PARSER_DEFAULT_OFFER_PATTERNS`)
 - E6.4 Политика «одно расписание на все обходы»
 - E6.5 Кнопка «Проверить сейчас» → dispatch
 - E6.6 Отчёт в TG из артефактов
