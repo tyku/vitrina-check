@@ -7,6 +7,7 @@ import { join } from 'node:path';
 import { OffersArtifactAnalyzerService } from '../offers/offers-artifact-analyzer.service';
 import { PlaywrightService } from '../playwright/playwright.service';
 import { DispatchSchedulerQueueRepository } from '../dispatch-scheduler';
+import { DispatchParseResultsService } from '../dispatch-parse-results';
 import { ChecklistsService } from '../checklists/checklists.service';
 import {
   dispatchQueuePageHtmlPath,
@@ -24,6 +25,7 @@ export class DispatchParserProcessor extends WorkerHost {
     private readonly playwrightService: PlaywrightService,
     private readonly offersArtifactAnalyzer: OffersArtifactAnalyzerService,
     private readonly checklistsService: ChecklistsService,
+    private readonly parseResultsService: DispatchParseResultsService,
     private readonly configService: ConfigService,
   ) {
     super();
@@ -84,8 +86,6 @@ export class DispatchParserProcessor extends WorkerHost {
         },
       });
 
-      const safeId = sanitizeDispatchQueueIdForFilename(queueId);
-      const reportPath = join(this.artifactsDir, `report_${safeId}.json`);
       const pageHtmlPath = dispatchQueuePageHtmlPath(
         this.artifactsDir,
         queueId,
@@ -96,25 +96,41 @@ export class DispatchParserProcessor extends WorkerHost {
       }
       scratchCapturePath = undefined;
 
-      const report = {
-        dispatchQueueItemId: queueId,
-        checklistId: queueItem.checklistId,
-        url: queueItem.href,
+      const analyzedAt = new Date();
+      const slimResult = await this.parseResultsService.saveParseResult({
+        queueItemId: queueId,
         userId: queueItem.userId,
-        analyzedAt: new Date().toISOString(),
-        ...analysis,
+        checklistId: queueItem.checklistId,
+        scheduleId: queueItem.scheduleId,
+        url: queueItem.href,
+        analyzedAt,
         patterns,
-        artifactHtmlPath: pageHtmlPath,
-      };
-      await writeFile(
-        reportPath,
-        `${JSON.stringify(report, null, 2)}\n`,
-        'utf-8',
-      );
+        analysis,
+      });
+
+      const persistReportFile =
+        this.configService.get<boolean>(
+          'dispatchParser.persistReportFile',
+          true,
+        ) ?? true;
+      let reportPath: string | undefined;
+      if (persistReportFile) {
+        const safeId = sanitizeDispatchQueueIdForFilename(queueId);
+        reportPath = join(this.artifactsDir, `report_${safeId}.json`);
+        const reportForFile = {
+          ...slimResult,
+          analyzedAt: slimResult.analyzedAt.toISOString(),
+        };
+        await writeFile(
+          reportPath,
+          `${JSON.stringify(reportForFile, null, 2)}\n`,
+          'utf-8',
+        );
+      }
 
       await this.dispatchQueueRepository.markDone(queueId);
       this.logger.log(
-        `Dispatch parser processed queue item id=${queueId}, jobId=${job.id?.toString() ?? 'n/a'}, href=${queueItem.href}, reportPath=${reportPath}, pageHtmlPath=${pageHtmlPath}`,
+        `Dispatch parser processed queue item id=${queueId}, jobId=${job.id?.toString() ?? 'n/a'}, href=${queueItem.href}, reportPath=${reportPath ?? 'disabled'}, pageHtmlPath=${pageHtmlPath}, matches=${slimResult.matches.length}`,
       );
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);

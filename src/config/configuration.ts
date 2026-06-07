@@ -34,6 +34,14 @@ export default () => ({
     pollIntervalMinutes:
       parseInt(process.env.DISPATCH_PARSER_POLL_INTERVAL_MINUTES || '1', 10) ||
       1,
+    /** When false, skip writing `artifacts/report_*.json` (Mongo storage still runs). */
+    persistReportFile: (() => {
+      const raw = process.env.DISPATCH_PARSER_PERSIST_REPORT_FILE;
+      if (raw === undefined || raw.trim() === '') {
+        return true;
+      }
+      return raw.toLowerCase() !== 'false';
+    })(),
   },
   telegram: {
     /** Public base URL for auto `setWebhook` on startup (no trailing slash needed). */

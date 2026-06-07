@@ -50,6 +50,7 @@ const EnvSchema = z.object({
     .min(1)
     .max(1440)
     .optional(),
+  DISPATCH_PARSER_PERSIST_REPORT_FILE: z.enum(['true', 'false']).optional(),
   TELEGRAM_WEBHOOK_SECRET_TOKEN: z.string().min(1).optional(),
   TELEGRAM_WEBHOOK_PUBLIC_BASE_URL: z.url().optional(),
   TELEGRAM_WEBHOOK_PATH_SECRET: z.string().min(1).optional(),
