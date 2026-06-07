@@ -13,6 +13,9 @@ export type TSlimParseResultMatch = {
   positionOnPage: number;
   positionInBlock: number;
   finalUrl?: string;
+  tagMatchedInChain?: boolean;
+  destinationHost?: string;
+  destinationUrl?: string;
 };
 
 export type TSlimParseResultPayload = {

@@ -40,6 +40,15 @@ export class DispatchParseResultMatch {
 
   @Prop()
   finalUrl?: string;
+
+  @Prop()
+  tagMatchedInChain?: boolean;
+
+  @Prop()
+  destinationHost?: string;
+
+  @Prop()
+  destinationUrl?: string;
 }
 
 export const DispatchParseResultMatchSchema = SchemaFactory.createForClass(

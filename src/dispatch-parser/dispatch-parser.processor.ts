@@ -106,6 +106,16 @@ export class DispatchParserProcessor extends WorkerHost {
         analyzedAt,
         patterns,
         analysis,
+        enrichMatches:
+          this.configService.get<boolean>(
+            'dispatchParser.enrichMatchDestinations',
+            true,
+          ) ?? true,
+        enrichRequestHeaders: {
+          'user-agent': this.configService.getOrThrow<string>(
+            'playwright.userAgent',
+          ),
+        },
       });
 
       const persistReportFile =

@@ -42,6 +42,14 @@ export default () => ({
       }
       return raw.toLowerCase() !== 'false';
     })(),
+    /** Extend redirect chains past tracker hops before Mongo save (see enrich-parse-matches.ts). */
+    enrichMatchDestinations: (() => {
+      const raw = process.env.DISPATCH_PARSER_ENRICH_MATCH_DESTINATIONS;
+      if (raw === undefined || raw.trim() === '') {
+        return true;
+      }
+      return raw.toLowerCase() !== 'false';
+    })(),
   },
   telegram: {
     /** Public base URL for auto `setWebhook` on startup (no trailing slash needed). */

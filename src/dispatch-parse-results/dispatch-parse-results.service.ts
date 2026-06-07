@@ -6,6 +6,7 @@ import {
 import type { TAnalyzeArtifactOutput } from '../offers/types';
 import type { TResponseDispatchParseResultDto } from './dto/response-dispatch-parse-result.dto';
 import { DispatchParseResultsRepository } from './dispatch-parse-results.repository';
+import { maybeEnrichParseMatches } from './libs/enrich-parse-matches';
 import {
   buildSlimParseResult,
   type TSlimParseResultPayload,
@@ -21,6 +22,9 @@ export type TSaveParseResultInput = {
   analyzedAt: Date;
   patterns: string[];
   analysis: TAnalyzeArtifactOutput;
+  /** Set false or `DISPATCH_PARSER_ENRICH_MATCH_DESTINATIONS=false` to skip enrichment. */
+  enrichMatches?: boolean;
+  enrichRequestHeaders?: Record<string, string>;
 };
 
 @Injectable()
@@ -36,7 +40,16 @@ export class DispatchParseResultsService {
   async saveParseResult(
     input: TSaveParseResultInput,
   ): Promise<TSlimParseResultPayload> {
-    const payload = this.buildSlimResult(input);
+    let payload = this.buildSlimResult(input);
+
+    // Optional enrichment hook — comment out the block below to detach entirely.
+    payload = await maybeEnrichParseMatches(payload, {
+      enabled: input.enrichMatches ?? true,
+      patterns: input.patterns,
+      analysis: input.analysis,
+      requestHeaders: input.enrichRequestHeaders,
+    });
+
     await this.parseResultsRepository.upsertByQueueItemId(payload);
     return payload;
   }
@@ -89,6 +102,9 @@ export class DispatchParseResultsService {
         positionOnPage: match.positionOnPage,
         positionInBlock: match.positionInBlock,
         finalUrl: match.finalUrl,
+        tagMatchedInChain: match.tagMatchedInChain,
+        destinationHost: match.destinationHost,
+        destinationUrl: match.destinationUrl,
       })),
     };
   }

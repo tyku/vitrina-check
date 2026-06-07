@@ -10,6 +10,9 @@ export type TResponseDispatchParseResultMatchDto = {
   positionOnPage: number;
   positionInBlock: number;
   finalUrl?: string;
+  tagMatchedInChain?: boolean;
+  destinationHost?: string;
+  destinationUrl?: string;
 };
 
 export type TResponseDispatchParseResultDto = {
