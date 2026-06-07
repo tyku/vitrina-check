@@ -10,6 +10,7 @@ import { PlaywrightModule } from './playwright/playwright.module';
 import { OffersModule } from './offers/libs';
 import { UserModule } from './user';
 import { ChecklistsModule } from './checklists';
+import { DispatchParseResultsModule } from './dispatch-parse-results';
 import { DispatchParserModule } from './dispatch-parser';
 import { SchedulesModule } from './schedules';
 import { DispatchSchedulerModule } from './dispatch-scheduler';
@@ -44,6 +45,7 @@ import { TelegramModule } from './telegram';
     OffersModule,
     UserModule,
     ChecklistsModule,
+    DispatchParseResultsModule,
     DispatchParserModule,
     SchedulesModule,
     DispatchSchedulerModule,

@@ -1,10 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import type { TAnalyzeArtifactOutput } from '../offers/types';
+import type { TResponseDispatchParseResultDto } from './dto/response-dispatch-parse-result.dto';
 import { DispatchParseResultsRepository } from './dispatch-parse-results.repository';
 import {
   buildSlimParseResult,
   type TSlimParseResultPayload,
 } from './libs/slim-parse-result';
+import type { DispatchParseResultDocument } from './schemas/dispatch-parse-result.schema';
 
 export type TSaveParseResultInput = {
   queueItemId: string;
@@ -33,5 +39,57 @@ export class DispatchParseResultsService {
     const payload = this.buildSlimResult(input);
     await this.parseResultsRepository.upsertByQueueItemId(payload);
     return payload;
+  }
+
+  async findRecentForUser(
+    userId: string,
+    limit: number,
+  ): Promise<TResponseDispatchParseResultDto[]> {
+    const results = await this.parseResultsRepository.findRecentByUserId(
+      userId,
+      limit,
+    );
+    return results.map((result) => this.mapToResponseDto(result));
+  }
+
+  async findByQueueItemIdForUser(
+    queueItemId: string,
+    userId: string,
+  ): Promise<TResponseDispatchParseResultDto> {
+    const result =
+      await this.parseResultsRepository.findByQueueItemId(queueItemId);
+    if (!result) {
+      throw new NotFoundException('Dispatch parse result not found');
+    }
+    if (result.userId !== userId) {
+      throw new ForbiddenException(
+        'Dispatch parse result does not belong to this user',
+      );
+    }
+    return this.mapToResponseDto(result);
+  }
+
+  private mapToResponseDto(
+    result: DispatchParseResultDocument,
+  ): TResponseDispatchParseResultDto {
+    return {
+      queueItemId: result.queueItemId,
+      checklistId: result.checklistId,
+      scheduleId: result.scheduleId,
+      url: result.url,
+      analyzedAt: result.analyzedAt,
+      patterns: result.patterns,
+      matches: result.matches.map((match) => ({
+        matchType: match.matchType,
+        pattern: match.pattern,
+        href: match.href,
+        anchorText: match.anchorText,
+        blockName: match.blockName,
+        blockSelector: match.blockSelector,
+        positionOnPage: match.positionOnPage,
+        positionInBlock: match.positionInBlock,
+        finalUrl: match.finalUrl,
+      })),
+    };
   }
 }

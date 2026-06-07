@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { DispatchParseResultsController } from './dispatch-parse-results.controller';
 import { DispatchParseResultsRepository } from './dispatch-parse-results.repository';
 import { DispatchParseResultsService } from './dispatch-parse-results.service';
 import {
@@ -13,6 +14,7 @@ import {
       { name: DispatchParseResult.name, schema: DispatchParseResultSchema },
     ]),
   ],
+  controllers: [DispatchParseResultsController],
   providers: [DispatchParseResultsRepository, DispatchParseResultsService],
   exports: [DispatchParseResultsService, DispatchParseResultsRepository],
 })

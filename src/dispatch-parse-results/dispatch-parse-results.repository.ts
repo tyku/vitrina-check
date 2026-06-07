@@ -25,4 +25,21 @@ export class DispatchParseResultsRepository {
       })
       .exec();
   }
+
+  async findRecentByUserId(
+    userId: string,
+    limit: number,
+  ): Promise<DispatchParseResultDocument[]> {
+    return this.parseResultModel
+      .find({ userId })
+      .sort({ analyzedAt: -1 })
+      .limit(limit)
+      .exec();
+  }
+
+  async findByQueueItemId(
+    queueItemId: string,
+  ): Promise<DispatchParseResultDocument | null> {
+    return this.parseResultModel.findOne({ queueItemId }).exec();
+  }
 }
