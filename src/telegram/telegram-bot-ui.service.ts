@@ -10,9 +10,11 @@ import {
   TG_CB_MENU_VITRINY,
   TG_MAIN_MENU_CALLBACKS,
 } from './telegram-bot-ui.constants';
-import { isVitrinyCallback } from './telegram-vitriny-ui.constants';
+import { isScheduleCallback } from './telegram-schedule-ui.constants';
 import { isTagsCallback } from './telegram-tags-ui.constants';
+import { isVitrinyCallback } from './telegram-vitriny-ui.constants';
 import { TelegramOutboundService } from './telegram-outbound.service';
+import { TelegramScheduleUiService } from './telegram-schedule-ui.service';
 import { TelegramTagsUiService } from './telegram-tags-ui.service';
 import { TelegramVitrinyUiService } from './telegram-vitriny-ui.service';
 import {
@@ -67,6 +69,7 @@ export class TelegramBotUiService {
     private readonly users: UserService,
     private readonly vitrinyUi: TelegramVitrinyUiService,
     private readonly tagsUi: TelegramTagsUiService,
+    private readonly scheduleUi: TelegramScheduleUiService,
   ) {}
 
   /**
@@ -128,6 +131,16 @@ export class TelegramBotUiService {
         correlationId,
       );
       if (handledByTags) {
+        return;
+      }
+      const handledBySchedule = await this.scheduleUi.handleTextMessage(
+        text,
+        chatId,
+        user,
+        telegramUserId,
+        correlationId,
+      );
+      if (handledBySchedule) {
         return;
       }
     }
@@ -230,6 +243,29 @@ export class TelegramBotUiService {
       return;
     }
 
+    if (data === TG_CB_MENU_SCHEDULE || isScheduleCallback(data)) {
+      if (data === TG_CB_MENU_SCHEDULE) {
+        await this.scheduleUi.showMenu(chatId, user, correlationId);
+        return;
+      }
+      const scheduleResult = await this.scheduleUi.handleCallback(
+        data,
+        chatId,
+        user,
+        telegramUserId,
+        correlationId,
+      );
+      if (scheduleResult === 'back_main') {
+        await this.enqueueSendMessage({
+          chat_id: chatId,
+          text: 'Главное меню:',
+          reply_markup: mainMenuReplyMarkup(),
+          correlationId,
+        });
+      }
+      return;
+    }
+
     if (!TG_MAIN_MENU_CALLBACKS.has(data)) {
       await this.enqueueSendMessage({
         chat_id: chatId,
@@ -240,7 +276,6 @@ export class TelegramBotUiService {
     }
 
     const stubs: Record<string, string> = {
-      [TG_CB_MENU_SCHEDULE]: 'Раздел «Расписание» скоро будет доступен.',
       [TG_CB_MENU_RUN]: 'Запуск проверки — скоро будет доступен.',
       [TG_CB_MENU_REPORT]: 'Отчёты — скоро будут доступны.',
       [TG_CB_MENU_SUB]: 'Подписка — скоро будет доступна.',

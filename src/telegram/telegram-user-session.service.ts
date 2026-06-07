@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import Redis from 'ioredis';
+import type { SchedulePeriodicity } from '../schedules/schemas/schedule.schema';
 import { TELEGRAM_WEBHOOK_DEDUP_REDIS } from './telegram-webhook-dedup.constants';
 
 const SESSION_KEY_PREFIX = 'telegram:ui:session:v1:';
@@ -7,7 +8,12 @@ const SESSION_TTL_SECONDS = 900;
 
 export type TTelegramUiSession =
   | { action: 'add_vitrina' }
-  | { action: 'add_offer_tag'; checklistId: string };
+  | { action: 'add_offer_tag'; checklistId: string }
+  | {
+      action: 'set_schedule_time';
+      scheduleId?: string;
+      pendingPeriodicity?: SchedulePeriodicity;
+    };
 
 @Injectable()
 export class TelegramUserSessionService {
@@ -32,6 +38,25 @@ export class TelegramUserSessionService {
       ) {
         return parsed;
       }
+      if (parsed.action === 'set_schedule_time') {
+        const scheduleId =
+          typeof parsed.scheduleId === 'string' && parsed.scheduleId.length > 0
+            ? parsed.scheduleId
+            : undefined;
+        const pendingPeriodicity =
+          typeof parsed.pendingPeriodicity === 'string'
+            ? parsed.pendingPeriodicity
+            : undefined;
+        if (scheduleId || pendingPeriodicity) {
+          return {
+            action: 'set_schedule_time',
+            scheduleId,
+            pendingPeriodicity: pendingPeriodicity as
+              | SchedulePeriodicity
+              | undefined,
+          };
+        }
+      }
       return null;
     } catch {
       return null;
@@ -49,6 +74,20 @@ export class TelegramUserSessionService {
     await this.setSession(telegramUserId, {
       action: 'add_offer_tag',
       checklistId,
+    });
+  }
+
+  async setScheduleTime(
+    telegramUserId: string,
+    options: {
+      scheduleId?: string;
+      pendingPeriodicity?: SchedulePeriodicity;
+    },
+  ): Promise<void> {
+    await this.setSession(telegramUserId, {
+      action: 'set_schedule_time',
+      scheduleId: options.scheduleId,
+      pendingPeriodicity: options.pendingPeriodicity,
     });
   }
 
